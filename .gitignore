@@ -1,0 +1,10 @@
+proyectos/
+README.md
+pruebas-git/
+/.gitignore
+/AppRamirezBike/AppRamirezBike/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+/AppRamirezBike/AppRamirezBike/obj/Debug/AppRamirezBike.csproj.AssemblyReference.cache
+/AppRamirezBike/.vs/AppRamirezBike/FileContentIndex
+/AppRamirezBike/AppRamirezBike/.vs
+/AppRamirezBike/.vs/AppRamirezBike/config/applicationhost.config
+/AppRamirezBike/AppRamirezBike/AppRamirezBike.csproj
