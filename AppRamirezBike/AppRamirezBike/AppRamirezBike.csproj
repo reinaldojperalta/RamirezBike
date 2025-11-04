@@ -70,6 +70,8 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Datos\ClConexion.cs" />
+    <Compile Include="Modelo\Producto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -82,9 +84,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Datos\" />
     <Folder Include="Logica\" />
-    <Folder Include="Modelo\" />
     <Folder Include="Vista\" />
   </ItemGroup>
   <PropertyGroup>
