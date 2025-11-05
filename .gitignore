@@ -1,0 +1,18 @@
+proyectos/
+AppPaginaASPConectada.rar
+AppPaginaASPConectada/
+visual-adso-2025-mañana.rar
+README.md
+
+# Archivos de configuración y de compilación
+**/[Bb]in/
+**/[Oo]bj/
+**/.vs/
+*.log
+*.suo
+*.user
+*.useros
+*.bak
+
+# Si usas packages (NuGet)
+packages/
