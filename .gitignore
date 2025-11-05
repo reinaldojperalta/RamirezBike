@@ -14,5 +14,8 @@ README.md
 *.useros
 *.bak
 
-# Si usas packages (NuGet)
-packages/
+# Archivos generados por scaffolding de ASP.NET
+ScaffoldingReadMe.txt
+
+# Contenido de publish (publicación)
+[Pp]ublish/
