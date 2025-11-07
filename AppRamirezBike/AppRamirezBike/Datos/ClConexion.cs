@@ -12,7 +12,7 @@ namespace AppRamirezBike.Datos
 
         public ClConexion()
         {
-            objConexion = new SqlConnection("Data Source=DESKTOP-BTOUG7O;Initial Catalog=dbRamirezBike;Integrated Security=True");
+            objConexion = new SqlConnection("Data Source=DESKTOP-AJM9FE4;Initial Catalog=RamirezBike_Sprint1;Integrated Security=True;TrustServerCertificate=True");
         }
         public SqlConnection MtAbrirConexion()
         {

@@ -67,7 +67,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Vista\carrito.js" />
     <Content Include="Vista\Catalogo.aspx" />
+    <Content Include="Vista\Detalle.aspx" />
     <Content Include="Vista\img\bici1.jpeg" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -84,6 +86,13 @@
     </Compile>
     <Compile Include="Vista\Catalogo.aspx.designer.cs">
       <DependentUpon>Catalogo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\Detalle.aspx.cs">
+      <DependentUpon>Detalle.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vista\Detalle.aspx.designer.cs">
+      <DependentUpon>Detalle.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vista\MasterPag1.Master.cs">
       <DependentUpon>MasterPag1.Master</DependentUpon>
