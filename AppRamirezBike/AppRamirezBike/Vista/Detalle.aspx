@@ -7,5 +7,5 @@
         class="btn-agregar-carrito">
         AÑADIR AL CARRITO
     </button>
-    <script src="js/carrito.js"></script>
+ 
 </asp:Content>
