@@ -15,5 +15,6 @@ namespace AppRamirezBike.Modelo
         public string telefono { get; set; }
         public string email { get; set; }
         public string clave { get; set; }
+        public int idRol { get; set; }
     }
 }

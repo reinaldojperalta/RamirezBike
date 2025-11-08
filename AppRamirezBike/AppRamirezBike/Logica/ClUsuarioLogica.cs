@@ -14,6 +14,12 @@ namespace AppRamirezBike.Logica
             ClUsuarioDatos oUsuarioD = new ClUsuarioDatos();
             int filasAfectadas = oUsuarioD.MtRegistrarUsuario(oUsuario);
             return filasAfectadas == 1;
+     
+        }
+        public bool MtVerificarDocumentoExistente(string documento)
+        {
+            ClUsuarioDatos oUsuarioD = new ClUsuarioDatos();
+            return oUsuarioD.MtVerificarDocumentoExistente(documento);
         }
     }
 }

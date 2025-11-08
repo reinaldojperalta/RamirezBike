@@ -70,6 +70,7 @@
     <Content Include="obj\Debug\AppRamirezBike.pdb" />
     <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <Content Include="Vista\Catalogo.aspx" />
+    <Content Include="Vista\Global.asax" />
     <Content Include="Vista\img\bici1.jpeg" />
     <Content Include="Vista\RegistroUsuario.aspx" />
     <Content Include="Web.config" />
@@ -77,9 +78,12 @@
   <ItemGroup>
     <Compile Include="Datos\ClConexion.cs" />
     <Compile Include="Datos\ClProductoDatos.cs" />
+    <Compile Include="Datos\ClRolDatos.cs" />
     <Compile Include="Datos\ClUsuarioDatos.cs" />
     <Compile Include="Logica\ClProductoLogica.cs" />
+    <Compile Include="Logica\ClRolLogica.cs" />
     <Compile Include="Logica\ClUsuarioLogica.cs" />
+    <Compile Include="Modelo\Rol.cs" />
     <Compile Include="Modelo\Usuario.cs" />
     <Compile Include="Modelo\Producto.cs" />
     <Compile Include="obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
@@ -90,6 +94,9 @@
     </Compile>
     <Compile Include="Vista\Catalogo.aspx.designer.cs">
       <DependentUpon>Catalogo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Vista\MasterPag1.Master.cs">
       <DependentUpon>MasterPag1.Master</DependentUpon>
