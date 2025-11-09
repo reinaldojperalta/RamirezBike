@@ -1,4 +1,4 @@
-﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -63,18 +63,27 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
+  <!-- COMIENZO DEL GRUPO DE REFERENCIAS Y CONTENIDO FUSIONADO -->
   <ItemGroup>
+    <!-- Referencia duplicada eliminada, se mantiene la de NuGet -->
     <Content Include="obj\Debug\AppRamirezBike.csproj.AssemblyReference.cache" />
     <Content Include="obj\Debug\AppRamirezBike.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\AppRamirezBike.dll" />
     <Content Include="obj\Debug\AppRamirezBike.pdb" />
     <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    
+    <!-- Archivos de Contenido (Content) de ambas ramas: steven y main -->
+    <Content Include="Vista\carrito.js" />
     <Content Include="Vista\Catalogo.aspx" />
+    <Content Include="Vista\Detalle.aspx" />
+    <Content Include="Vista\WebForm1.aspx" />
     <Content Include="Vista\Global.asax" />
     <Content Include="Vista\img\bici1.jpeg" />
     <Content Include="Vista\RegistroUsuario.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
+  
+  <!-- COMIENZO DEL GRUPO DE COMPILACIÓN FUSIONADO -->
   <ItemGroup>
     <Compile Include="Datos\ClConexion.cs" />
     <Compile Include="Datos\ClProductoDatos.cs" />
@@ -94,6 +103,22 @@
     </Compile>
     <Compile Include="Vista\Catalogo.aspx.designer.cs">
       <DependentUpon>Catalogo.aspx</DependentUpon>
+    </Compile>
+    
+    <!-- Code-Behind de ambas ramas: steven (Detalle) y main (Global) -->
+    <Compile Include="Vista\Detalle.aspx.cs">
+      <DependentUpon>Detalle.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vista\Detalle.aspx.designer.cs">
+      <DependentUpon>Detalle.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\WebForm1.aspx.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vista\WebForm1.aspx.designer.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vista\Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -161,7 +186,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets'))" />
   </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.  
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

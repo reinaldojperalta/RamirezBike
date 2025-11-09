@@ -23,7 +23,7 @@
                                 <h5 class="card-text"><%# Eval("precio") %></h5>
 
                                 <div class="mt-auto">
-                                    <a href="Catalogo.aspx?id=<%# Eval("idProducto") %>" class="btn btn-primary w-100">Comprar</a>
+                                    <a href="Detalle.aspx?id=<%# Eval("idProducto") %>" class="btn btn-primary w-100">Comprar</a>
                                 </div>
                             </div>
                         </div>
