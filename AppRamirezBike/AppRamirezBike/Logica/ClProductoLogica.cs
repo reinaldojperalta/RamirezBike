@@ -11,41 +11,20 @@ namespace AppRamirezBike.Logica
     {
 
 
-        public List<Producto> MtDatosVistaProducto(int salto, int tamañoPagina, out int totalRegistros)
-        {
-            ClProductoDatos objProductoDatos = new ClProductoDatos();
-
-
-            List<Producto> productosPaginados = objProductoDatos.MtListarProductosPaginados(
-                salto,
-                tamañoPagina,
-                out totalRegistros
-            );
-
-            return productosPaginados;
-        }
-
-
-
-        public Producto ObtenerProductoPorId(int id)
-        {
-            ClProductoDatos datos = new ClProductoDatos();
-            Producto producto = datos.MtObtenerPorId(id);
-
-            if (producto == null)
+            public List<Producto> MtDatosVistaProducto(int salto, int tamañoPagina, out int totalRegistros)
             {
-                producto = new Producto();
-                producto.idProducto = id;
-                producto.nombre = "Producto de Prueba";
-                producto.precio = 999999;
-                producto.imgUrl = "img/default.jpg";
-                producto.descripcion = "Este producto es de prueba";
-                producto.stock = 99;
-                producto.estado = true;
+                ClProductoDatos objProductoDatos = new ClProductoDatos();
+
+              
+                List<Producto> productosPaginados = objProductoDatos.MtListarProductosPaginados(
+                    salto,
+                    tamañoPagina,
+                    out totalRegistros 
+                );
+
+                return productosPaginados;
             }
 
-            return producto;
-        }
 
+        }
     }
-}
