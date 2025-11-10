@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using MySql.Data.MySqlClient;
 
 namespace AppRamirezBike.Datos
 {
@@ -12,8 +13,8 @@ namespace AppRamirezBike.Datos
 
         public ClConexion()
         {
-
-            objConexion = new SqlConnection("Data Source=DESKTOP-E7O1G9I\\SQLEXPRESS;Initial Catalog=dbPruebaProyecto;Integrated Security=True;TrustServerCertificate=True");
+            string connectionString = "Data Source=LAPTOP-6LQPP2A5\\SQLEXPRESS;Initial Catalog=dbRamirezBike;Integrated Security=True;";
+            objConexion = new SqlConnection(connectionString);
 
         }
         public SqlConnection MtAbrirConexion()

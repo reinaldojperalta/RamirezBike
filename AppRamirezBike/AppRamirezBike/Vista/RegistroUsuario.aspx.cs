@@ -52,8 +52,8 @@ namespace AppRamirezBike.Vista
             {
                 tipoDocumento = ddlTipoDocumento.SelectedValue.Trim(),
                 documento = documentoIngresado,
-                nombres = txtNombres.Text.Trim(),
-                apellidos = txtApellidos.Text.Trim(),
+                nombre = txtNombres.Text.Trim(),
+                apellido = txtApellidos.Text.Trim(),
                 email = txtEmail.Text.Trim(),
                 telefono = txtTelefono.Text.Trim(),
                 clave = txtClave.Text.Trim(),
