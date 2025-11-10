@@ -136,11 +136,8 @@
     <Compile Include="Datos\ClProductoDatos.cs" />
     <Compile Include="Datos\ClRolDatos.cs" />
     <Compile Include="Datos\ClUsuarioDatos.cs" />
-<<<<<<< HEAD
     <Compile Include="Logica\ClCategoriaLogica.cs" />
-=======
     <Compile Include="Datos\HasheoClave.cs" />
->>>>>>> main
     <Compile Include="Logica\ClProductoLogica.cs" />
     <Compile Include="Logica\ClRolLogica.cs" />
     <Compile Include="Logica\ClUsuarioLogica.cs" />
