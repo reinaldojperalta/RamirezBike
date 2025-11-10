@@ -76,13 +76,16 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Datos\ClCategoriaDatos.cs" />
     <Compile Include="Datos\ClConexion.cs" />
     <Compile Include="Datos\ClProductoDatos.cs" />
     <Compile Include="Datos\ClRolDatos.cs" />
     <Compile Include="Datos\ClUsuarioDatos.cs" />
+    <Compile Include="Logica\ClCategoriaLogica.cs" />
     <Compile Include="Logica\ClProductoLogica.cs" />
     <Compile Include="Logica\ClRolLogica.cs" />
     <Compile Include="Logica\ClUsuarioLogica.cs" />
+    <Compile Include="Modelo\Categoria.cs" />
     <Compile Include="Modelo\Rol.cs" />
     <Compile Include="Modelo\Usuario.cs" />
     <Compile Include="Modelo\Producto.cs" />
@@ -126,8 +129,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Logica\" />
-    <Folder Include="Vista\" />
     <Folder Include="bin\" />
     <Folder Include="obj\Debug\TempPE\" />
   </ItemGroup>

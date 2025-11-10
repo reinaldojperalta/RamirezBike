@@ -18,6 +18,7 @@ namespace AppRamirezBike.Vista
 		{
 			if (!IsPostBack)
 			{
+                MtCargarCategorias();
                 int paginaActual = 1;
                 if (Request.QueryString["pagina"] != null && int.TryParse(Request.QueryString["pagina"], out int p))
                 {
@@ -39,7 +40,8 @@ namespace AppRamirezBike.Vista
             List<Producto> productosDePagina = objProductoLogica.MtDatosVistaProducto(
                 salto,
                 tamañoPagina,
-                out TotalRegistros
+                out TotalRegistros,
+                MtFiltroCategoria
             );
 
             // 3. Llenar el Repeater
@@ -78,6 +80,44 @@ namespace AppRamirezBike.Vista
 
             // Si el número de página del Repeater coincide con la página actual, devuelve 'active'
             return numeroPagina == paginaActual ? "active" : string.Empty;
+        }
+
+        public int MtFiltroCategoria
+        {
+            get
+            {
+                if (Request.QueryString["categoria"] != null && int.TryParse(Request.QueryString["categoria"], out int idCat))
+                {
+                    return idCat;
+                }
+                return 0;
+            }
+        }
+        private void MtCargarCategorias()
+        {
+            ClCategoriaLogica objCategoria = new ClCategoriaLogica();
+            List<Categoria> listaCategorias = objCategoria.MtObtenerCategorias();
+
+            ddlCategorias.DataSource = listaCategorias;
+            ddlCategorias.DataTextField = "nombre";
+            ddlCategorias.DataValueField = "idCategoria";
+            ddlCategorias.DataBind();
+
+            ddlCategorias.Items.Insert(0, new ListItem("Seleccione Una Categoria", ""));
+        }
+
+        protected void ddlCategorias_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string categoriaSelect = ddlCategorias.SelectedValue;
+            string url = "/Vista/Catalogo.aspx?pagina=1";
+
+            if (!string.IsNullOrEmpty(categoriaSelect) && categoriaSelect!= "0")
+            {
+                url += "&categoria=" + categoriaSelect;
+            }
+
+            Response.Redirect(url);
+
         }
     }
 }

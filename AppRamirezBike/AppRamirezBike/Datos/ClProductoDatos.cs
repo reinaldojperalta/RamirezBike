@@ -43,21 +43,28 @@ namespace AppRamirezBike.Datos
             return objProductosList;
         }
 
-        public List<Producto> MtListarProductosPaginados(int salto, int tamañoPagina, out int totalRegistros)
+        public List<Producto> MtListarProductosPaginados(int salto, int tamañoPagina, out int totalRegistros, int idCategoria)
         {
             List<Producto> objProductosList = new List<Producto>();
             ClConexion objConexion = new ClConexion();
             SqlConnection conex = null;
+            string clausulaWhere = "";
+
+            if (idCategoria > 0)
+            {
+                clausulaWhere = " WHERE IdCategoria = " + idCategoria.ToString();
+            }
 
             // 1. Consulta para obtener el TOTAL de registros (necesario para la paginación)
-            string consultaTotal = "SELECT COUNT(IdProducto) FROM dbo.producto";
+            string consultaTotal = "SELECT COUNT(idProducto) FROM dbo.producto" + clausulaWhere;
 
             // 2. Consulta para obtener los registros de la página actual
             // Es crucial que haya un ORDER BY para que OFFSET y FETCH funcionen.
-            string consultaPaginada = @"
-        SELECT IdProducto, nombre, descripcion, precio, imgUrl, stock, estado, CreacionFecha, ModificacionFecha 
+            string consultaPaginada = $@"
+        SELECT idProducto, nombre, descripcion, precio, imgUrl, stock, estado, CreacionFecha, ModificacionFecha, idCategoria
         FROM dbo.producto
-        ORDER BY IdProducto -- O cualquier columna de orden, es OBLIGATORIO
+        {clausulaWhere}  
+        ORDER BY idProducto
         OFFSET @Salto ROWS
         FETCH NEXT @TamañoPagina ROWS ONLY";
 
@@ -87,6 +94,7 @@ namespace AppRamirezBike.Datos
                     estado = reader.GetBoolean(reader.GetOrdinal("estado")),
                     CreacionFecha = reader.GetDateTime(reader.GetOrdinal("CreacionFecha")),
                     ModificacionFecha = reader.GetDateTime(reader.GetOrdinal("ModificacionFecha")),
+                    idCategoria = reader.GetInt32(reader.GetOrdinal("idCategoria"))
                 };
                 objProductosList.Add(objProducto);
             }

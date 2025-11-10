@@ -6,6 +6,11 @@
     <div class="container mt-5">
         <div class="row">
 
+            <div class ="filtro-categoria">
+                <asp:Label ID="lblFiltro" runat="server" Text="Filtra Aqui Por Categoria" />
+                <asp:DropDownList ID="ddlCategorias" runat="server" AutoPostBack ="true" OnSelectedIndexChanged="ddlCategorias_SelectedIndexChanged"></asp:DropDownList>
+            </div>
+
             <asp:Repeater ID="rptProducto" runat="server">
 
                 <ItemTemplate>

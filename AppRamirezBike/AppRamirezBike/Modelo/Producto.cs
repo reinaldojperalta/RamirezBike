@@ -16,5 +16,6 @@ namespace AppRamirezBike.Modelo
 		public bool estado { get; set; }
 		public DateTime CreacionFecha { get; set; }
 		public DateTime ModificacionFecha { get; set; }
-	}
+        public int  idCategoria { get; set; }
+    }
 }
