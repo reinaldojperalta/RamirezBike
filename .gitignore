@@ -1,0 +1,22 @@
+proyectos/
+AppPaginaASPConectada.rar
+AppPaginaASPConectada/
+visual-adso-2025-mañana.rar
+README.md
+
+# Archivos de configuración y de compilación
+**/[Bb]in/
+**/[Oo]bj/
+**/.vs/
+*.log
+*.suo
+*.user
+*.useros
+*.bak
+
+# Archivos generados por scaffolding de ASP.NET
+ScaffoldingReadMe.txt
+
+# Contenido de publish (publicación)
+[Pp]ublish/
+/AppRamirezBike/packages/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1
