@@ -6,22 +6,23 @@ using System.Web;
 
 namespace AppRamirezBike.Datos
 {
-    public class ClConexion
-    {
-        SqlConnection oConexion;
+	public class ClConexion
+	{
+        SqlConnection objConexion;
 
         public ClConexion()
         {
-            oConexion = new SqlConnection("");
+            objConexion = new SqlConnection("Data Source=DESKTOP-E7O1G9I\\SQLEXPRESS;Initial Catalog=dbPruebaProyecto;Integrated Security=True;TrustServerCertificate=True");
         }
         public SqlConnection MtAbrirConexion()
         {
-            oConexion.Open();
-            return oConexion;
+            objConexion.Open();
+            return objConexion;
         }
+
         public void MtCerrarConexion()
         {
-            oConexion.Close();
+            objConexion.Close();
         }
-    }
+	}
 }
