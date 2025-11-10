@@ -11,7 +11,7 @@ namespace AppRamirezBike.Logica
     {
 
 
-            public List<Producto> MtDatosVistaProducto(int salto, int tamañoPagina, out int totalRegistros,int idCategoria)
+            public List<Producto> MtDatosVistaProducto(int salto, int tamañoPagina, out int totalRegistros, int idCategoria)
             {
                 ClProductoDatos objProductoDatos = new ClProductoDatos();
 
@@ -21,12 +21,33 @@ namespace AppRamirezBike.Logica
                     tamañoPagina,
                     out totalRegistros,
                     idCategoria
-                    
                 );
 
-                return productosPaginados;
+            return productosPaginados;
+        }
+
+
+
+        public Producto ObtenerProductoPorId(int id)
+        {
+            ClProductoDatos datos = new ClProductoDatos();
+            Producto producto = datos.MtObtenerPorId(id);
+
+            if (producto == null)
+            {
+                producto = new Producto();
+                producto.idProducto = id;
+                producto.nombre = "Producto de Prueba";
+                producto.precio = 999999;
+                producto.imgUrl = "img/default.jpg";
+                producto.descripcion = "Este producto es de prueba";
+                producto.stock = 99;
+                producto.estado = true;
+
             }
 
-
+            return producto;
         }
+
     }
+}

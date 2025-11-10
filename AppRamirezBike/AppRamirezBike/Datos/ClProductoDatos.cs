@@ -103,6 +103,34 @@ namespace AppRamirezBike.Datos
 
             return objProductosList;
         }
+        public Producto MtObtenerPorId(int id)
+        {
+            ClConexion conexion = new ClConexion();
+            SqlConnection conn = conexion.MtAbrirConexion(); // ABRE Y DEVUELVE CONEXIÓN
+
+            string query = "SELECT idProducto, nombre, descripcion, precio, imgUrl, stock, estado FROM Producto WHERE idProducto = " + id;
+
+            SqlCommand cmd = new SqlCommand(query, conn);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            Producto producto = null;
+
+            if (reader.Read())
+            {
+                producto = new Producto();
+                producto.idProducto = (int)reader["idProducto"];
+                producto.nombre = reader["nombre"].ToString();
+                producto.descripcion = reader["descripcion"].ToString();
+                producto.precio = Convert.ToInt32(reader["precio"]);
+                producto.imgUrl = reader["imgUrl"].ToString();
+                producto.stock = (int)reader["stock"];
+                producto.estado = (bool)reader["estado"];
+            }
+
+            conexion.MtCerrarConexion(); // CIERRA
+
+            return producto; // SI NO ENCUENTRA → NULL (lógica lo maneja)
+        }
 
     }
 }

@@ -137,7 +137,7 @@
                         </div>
 
                         <div class="d-grid">
-                            <asp:Button ID="BtnRegistrarse" class="btnRegistrarse" runat="server" Text="Registrarse" OnClick="BtnRegistrarse_Click" />
+                            <asp:Button ID="BtnRegistrarse" class="btnRegistrarse" runat="server" Text="Registrarse" OnClick="BtnRegistrarse_Click"/>
                         </div>
 
                     </div>

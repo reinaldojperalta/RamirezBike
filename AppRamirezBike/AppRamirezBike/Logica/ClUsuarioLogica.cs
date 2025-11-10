@@ -21,5 +21,12 @@ namespace AppRamirezBike.Logica
             ClUsuarioDatos oUsuarioD = new ClUsuarioDatos();
             return oUsuarioD.MtVerificarDocumentoExistente(documento);
         }
+
+        public bool MtVerificarLogin(string correo, string claveIngresada)
+        {
+            ClUsuarioDatos oUsuarioD = new ClUsuarioDatos();
+            bool confirmacion = oUsuarioD.MtVerificarLogin(correo,claveIngresada);
+            return confirmacion;
+        }
     }
 }
