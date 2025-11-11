@@ -15,8 +15,7 @@ namespace AppRamirezBike.Vista
         {
             if (User.Identity.IsAuthenticated)
             {
-                // Redirige al catálogo si ya inició sesión
-                //Response.Redirect("Vista/Catalogo.aspx");
+                Response.Redirect("Vista/Catalogo.aspx");
             }
         }
         protected void BtnLogin_Click(object sender, EventArgs e)

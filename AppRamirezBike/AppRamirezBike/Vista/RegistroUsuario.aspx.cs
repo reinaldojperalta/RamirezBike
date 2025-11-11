@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -63,7 +64,8 @@ namespace AppRamirezBike.Vista
             bool registroExitoso = objUsuario.MtRegistrarUsuario(nuevoUsuario);
             if (registroExitoso)
             {
-                Response.Redirect("");
+                FormsAuthentication.SetAuthCookie(txtEmail.Text.Trim(), false);
+                Response.Redirect("/Vista/Catalogo.aspx");
             }
             else
             {

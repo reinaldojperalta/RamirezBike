@@ -17,6 +17,10 @@
             </asp:ContentPlaceHolder>
 
         </div>
+
+       <asp:Button ID="btnLogout" runat="server" Text="Cerrar sesión" OnClick="btnLogout_Click" />
+
+
    
         <div style="position:fixed; top:20px; right:20px; z-index:9999;">
     <a href="Carrito.aspx">

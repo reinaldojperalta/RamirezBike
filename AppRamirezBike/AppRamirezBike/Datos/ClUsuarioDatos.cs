@@ -16,7 +16,7 @@ namespace AppRamirezBike.Datos
         
         public int MtRegistrarUsuario(Usuario oUsuario)
         {
-            string consulta = "INSERT INTO usuario (tipoDocumento, documento, nombre, apellido, telefono, email, clave, idRol) " +
+            string consulta = "INSERT INTO usuario (tipoDocumento, documento, nombres, apellidos, telefono, email, clave, idRol) " +
                           "VALUES (@tipoDoc, @doc, @nombre, @apellido, @tel, @email, @clave, @idRol)";
 
             SqlCommand comando = new SqlCommand(consulta, objConexion.MtAbrirConexion());
@@ -53,7 +53,7 @@ namespace AppRamirezBike.Datos
         public Usuario MtBuscarCorreo(string correo)
         {
             Usuario usuarioEncontrado = null;
-            string consulta = "SELECT idUsuario, tipoDocumento, documento, nombre, apellido, telefono, email, clave, idRol " +
+            string consulta = "SELECT idUsuario, tipoDocumento, documento, nombres, apellidos, telefono, email, clave, idRol " +
                               "FROM usuario WHERE email = @correo";
             SqlCommand comando = new SqlCommand(consulta, objConexion.MtAbrirConexion());
             comando.Parameters.AddWithValue("@correo", correo);
@@ -65,8 +65,8 @@ namespace AppRamirezBike.Datos
                     idUsuario = reader.GetInt32(reader.GetOrdinal("idUsuario")),
                     tipoDocumento = reader["tipoDocumento"].ToString(),
                     documento = reader["documento"].ToString(),
-                    nombre = reader["nombre"].ToString(),
-                    apellido = reader["apellido"].ToString(),
+                    nombre = reader["nombres"].ToString(),
+                    apellido = reader["apellidos"].ToString(),
                     telefono = reader["telefono"].ToString(),
                     email = reader["email"].ToString(),
                     clave = reader["clave"].ToString(),
