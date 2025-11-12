@@ -39,18 +39,17 @@ function actualizarNumero() {
     for (let i = 0; i < carrito.length; i++) {
         total += carrito[i].cantidad;
     }
-    let span = document.getElementById("cart-count");
-    if (span) {
-        span.innerText = total;
+    let contador = document.getElementById("cart-count");
+    if (contador) {
+        contador.innerText = total;
 
       
         if (total > 0) {
-            span.style.display = "block"; // Mostrar el contador
+            contador.style.display = "block"; // Mostrar el contador
         } else {
-            span.style.display = "none";  // Ocultar el contador
+            contador.style.display = "none";  // Ocultar el contador
         }
         
     }
 }
-
 actualizarNumero();

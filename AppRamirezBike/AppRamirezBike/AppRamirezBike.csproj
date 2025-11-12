@@ -67,6 +67,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Vista\carrito.aspx" />
     <Content Include="Vista\carrito.js" />
     <Content Include="Vista\Catalogo.aspx" />
     <Content Include="Vista\Detalle.aspx" />
@@ -80,6 +81,13 @@
     <Compile Include="Modelo\Producto.cs" />
     <Compile Include="obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Vista\carrito.aspx.cs">
+      <DependentUpon>carrito.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vista\carrito.aspx.designer.cs">
+      <DependentUpon>carrito.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Vista\Catalogo.aspx.cs">
       <DependentUpon>Catalogo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
