@@ -33,6 +33,7 @@ namespace AppRamirezBike.Datos
 
         public static bool MtVerificarClave(string claveIngresada, string hashAlmacenado)
         {
+            string hasLimpio = hashAlmacenado.Trim();
             // ... (El código de tu MtVerificarClave aquí, usando las constantes de esta clase)
             byte[] hashBytes = Convert.FromBase64String(hashAlmacenado);
 

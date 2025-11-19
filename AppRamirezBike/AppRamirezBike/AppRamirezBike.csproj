@@ -127,21 +127,26 @@
     <Content Include="Vista\img\bici1.jpeg" />
     <Content Include="Vista\login.aspx" />
     <Content Include="Vista\RegistroUsuario.aspx" />
+    <Content Include="Vista\VentaRapida.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <!-- COMIENZO DEL GRUPO DE COMPILACIÓN FUSIONADO -->
   <ItemGroup>
     <Compile Include="Datos\ClCategoriaDatos.cs" />
     <Compile Include="Datos\ClConexion.cs" />
+    <Compile Include="Datos\ClPedidoDatos.cs" />
     <Compile Include="Datos\ClProductoDatos.cs" />
     <Compile Include="Datos\ClRolDatos.cs" />
     <Compile Include="Datos\ClUsuarioDatos.cs" />
     <Compile Include="Logica\ClCategoriaLogica.cs" />
     <Compile Include="Datos\HasheoClave.cs" />
+    <Compile Include="Logica\ClPedidoLogica.cs" />
     <Compile Include="Logica\ClProductoLogica.cs" />
     <Compile Include="Logica\ClRolLogica.cs" />
     <Compile Include="Logica\ClUsuarioLogica.cs" />
     <Compile Include="Modelo\Categoria.cs" />
+    <Compile Include="Modelo\DetallePedido.cs" />
+    <Compile Include="Modelo\Pedido.cs" />
     <Compile Include="Modelo\Rol.cs" />
     <Compile Include="Modelo\Usuario.cs" />
     <Compile Include="Modelo\Producto.cs" />
@@ -192,6 +197,13 @@
     </Compile>
     <Compile Include="Vista\RegistroUsuario.aspx.designer.cs">
       <DependentUpon>RegistroUsuario.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\VentaRapida.aspx.cs">
+      <DependentUpon>VentaRapida.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vista\VentaRapida.aspx.designer.cs">
+      <DependentUpon>VentaRapida.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
