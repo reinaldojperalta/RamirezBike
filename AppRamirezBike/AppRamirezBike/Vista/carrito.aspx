@@ -1,116 +1,68 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Vista/MasterPag1.Master" AutoEventWireup="true" CodeBehind="carrito.aspx.cs" Inherits="AppRamirezBike.Vista.carrito" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Vista/MasterPag1.Master" AutoEventWireup="true" CodeBehind="Carrito.aspx.cs" Inherits="AppRamirezBike.Vista.Carrito" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentBody1" runat="server">
+    <div class="container mt-5">
+        <h1 class="text-center mb-4 text-primary fw-bold">Mi Carrito de Compras</h1>
 
-    <h1>MI CARRITO</h1>
+        <asp:Panel ID="pnlVacio" runat="server" Visible="false">
+            <div class="text-center p-5 bg-light rounded shadow">
+                <h2 class="text-muted">Tu carrito está vacío</h2>
+                <a href="Catalogo.aspx" class="btn btn-primary btn-lg mt-3">Ir al Catálogo</a>
+            </div>
+        </asp:Panel>
 
-    <!-- SI NO HAY PRODUCTOS -->
-    <div id="carritoVacio">
-        <h2>Tu carrito está vacío</h2>
-        <p>No has añadido nada aún.</p>
-        <a href="Catalogo.aspx">Seguir comprando</a>
+        <asp:Panel ID="pnlCarrito" runat="server" Visible="false">
+            <table class="table table-striped table-hover">
+                <thead class="table-primary">
+                    <tr>
+                        <th>Imagen</th>
+                        <th>Producto</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Subtotal</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <asp:Repeater ID="rptCarrito" runat="server">
+                        <ItemTemplate>
+                            <tr>
+                                <td>
+                                    <img src='img/<%# Eval("ImgUrl") %>' width="80" class="rounded" /></td>
+                                <td class="align-middle"><strong><%# Eval("Nombre") %></strong></td>
+                                <td class="align-middle">$<%# Eval("Precio", "{0:N0}") %></td>
+                                <td class="align-middle text-center"><%# Eval("Cantidad") %></td>
+                                <td class="align-middle text-success fw-bold">$<%# Eval("Subtotal", "{0:N0}") %></td>
+                                <td class="align-middle text-center">
+                                    <button type="button" class="btn btn-sm btn-outline-danger"
+                                        onclick="modificarCantidad(<%# Eval("IdProducto") %>, -1)">
+                                        –</button>
+
+                                    <span class="mx-3 fw-bold"><%# Eval("Cantidad") %></span>
+
+                                    <button type="button" class="btn btn-sm btn-outline-primary"
+                                        onclick="modificarCantidad(<%# Eval("IdProducto") %>, 1)">
+                                        +</button>
+                                </td>
+                            </tr>
+                        </ItemTemplate>
+                    </asp:Repeater>
+                </tbody>
+            </table>
+
+            <div class="text-end mt-4">
+                <h3>Total: $<asp:Label ID="lblTotal" runat="server" CssClass="text-success fw-bold" /></h3>
+                <button type="button" class="btn btn-danger btn-lg me-3"
+                    onclick="vaciarCarrito()">
+                    Vaciar Carrito
+                </button>
+                <button class="btn btn-success btn-lg">Proceder al Pago</button>
+            </div>
+        </asp:Panel>
     </div>
 
-    <!-- LISTA DE PRODUCTOS -->
-    <div id="listaProductos"></div>
-
-    <!-- BOTÓN VACIAR -->
-    <div id="botonVaciar" style="text-align: center; margin: 20px; display: none;">
-        <button onclick="vaciarCarrito()" style="background: #dc3545; color: white; padding: 12px 30px; border: none; border-radius: 10px; font-size: 18px; cursor: pointer;">
-            Vaciar Carrito
-       
-        </button>
-    </div>
-
-    <!-- TOTAL -->
-    <div id="resumenTotal" style="text-align: right; margin: 20px; font-size: 24px; font-weight: bold;">
-        Total: $<span id="totalPrecio">0</span>
-    </div>
-
-    <!-- JS -->
-    <script>
-        window.onload = function () {
-            cargarCarrito();
-            actualizarNumero();
-            mostrarCarrito();
-
-            // OCULTAR ÍCONO
-            let icono = document.querySelector(".carrito-icono");
-            if (icono) icono.style.display = "none";
-        };
-
-        function mostrarCarrito() {
-            let lista = document.getElementById("listaProductos");
-            let vacio = document.getElementById("carritoVacio");
-            let totalSpan = document.getElementById("totalPrecio");
-            let botonVaciar = document.getElementById("botonVaciar");
-
-            lista.innerHTML = "";
-            let total = 0;
-
-            if (carrito.length == 0) {
-                vacio.style.display = "block";
-                document.getElementById("resumenTotal").style.display = "none";
-                botonVaciar.style.display = "none";
-                return;
-            }
-
-            vacio.style.display = "none";
-            document.getElementById("resumenTotal").style.display = "block";
-            botonVaciar.style.display = "block";
-
-            for (let i = 0; i < carrito.length; i++) {
-                let p = carrito[i];
-                let subtotal = p.precio * p.cantidad;
-                total += subtotal;
-
-                let fila = document.createElement("div");
-                fila.innerHTML = `
-                    <hr>
-                    <img src="${p.imgUrl}" width="70">
-                    <strong>${p.nombre}</strong><br>
-                    Precio: $${p.precio} | Cantidad: 
-                    <button onclick="cambiarCantidad(${i}, -1)">-</button>
-                    <strong>${p.cantidad}</strong>
-                    <button onclick="cambiarCantidad(${i}, 1)">+</button>
-                    | Subtotal: $${subtotal}<br>
-                    <button onclick="eliminarDelCarrito(${i})">Eliminar</button>
-                `;
-                lista.appendChild(fila);
-            }
-
-            totalSpan.innerText = total;
-        }
-
-        function cambiarCantidad(i, cambio) {
-            if (carrito[i].cantidad + cambio > 0) {
-                carrito[i].cantidad += cambio;
-            } else {
-                eliminarDelCarrito(i);
-                return;
-            }
-            guardarCarrito();
-            actualizarNumero();
-            mostrarCarrito();
-        }
-
-        function eliminarDelCarrito(i) {
-            carrito.splice(i, 1);
-            guardarCarrito();
-            actualizarNumero();
-            mostrarCarrito();
-        }
-
-        function vaciarCarrito() {
-            if (confirm("¿Seguro que quieres vaciar el carrito?")) {
-                carrito = [];
-                guardarCarrito();
-                actualizarNumero();
-                mostrarCarrito();
-            }
-        }
-    </script>
-
+   
 </asp:Content>
+
