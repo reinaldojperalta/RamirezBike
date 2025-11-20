@@ -3,7 +3,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentBody1" runat="server">
     <button type="button" 
-        onclick="añadirAlCarrito(<%= producto.idProducto %>, '<%= producto.nombre %>', <%= producto.precio %>, '<%= producto.imgUrl %>')"
+        onclick="añadirAlCarrito(<%= producto.idProducto %>)"
         class="btn-agregar-carrito">
         AÑADIR AL CARRITO
     </button>

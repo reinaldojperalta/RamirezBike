@@ -13,7 +13,9 @@ namespace AppRamirezBike.Datos
 
         public ClConexion()
         {
+
             objConexion = new SqlConnection("Data Source=DESKTOP-E7O1G9I\\SQLEXPRESS;Initial Catalog=dbPruebaProyecto;Integrated Security=True;Encrypt=True;TrustServerCertificate=True");
+
         }
         public SqlConnection MtAbrirConexion()
         {

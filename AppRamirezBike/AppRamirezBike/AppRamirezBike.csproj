@@ -64,6 +64,7 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\lib\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+
     <Reference Include="MySql.Data, Version=9.5.0.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.9.5.0\lib\net462\MySql.Data.dll</HintPath>
     </Reference>
@@ -91,6 +92,11 @@
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Transactions" />
+
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -111,15 +117,18 @@
       <HintPath>..\packages\ZstdSharp.Port.0.8.6\lib\net462\ZstdSharp.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <!-- COMIENZO DEL GRUPO DE REFERENCIAS Y CONTENIDO FUSIONADO -->
   <ItemGroup>
-    <!-- Referencia duplicada eliminada, se mantiene la de NuGet -->
-    <Content Include="obj\Debug\AppRamirezBike.csproj.AssemblyReference.cache" />
-    <Content Include="obj\Debug\AppRamirezBike.csproj.FileListAbsolute.txt" />
-    <Content Include="obj\Debug\AppRamirezBike.dll" />
-    <Content Include="obj\Debug\AppRamirezBike.pdb" />
-    <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
-    <!-- Archivos de Contenido (Content) de ambas ramas: steven y main -->
+    <None Include="packages.config" />
+    <None Include="Scripts\jquery-3.7.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.7.1.js" />
+    <Content Include="Scripts\jquery-3.7.1.min.js" />
+    <Content Include="Scripts\jquery-3.7.1.slim.js" />
+    <Content Include="Scripts\jquery-3.7.1.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Vista\carrito.js" />
     <Content Include="Vista\Catalogo.aspx" />
     <Content Include="Vista\Detalle.aspx" />
@@ -127,11 +136,11 @@
     <Content Include="Vista\img\bici1.jpeg" />
     <Content Include="Vista\login.aspx" />
     <Content Include="Vista\RegistroUsuario.aspx" />
+    <Content Include="Vista\Carrito.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
-  <!-- COMIENZO DEL GRUPO DE COMPILACIÓN FUSIONADO -->
-  <ItemGroup>
-    <Compile Include="Datos\ClCategoriaDatos.cs" />
+
+  <ItemGroup> <Compile Include="Datos\ClCategoriaDatos.cs" />
     <Compile Include="Datos\ClConexion.cs" />
     <Compile Include="Datos\ClProductoDatos.cs" />
     <Compile Include="Datos\ClRolDatos.cs" />
@@ -154,7 +163,7 @@
     <Compile Include="Vista\Catalogo.aspx.designer.cs">
       <DependentUpon>Catalogo.aspx</DependentUpon>
     </Compile>
-    <!-- Code-Behind de ambas ramas: steven (Detalle) y main (Global) -->
+
     <Compile Include="Vista\Detalle.aspx.cs">
       <DependentUpon>Detalle.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -193,13 +202,21 @@
     <Compile Include="Vista\RegistroUsuario.aspx.designer.cs">
       <DependentUpon>RegistroUsuario.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Vista\Carrito.aspx.cs">
+      <DependentUpon>Carrito.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vista\Carrito.aspx.designer.cs">
+      <DependentUpon>Carrito.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="obj\Debug\AppRamir.38191971.Up2Date" />
     <Content Include="obj\Debug\AppRamirezBike.csproj.CoreCompileInputs.cache" />
-    <None Include="packages.config" />
     <Content Include="Vista\MasterPag1.Master" />
     <Content Include="Vista\loginMaster.Master" />
+    <Content Include="Scripts\jquery-3.7.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.7.1.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -243,11 +260,4 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets'))" />
   </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.  
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
-</Project>
+  </Project>
