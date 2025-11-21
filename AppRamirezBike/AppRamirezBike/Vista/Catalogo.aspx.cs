@@ -19,6 +19,7 @@ namespace AppRamirezBike.Vista
 			if (!IsPostBack)
 			{
                 MtCargarCategorias();
+
                 int paginaActual = 1;
                 if (Request.QueryString["pagina"] != null && int.TryParse(Request.QueryString["pagina"], out int p))
                 {
@@ -106,7 +107,7 @@ namespace AppRamirezBike.Vista
             ddlCategorias.DataValueField = "idCategoria";
             ddlCategorias.DataBind();
 
-            ddlCategorias.Items.Insert(0, new ListItem("Seleccione Una Categoria", ""));
+            ddlCategorias.Items.Insert(0, new ListItem("Seleccione Una Categoria", "0"));
         }
 
         protected void ddlCategorias_SelectedIndexChanged(object sender, EventArgs e)
@@ -125,6 +126,8 @@ namespace AppRamirezBike.Vista
                 // Usar Server.UrlEncode para manejar espacios y caracteres especiales.
                 url += "&busqueda=" + Server.UrlEncode(busquedaActual);
             }
+
+            Console.WriteLine(url);
 
             Response.Redirect(url);
 
@@ -149,11 +152,10 @@ namespace AppRamirezBike.Vista
 
                 // 2. Obtener el filtro de Búsqueda
                 string busquedaActual = MtFiltroBusqueda;
-                string busquedaQuery = !string.IsNullOrEmpty(busquedaActual)
-                                        ? $"&busqueda={Server.UrlEncode(busquedaActual)}"
-                                        : string.Empty;
+                string busquedaQuery = !string.IsNullOrEmpty(busquedaActual) ? $"&busqueda={Server.UrlEncode(busquedaActual)}": string.Empty;
 
                 // Retorna solo los parámetros, listos para ser usados después de 'pagina=X'
+
                 return categoriaQuery + busquedaQuery;
             }
         }

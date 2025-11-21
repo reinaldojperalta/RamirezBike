@@ -33,7 +33,7 @@
                             <a class="nav-link" href="javascript:void(0)">Link</a>
                         </li>
                     </ul>
-                    <form class="d-flex">
+                    <div class="d-flex">
 
                         <asp:TextBox id="txtBusqueda" runat="server" Cssclass="form-control me-2" placeholder="Search"/>
                         <asp:Button id="btnBuscar" runat="server" CssClass="btn btn-primary" Text="Search" OnClick="btnBuscar_Click"  />
@@ -46,7 +46,7 @@
                         <div class="carrito-icono" style="position: fixed; top: 20px; right: 20px; z-index: 9999;">
                         </div>
 
-                    </form>
+                    </>
                 </div>
             </div>
         </nav>
