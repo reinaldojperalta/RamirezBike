@@ -2,16 +2,17 @@
 
 function cargarCarrito() {
     let guardado = localStorage.getItem("carrito_ramirez");
-    if (guardado) {
+    if (guardado && guardado !== "null" && guardado !== "[]") {
         carrito = JSON.parse(guardado);
     }
 }
+
+// CARGAR AL INICIO (solo una vez)
 cargarCarrito();
 
 function guardarCarrito() {
     localStorage.setItem("carrito_ramirez", JSON.stringify(carrito));
 }
-
 
 function añadirAlCarrito(id) {
     for (let i = 0; i < carrito.length; i++) {
@@ -19,16 +20,11 @@ function añadirAlCarrito(id) {
             carrito[i].cantidad++;
             guardarCarrito();
             actualizarNumero();
-            alert(`¡Añadido otra vez! `);
+            alert("¡Añadido otra vez!");
             return;
         }
     }
-
-    carrito.push({
-        idProducto: id,
-        cantidad: 1
-    });
-
+    carrito.push({ idProducto: id, cantidad: 1 });
     guardarCarrito();
     actualizarNumero();
     alert("¡Producto añadido al carrito!");
@@ -42,116 +38,92 @@ function actualizarNumero() {
     let contador = document.getElementById("cart-count");
     if (contador) {
         contador.innerText = total;
-        if (total > 0) {
-            contador.style.display = "block";
-        } else {
-            contador.style.display = "none";
-        }
+        contador.style.display = total > 0 ? "block" : "none";
     }
 }
+
 function irAlCarrito() {
     let datos = localStorage.getItem("carrito_ramirez");
-
-    // Si está vacío o no existe
     if (!datos || datos === "[]" || datos === "null" || datos === "") {
         alert("Tu carrito está vacío");
         window.location.href = "Carrito.aspx";
         return;
     }
-
-    // Convertimos el array a formato: id-cantidad,id-cantidad
-    let carrito = JSON.parse(datos);
+    let temp = JSON.parse(datos);
     let cadena = "";
-
-    for (let i = 0; i < carrito.length; i++) {
-        if (i > 0) {
-            cadena += ",";
-        }
-
-        // 2. Construcción de la pareja ID-CANTIDAD
-        cadena += carrito[i].idProducto + "-" + carrito[i].cantidad;
+    for (let i = 0; i < temp.length; i++) {
+        if (i > 0) cadena += ",";
+        cadena += temp[i].idProducto + "-" + temp[i].cantidad;
     }
-
-    // Redirigimos con los datos en la URL
     window.location.href = "Carrito.aspx?datos=" + cadena;
 }
 
-// 1. PRIMERO: función para revisar si está vacío o no
 function revisarCarrito() {
+    // Solo ejecutamos si estamos en Carrito.aspx
+    let divVacio = document.getElementById("divVacio");
+    let divConProductos = document.getElementById("divConProductos");
+    if (!divVacio && !divConProductos) return; // Salimos si no existen
+
     let guardado = localStorage.getItem("carrito_ramirez");
-    if (!guardado || guardado === "[]" || guardado === "null") {
-        document.getElementById("divVacio").style.display = "block";
-        document.getElementById("divConProductos").style.display = "none";
+    if (!guardado || guardado === "[]" || guardado === "null" || guardado === "") {
+        divVacio.style.display = "block";
+        divConProductos.style.display = "none";
     } else {
-        document.getElementById("divVacio").style.display = "none";
-        document.getElementById("divConProductos").style.display = "block";
+        divVacio.style.display = "none";
+        divConProductos.style.display = "block";
     }
 }
 
-// 2. SEGUNDO: función para vaciar (aquí sí puede llamar a revisarCarrito)
 function vaciarCarrito() {
     if (confirm("¿Estás seguro de que quieres vaciar todo el carrito?")) {
-        // 1. Borramos del localStorage
         localStorage.removeItem("carrito_ramirez");
-
-        // 2. Redirigimos a Carrito.aspx limpio
         window.location.href = "Carrito.aspx";
     }
 }
+
 function modificarCantidad(idProducto, cambio) {
     let datos = localStorage.getItem("carrito_ramirez");
+    if (!datos || datos === "[]" || datos === "null") return;
 
-    if (!datos || datos === "[]" || datos === "null") {
-        return;
-    }
-
-    let carrito = JSON.parse(datos);
-    let encontrado = false;
-
-    // Buscamos el producto y modificamos la cantidad
-    for (let i = 0; i < carrito.length; i++) {
-        if (carrito[i].idProducto == idProducto) {
-            carrito[i].cantidad += cambio;
-
-            // No permitimos cantidad menor a 1
-            if (carrito[i].cantidad < 1) {
+    let temp = JSON.parse(datos);
+    for (let i = 0; i < temp.length; i++) {
+        if (temp[i].idProducto == idProducto) {
+            temp[i].cantidad += cambio;
+            if (temp[i].cantidad < 1) {
                 if (confirm("¿Quieres eliminar este producto del carrito?")) {
-                    carrito.splice(i, 1); // lo quitamos
+                    temp.splice(i, 1);
                 } else {
-                    carrito[i].cantidad = 1; // lo dejamos en 1
+                    temp[i].cantidad = 1;
                 }
             }
-            encontrado = true;
             break;
         }
     }
+    localStorage.setItem("carrito_ramirez", JSON.stringify(temp));
 
-    // Si no lo encontró (raro, pero por seguridad)
-    if (!encontrado) {
-        return;
-    }
-
-    // Guardamos de nuevo
-    localStorage.setItem("carrito_ramirez", JSON.stringify(carrito));
-
-    // Reconstruimos la URL con el formato id-cantidad,id-cantidad
     let nuevaCadena = "";
-    for (let i = 0; i < carrito.length; i++) {
+    for (let i = 0; i < temp.length; i++) {
         if (i > 0) nuevaCadena += ",";
-        nuevaCadena += carrito[i].idProducto + "-" + carrito[i].cantidad;
+        nuevaCadena += temp[i].idProducto + "-" + temp[i].cantidad;
     }
-
-    // Redirigimos con los nuevos datos
-    if (nuevaCadena === "") {
-        window.location.href = "Carrito.aspx";
-    } else {
-        window.location.href = "Carrito.aspx?datos=" + nuevaCadena;
-    }
+    window.location.href = nuevaCadena === "" ? "Carrito.aspx" : "Carrito.aspx?datos=" + nuevaCadena;
 }
 
+// === ESTO ES LO QUE FALTABA: EJECUTAR AL CARGAR LA PÁGINA ===
+document.addEventListener("DOMContentLoaded", function () {
+    actualizarNumero();
+    revisarCarrito();
+});
 
-// 3. AL FINAL: ejecutamos al cargar la página
-revisarCarrito();
+// Actualiza si cambian desde otra pestaña
+window.addEventListener("storage", function () {
+    cargarCarrito();
+    actualizarNumero();
+    revisarCarrito();
+});
 
-
-actualizarNumero();
+// Por si acaso (infalible)
+setInterval(function () {
+    actualizarNumero();
+    revisarCarrito();
+}, 1000);

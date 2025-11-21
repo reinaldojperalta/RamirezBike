@@ -20,14 +20,13 @@
    
       <div class="carrito-icono" style="position:fixed; top:20px; right:20px; z-index:9999;">
   <a href="javascript:irAlCarrito()">
-    <img src="Vista/img/carrito.png" width="70" height="70" style="..." />
+    <img src="Vista/img/carrito.png" width="70" height="70"  />
     <span id="cart-count">1</span>
 </a>
 </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 
-    </form>
-
-    <script src="carrito.js"></script>
+           <script src="carrito.js"></script>
+    </form> 
 </body>
 </html>
