@@ -43,17 +43,32 @@ namespace AppRamirezBike.Datos
             return objProductosList;
         }
 
-        public List<Producto> MtListarProductosPaginados(int salto, int tamañoPagina, out int totalRegistros, int idCategoria)
+        public List<Producto> MtListarProductosPaginados(int salto, int tamañoPagina, out int totalRegistros, int idCategoria, string textoBusqueda)
         {
             List<Producto> objProductosList = new List<Producto>();
             ClConexion objConexion = new ClConexion();
             SqlConnection conex = null;
-            string clausulaWhere = "";
 
+            // 1. Construcción Dinámica de la Cláusula WHERE y Parámetros
+            List<string> condiciones = new List<string>();
+
+            // Condición para filtrar por Categoría
             if (idCategoria > 0)
             {
-                clausulaWhere = " WHERE IdCategoria = " + idCategoria.ToString();
+                condiciones.Add("IdCategoria = @IdCategoria");
             }
+            // Condición para buscar por Nombre o Descripción
+            // Se usa TRIM para manejar espacios en blanco al inicio/final del texto de búsqueda
+            if (!string.IsNullOrEmpty(textoBusqueda))
+            {
+                // Se agrupan las condiciones de búsqueda por texto con OR
+                condiciones.Add("(nombre LIKE @TextoBusqueda OR descripcion LIKE @TextoBusqueda)");
+            }
+
+            // Unir las condiciones con ' AND ' y añadir ' WHERE ' al inicio si hay condiciones.
+            string clausulaWhere = condiciones.Count > 0
+                ? " WHERE " + string.Join(" AND ", condiciones)
+                : "";
 
             // 1. Consulta para obtener el TOTAL de registros (necesario para la paginación)
             string consultaTotal = "SELECT COUNT(idProducto) FROM dbo.producto" + clausulaWhere;
@@ -61,23 +76,46 @@ namespace AppRamirezBike.Datos
             // 2. Consulta para obtener los registros de la página actual
             // Es crucial que haya un ORDER BY para que OFFSET y FETCH funcionen.
             string consultaPaginada = $@"
-        SELECT idProducto, nombre, descripcion, precio, imgUrl, stock, estado, CreacionFecha, ModificacionFecha, idCategoria
-        FROM dbo.producto
-        {clausulaWhere}  
-        ORDER BY idProducto
-        OFFSET @Salto ROWS
-        FETCH NEXT @TamañoPagina ROWS ONLY";
+                SELECT idProducto, nombre, descripcion, precio, imgUrl, stock, estado, CreacionFecha, ModificacionFecha, idCategoria
+                FROM dbo.producto
+                {clausulaWhere}  
+                ORDER BY idProducto
+                OFFSET @Salto ROWS
+                FETCH NEXT @TamañoPagina ROWS ONLY";
 
             conex = objConexion.MtAbrirConexion();
 
             // Obtener el Total de Registros
             SqlCommand cmdTotal = new SqlCommand(consultaTotal, conex);
+
+            // Asignar parámetros al comando de TOTAL (solo los que se usaron en la clausula WHERE)
+            if (idCategoria > 0)
+            {
+                cmdTotal.Parameters.AddWithValue("@IdCategoria", idCategoria);
+            }
+            if (!string.IsNullOrEmpty(textoBusqueda))
+            {
+                // Se añade % para que el LIKE funcione (ej: %samsung%)
+                cmdTotal.Parameters.AddWithValue("@TextoBusqueda", "%" + textoBusqueda.Trim() + "%");
+            }
+
             totalRegistros = (int)cmdTotal.ExecuteScalar();
 
             // Obtener los Productos Paginados
             SqlCommand cmd = new SqlCommand(consultaPaginada, conex);
             cmd.Parameters.AddWithValue("@Salto", salto);
             cmd.Parameters.AddWithValue("@TamañoPagina", tamañoPagina);
+
+            // Asignar parámetros de filtro/búsqueda (los mismos que para cmdTotal)
+            if (idCategoria > 0)
+            {
+                cmd.Parameters.AddWithValue("@IdCategoria", idCategoria);
+            }
+            if (!string.IsNullOrEmpty(textoBusqueda))
+            {
+                // Se añade % para que el LIKE funcione (ej: %samsung%)
+                cmd.Parameters.AddWithValue("@TextoBusqueda", "%" + textoBusqueda.Trim() + "%");
+            }
 
             SqlDataReader reader = cmd.ExecuteReader();
 
