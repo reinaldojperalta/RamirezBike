@@ -19,6 +19,7 @@ namespace AppRamirezBike.Vista
 			if (!IsPostBack)
 			{
                 MtCargarCategorias();
+
                 int paginaActual = 1;
                 if (Request.QueryString["pagina"] != null && int.TryParse(Request.QueryString["pagina"], out int p))
                 {
@@ -41,7 +42,8 @@ namespace AppRamirezBike.Vista
                 salto,
                 tamañoPagina,
                 out TotalRegistros,
-                MtFiltroCategoria
+                MtFiltroCategoria,
+                MtFiltroBusqueda
             );
 
             // 3. Llenar el Repeater
@@ -57,7 +59,6 @@ namespace AppRamirezBike.Vista
             int totalPaginas = (int)Math.Ceiling((double)TotalRegistros / tamañoPagina);
 
             // Crea un Repeater de Paginación invisible. 
-            // ASUMO que tienes un Repeater llamado rptPaginacion en tu HTML (lo crearemos después)
 
             List<int> paginas = new List<int>();
             for (int i = 1; i <= totalPaginas; i++)
@@ -68,9 +69,11 @@ namespace AppRamirezBike.Vista
             // Aquí puedes usar un control como un Repeater o un PlaceHolder para dibujar los botones.
             // Por simplicidad y consistencia, sugiero un segundo Repeater.
 
-            // *** NOTA: ASUME que tienes un Repeater con ID="rptPaginacion" en tu ASPX ***
-           
-             rptPaginacion.DataSource = paginas;
+            string busquedaActual = MtFiltroBusqueda;
+            string categoriaActual = MtFiltroCategoria > 0 ? $"&categoria={MtFiltroCategoria}" : string.Empty;
+            string busquedaQuery = !string.IsNullOrEmpty(busquedaActual) ? $"&busqueda={Server.UrlEncode(busquedaActual)}" : string.Empty;
+
+            rptPaginacion.DataSource = paginas;
              rptPaginacion.DataBind();
         }
         public string EsPaginaActiva(string numeroPagina)
@@ -86,6 +89,7 @@ namespace AppRamirezBike.Vista
         {
             get
             {
+
                 if (Request.QueryString["categoria"] != null && int.TryParse(Request.QueryString["categoria"], out int idCat))
                 {
                     return idCat;
@@ -103,12 +107,13 @@ namespace AppRamirezBike.Vista
             ddlCategorias.DataValueField = "idCategoria";
             ddlCategorias.DataBind();
 
-            ddlCategorias.Items.Insert(0, new ListItem("Seleccione Una Categoria", ""));
+            ddlCategorias.Items.Insert(0, new ListItem("Seleccione Una Categoria", "0"));
         }
 
         protected void ddlCategorias_SelectedIndexChanged(object sender, EventArgs e)
         {
             string categoriaSelect = ddlCategorias.SelectedValue;
+            string busquedaActual = MtFiltroBusqueda;
             string url = "/Vista/Catalogo.aspx?pagina=1";
 
             if (!string.IsNullOrEmpty(categoriaSelect) && categoriaSelect!= "0")
@@ -116,8 +121,43 @@ namespace AppRamirezBike.Vista
                 url += "&categoria=" + categoriaSelect;
             }
 
+            if (!string.IsNullOrEmpty(busquedaActual))
+            {
+                // Usar Server.UrlEncode para manejar espacios y caracteres especiales.
+                url += "&busqueda=" + Server.UrlEncode(busquedaActual);
+            }
+
+            Console.WriteLine(url);
+
             Response.Redirect(url);
 
+        }
+
+        public string MtFiltroBusqueda
+        {
+            get
+            {
+                string texto = Request.QueryString["busqueda"];
+                return string.IsNullOrEmpty(texto) ? string.Empty : texto.Trim();
+            }
+
+        }
+
+        public string BaseUrlFiltros
+        {
+            get
+            {
+                // 1. Obtener el filtro de Categoría
+                string categoriaQuery = MtFiltroCategoria > 0 ? $"&categoria={MtFiltroCategoria}" : string.Empty;
+
+                // 2. Obtener el filtro de Búsqueda
+                string busquedaActual = MtFiltroBusqueda;
+                string busquedaQuery = !string.IsNullOrEmpty(busquedaActual) ? $"&busqueda={Server.UrlEncode(busquedaActual)}": string.Empty;
+
+                // Retorna solo los parámetros, listos para ser usados después de 'pagina=X'
+
+                return categoriaQuery + busquedaQuery;
+            }
         }
     }
 }

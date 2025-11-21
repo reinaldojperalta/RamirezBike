@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Vista/MasterPag1.Master" AutoEventWireup="true" CodeBehind="Catalogo.aspx.cs" Inherits="AppRamirezBike.Vista.Catalogo" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Vista/MasterPag1.Master" AutoEventWireup="true" CodeBehind="Catalogo.aspx.cs" Inherits="AppRamirezBike.Vista.Catalogo" EnableViewState="true" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -41,9 +41,7 @@
                     <asp:Repeater ID="rptPaginacion" runat="server">
                         <ItemTemplate>
                             <li class="page-item <%# EsPaginaActiva(Container.DataItem.ToString()) %>">
-                                <a class="page-link" href="Catalogo.aspx?pagina=<%# Container.DataItem %>">
-                                    <%# Container.DataItem %>
-                    </a>
+                               <a class="page-link" href="Catalogo.aspx?pagina=<%# Container.DataItem %><%# BaseUrlFiltros %>"><%# Container.DataItem %></a>
                             </li>
                         </ItemTemplate>
                     </asp:Repeater>

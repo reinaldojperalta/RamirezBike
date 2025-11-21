@@ -11,7 +11,7 @@ namespace AppRamirezBike.Logica
     {
 
 
-            public List<Producto> MtDatosVistaProducto(int salto, int tamañoPagina, out int totalRegistros, int idCategoria)
+            public List<Producto> MtDatosVistaProducto(int salto, int tamañoPagina, out int totalRegistros, int idCategoria,string busqueda)
             {
                 ClProductoDatos objProductoDatos = new ClProductoDatos();
 
@@ -20,7 +20,8 @@ namespace AppRamirezBike.Logica
                     salto,
                     tamañoPagina,
                     out totalRegistros,
-                    idCategoria
+                    idCategoria,
+                    busqueda
                 );
 
             return productosPaginados;
