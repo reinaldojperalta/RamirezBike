@@ -64,7 +64,6 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\lib\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-
     <Reference Include="MySql.Data, Version=9.5.0.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.9.5.0\lib\net462\MySql.Data.dll</HintPath>
     </Reference>
@@ -92,11 +91,9 @@
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Transactions" />
-
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -135,25 +132,31 @@
     <Content Include="Vista\Global.asax" />
     <Content Include="Vista\img\bici1.jpeg" />
     <Content Include="Vista\login.aspx" />
+    <Content Include="Vista\RegistrarVenta.aspx" />
     <Content Include="Vista\RegistroUsuario.aspx" />
     <Content Include="Vista\Carrito.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
-
-  <ItemGroup> <Compile Include="Datos\ClCategoriaDatos.cs" />
+  <ItemGroup>
+    <Compile Include="Datos\ClCategoriaDatos.cs" />
     <Compile Include="Datos\ClConexion.cs" />
     <Compile Include="Datos\ClProductoDatos.cs" />
     <Compile Include="Datos\ClRolDatos.cs" />
     <Compile Include="Datos\ClUsuarioDatos.cs" />
+    <Compile Include="Datos\ClVentaDatos.cs" />
     <Compile Include="Logica\ClCategoriaLogica.cs" />
     <Compile Include="Datos\HasheoClave.cs" />
     <Compile Include="Logica\ClProductoLogica.cs" />
     <Compile Include="Logica\ClRolLogica.cs" />
     <Compile Include="Logica\ClUsuarioLogica.cs" />
+    <Compile Include="Logica\ClVentaLogica.cs" />
     <Compile Include="Modelo\Categoria.cs" />
+    <Compile Include="Modelo\Cliente.cs" />
+    <Compile Include="Modelo\DetalleVenta.cs" />
     <Compile Include="Modelo\Rol.cs" />
     <Compile Include="Modelo\Usuario.cs" />
     <Compile Include="Modelo\Producto.cs" />
+    <Compile Include="Modelo\Venta.cs" />
     <Compile Include="obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Vista\Catalogo.aspx.cs">
@@ -163,7 +166,6 @@
     <Compile Include="Vista\Catalogo.aspx.designer.cs">
       <DependentUpon>Catalogo.aspx</DependentUpon>
     </Compile>
-
     <Compile Include="Vista\Detalle.aspx.cs">
       <DependentUpon>Detalle.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -194,6 +196,13 @@
     </Compile>
     <Compile Include="Vista\MasterPag1.Master.designer.cs">
       <DependentUpon>MasterPag1.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\RegistrarVenta.aspx.cs">
+      <DependentUpon>RegistrarVenta.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vista\RegistrarVenta.aspx.designer.cs">
+      <DependentUpon>RegistrarVenta.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vista\RegistroUsuario.aspx.cs">
       <DependentUpon>RegistroUsuario.aspx</DependentUpon>
@@ -260,4 +269,4 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets'))" />
   </Target>
-  </Project>
+</Project>

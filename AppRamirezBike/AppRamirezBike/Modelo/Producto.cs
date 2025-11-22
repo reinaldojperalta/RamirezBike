@@ -11,6 +11,7 @@ namespace AppRamirezBike.Modelo
 		public string nombre { get; set; }
 		public string descripcion { get; set; }
 		public int precio { get; set; }
+        public int precioProovedor { get; set; }
 		public string imgUrl { get; set; }
 		public int stock { get; set; }
 		public bool estado { get; set; }

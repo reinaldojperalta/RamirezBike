@@ -10,20 +10,17 @@ namespace AppRamirezBike.Logica
     public class ClProductoLogica
     {
 
-
-            public List<Producto> MtDatosVistaProducto(int salto, int tamañoPagina, out int totalRegistros, int idCategoria,string busqueda)
-            {
-                ClProductoDatos objProductoDatos = new ClProductoDatos();
-
-              
-                List<Producto> productosPaginados = objProductoDatos.MtListarProductosPaginados(
-                    salto,
-                    tamañoPagina,
-                    out totalRegistros,
-                    idCategoria,
-                    busqueda
-                );
-
+        private ClProductoDatos objProductoDatos = new ClProductoDatos();
+        public List<Producto> MtDatosVistaProducto(int salto, int tamañoPagina, out int totalRegistros, int idCategoria, string busqueda)
+        {
+            
+            List<Producto> productosPaginados = objProductoDatos.MtListarProductosPaginados(
+                salto,
+                tamañoPagina,
+                out totalRegistros,
+                idCategoria,
+                busqueda
+            );
             return productosPaginados;
         }
 
@@ -39,7 +36,7 @@ namespace AppRamirezBike.Logica
                 producto = new Producto();
                 producto.idProducto = id;
                 producto.nombre = "Producto de Prueba";
-                producto.precio = 999999;
+                producto.precioProovedor = 999999;
                 producto.imgUrl = "img/default.jpg";
                 producto.descripcion = "Este producto es de prueba";
                 producto.stock = 99;
@@ -49,6 +46,10 @@ namespace AppRamirezBike.Logica
 
             return producto;
         }
-
+        public List<Producto> MtObtenerProductos()
+        {
+            ClProductoDatos datos = new ClProductoDatos();
+            return datos.MtListarProductos();
+        }
     }
 }

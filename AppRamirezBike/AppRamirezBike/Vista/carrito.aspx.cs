@@ -45,14 +45,14 @@ namespace AppRamirezBike.Vista
                 var producto = logica.ObtenerProductoPorId(id);
                 if (producto != null)
                 {
-                    double subtotal = producto.precio * cantidad;
+                    double subtotal = producto.precioProovedor * cantidad;
                     totalGeneral += subtotal;
 
                     listaCarrito.Add(new ItemCarrito
                     {
                         IdProducto = producto.idProducto,
                         Nombre = producto.nombre,
-                        Precio = producto.precio,
+                        Precio = producto.precioProovedor,
                         Cantidad = cantidad,
                         ImgUrl = producto.imgUrl,
                         Subtotal = subtotal
