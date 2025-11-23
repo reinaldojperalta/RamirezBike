@@ -14,7 +14,7 @@ namespace AppRamirezBike.Datos
         public ClConexion()
         {
 
-            objConexion = new SqlConnection("Data Source=SANTIAGO;Initial Catalog=dbRamirezBike;Integrated Security=True;");
+            objConexion = new SqlConnection("Data Source=Santiago;Initial Catalog=dbRamirezBike;Integrated Security=True;");
 
         }
         public SqlConnection MtAbrirConexion()

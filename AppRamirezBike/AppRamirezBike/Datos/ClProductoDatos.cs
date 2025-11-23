@@ -1,6 +1,7 @@
 ﻿using AppRamirezBike.Modelo;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -9,9 +10,10 @@ namespace AppRamirezBike.Datos
 {
     public class ClProductoDatos
     {
-        
+
         public List<Producto> MtListarProductos()
         {
+
             List<Producto> objProductosList = new List<Producto>();
             ClConexion objConexion = new ClConexion();
             SqlConnection conex = null;
@@ -46,7 +48,7 @@ namespace AppRamirezBike.Datos
             return objProductosList;
         }
 
-        
+
         public List<Producto> MtListarProductosPaginados(int salto, int tamañoPagina, out int totalRegistros, int idCategoria, string textoBusqueda)
         {
             List<Producto> objProductosList = new List<Producto>();
@@ -114,7 +116,7 @@ namespace AppRamirezBike.Datos
             return objProductosList;
         }
 
-        
+
         public Producto MtObtenerPorId(int id)
         {
             ClConexion conexion = new ClConexion();
@@ -160,7 +162,7 @@ namespace AppRamirezBike.Datos
         {
             ClConexion objConexion = new ClConexion();
             SqlConnection conex = null;
-            int stock = -1; // Valor predeterminado para indicar error o producto no encontrado
+            int stock = -1; 
 
             try
             {
@@ -174,14 +176,12 @@ namespace AppRamirezBike.Datos
 
                     if (resultado != null && resultado != DBNull.Value)
                     {
-                        // Maneja el posible valor NULL (que corregimos antes)
                         stock = Convert.ToInt32(resultado);
                     }
                 }
             }
             catch (Exception ex)
             {
-                // Manejo de errores de conexión o SQL
                 Console.WriteLine("Error al obtener stock: " + ex.Message);
                 stock = -1;
             }
@@ -190,6 +190,129 @@ namespace AppRamirezBike.Datos
                 objConexion.MtCerrarConexion();
             }
             return stock;
+        }
+        public bool MtActualizarProducto(Producto objProducto, out string mensajeError)
+        {
+            mensajeError = string.Empty;
+            bool resultado = false;
+            ClConexion objConexion = new ClConexion();
+            SqlConnection conex = null;
+
+            string consultaUpdate = @"
+                UPDATE 
+                    Producto
+                SET 
+                    nombre = @nombre,
+                    descripcion = @descripcion,
+                    precio = @precio,
+                    precioProovedor = @precioProovedor,
+                    stock = @stock,
+                    imgUrl = @imgUrl,
+                    idCategoria = @idCategoria,
+                    ModificacionFecha = GETDATE()
+                WHERE 
+                    idProducto = @idProducto";
+
+            try
+            {
+                conex = objConexion.MtAbrirConexion();
+                using (SqlCommand cmd = new SqlCommand(consultaUpdate, conex))
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    cmd.Parameters.AddWithValue("@idProducto", objProducto.idProducto);
+                    cmd.Parameters.AddWithValue("@nombre", objProducto.nombre);
+                    cmd.Parameters.AddWithValue("@descripcion", objProducto.descripcion);
+                    cmd.Parameters.AddWithValue("@precio", objProducto.precio);
+                    cmd.Parameters.AddWithValue("@precioProovedor", objProducto.precioProovedor);
+                    cmd.Parameters.AddWithValue("@stock", objProducto.stock);
+                    cmd.Parameters.AddWithValue("@imgUrl", objProducto.imgUrl);
+                    cmd.Parameters.AddWithValue("@idCategoria", objProducto.idCategoria);
+
+                    int filasAfectadas = cmd.ExecuteNonQuery();
+
+                    if (filasAfectadas > 0)
+                    {
+                        resultado = true;
+                    }
+                    else
+                    {
+                        mensajeError = "No se encontró el producto para actualizar. Verifique el ID.";
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                mensajeError = "Error de Base de Datos al actualizar: " + ex.Message;
+                resultado = false;
+            }
+            catch (Exception ex)
+            {
+                mensajeError = "Error en la aplicación: " + ex.Message;
+                resultado = false;
+            }
+            finally
+            {
+                objConexion.MtCerrarConexion();
+            }
+            return resultado;
+        }
+
+        public bool MtRegistrarProducto(Producto objProducto, out string mensajeError)
+        {
+            mensajeError = string.Empty;
+            bool resultado = false;
+            ClConexion objConexion = new ClConexion();
+            SqlConnection conex = null;
+
+            string consultaInsert = @"
+                INSERT INTO Producto 
+                    (nombre, descripcion, precio, precioProovedor, stock, idCategoria, imgUrl, estado, CreacionFecha)
+                VALUES 
+                    (@nombre, @descripcion, @precio, @precioProovedor, @stock, @idCategoria, @imgUrl, 1, GETDATE())";
+
+            try
+            {
+                conex = objConexion.MtAbrirConexion();
+                using (SqlCommand cmd = new SqlCommand(consultaInsert, conex))
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    cmd.Parameters.AddWithValue("@nombre", objProducto.nombre);
+                    cmd.Parameters.AddWithValue("@descripcion", objProducto.descripcion);
+                    cmd.Parameters.AddWithValue("@precio", objProducto.precio);
+                    cmd.Parameters.AddWithValue("@precioProovedor", objProducto.precioProovedor);
+                    cmd.Parameters.AddWithValue("@stock", objProducto.stock);
+                    cmd.Parameters.AddWithValue("@idCategoria", objProducto.idCategoria);
+                    cmd.Parameters.AddWithValue("@imgUrl", objProducto.imgUrl);
+
+                    int filasAfectadas = cmd.ExecuteNonQuery();
+
+                    if (filasAfectadas > 0)
+                    {
+                        resultado = true;
+                    }
+                    else
+                    {
+                        mensajeError = "No se pudo registrar el producto. Intente de nuevo.";
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                mensajeError = "Error de Base de Datos al registrar: " + ex.Message;
+                resultado = false;
+            }
+            catch (Exception ex)
+            {
+                mensajeError = "Error en la aplicación: " + ex.Message;
+                resultado = false;
+            }
+            finally
+            {
+                objConexion.MtCerrarConexion();
+            }
+            return resultado;
         }
     }
 }
