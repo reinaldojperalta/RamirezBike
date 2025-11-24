@@ -28,13 +28,13 @@ namespace AppRamirezBike.Vista
 
             ClUsuarioLogica objLogica = new ClUsuarioLogica();
 
-            // Llamamos al nuevo método que hace todo el trabajo de BD y Cookies
-            int idRol = objLogica.MtIniciarSesionYCrearCookie(email, password);
+            // Llamamos al nuevo método que hace el login y cifra el rol
+            int idRol = objLogica.MtIniciarSesionYCifrarRol(email, password);
 
             // 1. Verificar si el login fue exitoso (idRol > 0)
             if (idRol > 0)
             {
-                // 2. Lógica de Redirección (más simple)
+                // 2. Lógica de Redirección 
                 if (idRol == 1 || idRol == 2) // Admin o Empleado
                 {
                     Response.Redirect("~/Vista/admin/dashboard.aspx");

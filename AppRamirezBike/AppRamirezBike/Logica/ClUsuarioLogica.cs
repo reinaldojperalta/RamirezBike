@@ -29,37 +29,44 @@ namespace AppRamirezBike.Logica
             bool confirmacion = oUsuarioD.MtVerificarLogin(correo,claveIngresada);
             return confirmacion;
         }
-        
-        public int MtIniciarSesionYCrearCookie(string correo, string clave)
+
+        public int MtIniciarSesionYCifrarRol(string correo, string clave)
         {
             ClUsuarioDatos objDatos = new ClUsuarioDatos();
 
-            // 1.  aca verificamos las credenciales osea que si llega un false ps entra
+            // 1. Verificar Credenciales
             if (!objDatos.MtVerificarLogin(correo, clave))
             {
-                return 0;
+                return 0; // Fallo de credenciales
             }
 
-            
+            // 2. Obtener Datos del Usuario
             Usuario objUsuario = objDatos.MtBuscarCorreo(correo);
+            int idRol = objUsuario.idRol;
 
-            // 3. Crear una instancia de cookie con la clave: DatosUsuario
-            HttpCookie cookie = new HttpCookie("DatosUsuario");
+            // 3. Crear el Ticket de Autenticación Personalizado (¡La única cookie!)
+            if (idRol > 0)
+            {
+                // 🔒 Cifrar el Rol y guardarlo como datos de usuario del Ticket
+                FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(
+                    1, // Versión del ticket
+                    correo, // Nombre de usuario (visible para User.Identity.Name)
+                    DateTime.Now, // Fecha de emisión
+                    DateTime.Now.AddDays(1), // Fecha de expiración (igual que tu cookie anterior)
+                    false, // No persistente (false), aunque la expiración de arriba manda
+                    idRol.ToString() // ⬅️ ¡Aquí guardamos el idRol en la sección de datos!
+                );
 
-            // le da un campo idrol a la cookie almasenada como texto
-            cookie.Values["idRol"] = objUsuario.idRol.ToString();
+                // 4. Cifrar el Ticket y crear la Cookie
+                string encTicket = FormsAuthentication.Encrypt(ticket);
+                HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
 
-            cookie.HttpOnly = true; // la proteccion literalmente dice solo para http
-            cookie.Expires = DateTime.Now.AddDays(1);
+                // 5. Establecer la cookie de autenticación (HttpOnly es por defecto)
+                HttpContext.Current.Response.Cookies.Add(cookie);
+            }
 
-            // esta cookie es nuestra tarjeta la que nos dira si el usuario logueado puede ingresar a dashboard
-            HttpContext.Current.Response.Cookies.Add(cookie);
-
-            // esta cookie es la que nos confirma que el usario esta logueado
-            FormsAuthentication.SetAuthCookie(correo, false);
-
-            // 4. Devolver el ID del Rol para la redirección
-            return objUsuario.idRol;
+            // 6. Devolver el ID del Rol para la redirección
+            return idRol;
         }
     }
 }

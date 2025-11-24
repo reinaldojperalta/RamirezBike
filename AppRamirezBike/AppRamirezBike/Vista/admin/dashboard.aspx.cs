@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -11,33 +12,39 @@ namespace AppRamirezBike.Vista.admin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            HttpCookie cookie = Request.Cookies["DatosUsuario"]; // Usamos el nombre de la cookie que creamos
-
-            if (cookie == null)
+            if (!User.Identity.IsAuthenticated)
             {
-                // Si la cookie no existe, forzamos la redirección al login
                 Response.Redirect("~/Vista/login.aspx");
                 return;
             }
 
-            // 2. Intentar leer el ID del Rol
+            // 2. Obtener el ticket de Forms Authentication
+            HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+            if (authCookie == null)
+            {
+                // Esto puede ocurrir si el usuario manipula la cookie, aunque la primera verificación fallaría.
+                FormsAuthentication.SignOut(); // Forzamos el cierre
+                Response.Redirect("~/Vista/login.aspx");
+                return;
+            }
+
+            FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value);
+
+            // 3. Obtener el idRol de los datos del ticket
             int idRol = 0;
-            string rolString = cookie.Values["idRol"];
-
-            // Validamos que el valor sea un número
-            if (!int.TryParse(rolString, out idRol))
+            if (!int.TryParse(ticket.UserData, out idRol))
             {
-                // Si el valor no es válido o está corrupto, forzamos login
+                // Si no podemos leer el rol cifrado, es un ataque o una corrupción.
+                FormsAuthentication.SignOut();
                 Response.Redirect("~/Vista/login.aspx");
                 return;
             }
 
-            // 3. LA VALIDACIÓN DE AUTORIZACIÓN (EL GUARDIA)
-            // Si el rol NO es 1 (Admin) Y NO es 2 (Empleado), lo echamos.
+            // 4. LA VALIDACIÓN DE AUTORIZACIÓN (EL GUARDIA)
             if (idRol != 1 && idRol != 2)
             {
-                // ¡ES UN CLIENTE! Lo enviamos de vuelta al Catálogo o a donde pertenezca.
-                Response.Redirect("~/Vista/Catalogo.aspx"); // ⬅️ ¡Aquí lo bloqueamos!
+                // ¡ES UN CLIENTE! Lo enviamos de vuelta al Catálogo.
+                Response.Redirect("~/Vista/Catalogo.aspx");
             }
         }
     }
