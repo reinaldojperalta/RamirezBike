@@ -19,6 +19,7 @@ namespace AppRamirezBike.Vista
 			if (!IsPostBack)
 			{
                 MtCargarCategorias();
+                ddlCategorias.SelectedValue = MtFiltroCategoria.ToString();
 
                 int paginaActual = 1;
                 if (Request.QueryString["pagina"] != null && int.TryParse(Request.QueryString["pagina"], out int p))
@@ -107,7 +108,7 @@ namespace AppRamirezBike.Vista
             ddlCategorias.DataValueField = "idCategoria";
             ddlCategorias.DataBind();
 
-            ddlCategorias.Items.Insert(0, new ListItem("Seleccione Una Categoria", "0"));
+            ddlCategorias.Items.Insert(0, new ListItem("Todos Los Productos", "0"));
         }
 
         protected void ddlCategorias_SelectedIndexChanged(object sender, EventArgs e)

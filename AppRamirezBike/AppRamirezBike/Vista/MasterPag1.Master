@@ -14,43 +14,53 @@
     <form id="form1" runat="server">
 
 
-
-        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="javascript:void(0)">Logo</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="mynavbar">
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)">Link</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)">Link</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)">Link</a>
-                        </li>
-                    </ul>
-                    <div class="d-flex">
-
-                        <asp:TextBox ID="txtBusqueda" runat="server" CssClass="form-control me-2" placeholder="Search" />
-                        <asp:Button ID="btnBuscar" runat="server" CssClass="btn btn-primary" Text="Search" OnClick="btnBuscar_Click" />
-                        <asp:Button ID="btnLogout" runat="server" Text="Cerrar sesión" OnClick="btnLogout_Click" />
-                        <a href="javascript:irAlCarrito()">
-                            <img src="Vista/img/carrito.png" width="70" height="70" style="" />
-                            <span id="cart-count">1</span>
-                        </a>
-
-                        <div class="carrito-icono" style="position: fixed; top: 20px; right: 20px; z-index: 9999;">
-                        </div>
-
-                        </>
-                    </div>
-                </div>
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="javascript:void(0)">Logo</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mynavbar">
+            
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="Catalogo.aspx">Catalogo</a>
+                </li>
+            </ul>
+            
+            <div class="d-flex mx-auto align-items-center" style="width: 400px;">
+                <asp:TextBox ID="txtBusqueda" 
+                    runat="server" 
+                    CssClass="form-control me-3" 
+                    placeholder="Buscar..."
+                    Width="200px" />
+    
+                <asp:Button ID="btnBuscar" 
+                    runat="server" 
+                    CssClass="btn btn-primary" 
+                    Text="Search" 
+                    OnClick="btnBuscar_Click" />
             </div>
-        </nav>
+
+            <div class="d-flex align-items-center ms-auto">
+                
+                <asp:Button ID="btnLogout" 
+                    runat="server" 
+                    Text="Cerrar sesión" 
+                    CssClass="btn btn-outline-light btn-sm me-3" 
+                    OnClick="btnLogout_Click" />
+
+                <a href="javascript:irAlCarrito()" class="text-white position-relative">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
+                        <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9z"/>
+                        <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
+                    </svg>
+                    <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">1</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
 
 
         <div>
