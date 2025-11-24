@@ -3,6 +3,23 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentBody1" runat="server">
+
+    <!-- Jumbotron RamirezBike -->
+<div class="container mt-3">
+  <div class="mt-4 p-5 bg-dark text-white rounded shadow">
+    <h1 class="display-4">Bienvenido a RamirezBike</h1>
+    <p class="lead">
+      Tu tienda de confianza en bicicletas, refacciones y accesorios.
+      Calidad, precio justo y atención personalizada para cada pedal.
+    </p>
+    <hr class="my-4">
+    <p>Envíos a todo el país · Financiación sin intereses · Servicio técnico propio</p>
+    <!--<a class="btn btn-outline-light btn-lg" href="Catalogo.aspx" role="button">
+      Ver catálogo
+    </a>-->
+  </div>
+</div>
+
     <div class="container mt-5">
         <div class="row">
 

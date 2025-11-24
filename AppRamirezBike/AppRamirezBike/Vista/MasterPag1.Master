@@ -35,18 +35,19 @@
                     </ul>
                     <div class="d-flex">
 
-                        <asp:TextBox id="txtBusqueda" runat="server" Cssclass="form-control me-2" placeholder="Search"/>
-                        <asp:Button id="btnBuscar" runat="server" CssClass="btn btn-primary" Text="Search" OnClick="btnBuscar_Click"  />
+                        <asp:TextBox ID="txtBusqueda" runat="server" CssClass="form-control me-2" placeholder="Search" />
+                        <asp:Button ID="btnBuscar" runat="server" CssClass="btn btn-primary" Text="Search" OnClick="btnBuscar_Click" />
                         <asp:Button ID="btnLogout" runat="server" Text="Cerrar sesión" OnClick="btnLogout_Click" />
                         <a href="javascript:irAlCarrito()">
-                            <img src="Vista/img/carrito.png" width="70" height="70" style="..." />
+                            <img src="Vista/img/carrito.png" width="70" height="70" style="" />
                             <span id="cart-count">1</span>
                         </a>
 
                         <div class="carrito-icono" style="position: fixed; top: 20px; right: 20px; z-index: 9999;">
                         </div>
 
-                    </>
+                        </>
+                    </div>
                 </div>
             </div>
         </nav>
