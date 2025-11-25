@@ -37,7 +37,7 @@ namespace AppRamirezBike.Vista
                 // 2. Lógica de Redirección 
                 if (idRol == 1 || idRol == 2) // Admin o Empleado
                 {
-                    Response.Redirect("~/Vista/admin/dashboard.aspx");
+                    Response.Redirect("~/Vista/admin/Administracion.aspx");
                 }
                 else // Cliente (cualquier otro)
                 {

@@ -5,14 +5,13 @@ using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
-namespace AppRamirezBike.Vista.admin
+namespace AppRamirezBike.Vista.Admin
 {
-    public partial class dashboard : System.Web.UI.Page
+    public partial class Dashboard : System.Web.UI.MasterPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!User.Identity.IsAuthenticated)
+            if (!this.Page.User.Identity.IsAuthenticated)
             {
                 Response.Redirect("~/Vista/login.aspx");
                 return;
