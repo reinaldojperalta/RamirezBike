@@ -15,39 +15,38 @@ namespace AppRamirezBike.Vista
         ClProductoLogica logica = new ClProductoLogica();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (producto == null) 
+            if (producto == null && !IsPostBack) // Añadir !IsPostBack para asegurar que solo cargue una vez
             {
-                int id = Convert.ToInt32(Request.QueryString["id"]);
-                producto = logica.ObtenerProductoPorId(id);
+                // 1. Obtener ID y cargar UNA SOLA VEZ
+                if (Request.QueryString["id"] != null)
+                {
+                    int id = Convert.ToInt32(Request.QueryString["id"]);
+                    producto = logica.ObtenerProductoPorId(id);
 
-                if (producto != null)
-                    MtCargarDetalle();
+                    if (producto != null)
+                        MtCargarDetalle();
+                }
             }
         }
         private void MtCargarDetalle()
         {
-            int id = Convert.ToInt32(Request.QueryString["id"]);
-            producto = logica.ObtenerProductoPorId(id);
+            // 2. Usar el objeto 'producto' que ya se cargó en Page_Load
 
             /* imagen */
-            imgPrincipal.ImageUrl = "img/" +  producto.imgUrl;   // imgUrl (minúscula)
+            imgPrincipal.ImageUrl = "img/" + producto.imgUrl;
             imgPrincipal.AlternateText = producto.nombre;
 
             /* textos */
             lblNombre.Text = producto.nombre;
             lblDescripcion.Text = producto.descripcion;
-            lblSKU.Text = "SKU: " + producto.idProducto;  // o el campo que uses como SKU
+            lblSKU.Text = "SKU: " + producto.idProducto;
 
             /* precio */
             lblPrecio.Text = "$" + producto.precio.ToString("0.00");
-
-            /* si más adelante tienes “precioOriginal” agrégalo; por ahora solo uno */
             lblPrecioOriginal.Text = string.Empty;
 
             /* cantidad por defecto */
             txtCantidad.Text = "1";
-
-            /* id para el JS */
         }
     }
 }
