@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace AppRamirezBike.Vista.admin
 {
-    public partial class Administracion : System.Web.UI.Page
+    public partial class administracion : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

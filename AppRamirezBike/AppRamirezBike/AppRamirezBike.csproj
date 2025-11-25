@@ -126,7 +126,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Vista\admin\Administracion.aspx" />
+    <Content Include="Vista\admin\administracion.aspx" />
     <Content Include="Vista\carrito.js" />
     <Content Include="Vista\Catalogo.aspx" />
     <Content Include="Vista\Detalle.aspx" />
@@ -157,19 +157,19 @@
     <Compile Include="Modelo\Producto.cs" />
     <Compile Include="obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Vista\admin\Administracion.aspx.cs">
-      <DependentUpon>Administracion.aspx</DependentUpon>
+    <Compile Include="Vista\admin\administracion.aspx.cs">
+      <DependentUpon>administracion.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Vista\admin\Administracion.aspx.designer.cs">
-      <DependentUpon>Administracion.aspx</DependentUpon>
+    <Compile Include="Vista\admin\administracion.aspx.designer.cs">
+      <DependentUpon>administracion.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Vista\admin\Dashboard.Master.cs">
-      <DependentUpon>Dashboard.Master</DependentUpon>
+    <Compile Include="Vista\admin\dashboard.master.cs">
+      <DependentUpon>dashboard.master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Vista\admin\Dashboard.Master.designer.cs">
-      <DependentUpon>Dashboard.Master</DependentUpon>
+    <Compile Include="Vista\admin\dashboard.master.designer.cs">
+      <DependentUpon>dashboard.master</DependentUpon>
     </Compile>
     <Compile Include="Vista\Catalogo.aspx.cs">
       <DependentUpon>Catalogo.aspx</DependentUpon>
@@ -232,7 +232,7 @@
     <Content Include="Scripts\jquery-3.7.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.7.1.min.map" />
     <Content Include="Vista\admin\Web.config" />
-    <Content Include="Vista\admin\Dashboard.Master" />
+    <Content Include="Vista\admin\dashboard.master" />
     <None Include="Vista\admin\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

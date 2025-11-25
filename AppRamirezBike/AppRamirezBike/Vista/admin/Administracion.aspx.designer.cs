@@ -11,7 +11,7 @@ namespace AppRamirezBike.Vista.admin
 {
 
 
-    public partial class Administracion
+    public partial class administracion
     {
     }
 }
