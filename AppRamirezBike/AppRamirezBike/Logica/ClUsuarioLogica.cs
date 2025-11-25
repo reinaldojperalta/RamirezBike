@@ -68,5 +68,23 @@ namespace AppRamirezBike.Logica
             // 6. Devolver el ID del Rol para la redirección
             return idRol;
         }
+
+        public string MtInhabilitarUsuario(int idUsuario)
+        {
+            ClUsuarioDatos objDatos = new ClUsuarioDatos();
+            return objDatos.MtInhabilitarUsuario(idUsuario);
+        }
+
+        public Usuario MtObtenerUsuarioPorId(int idUsuario)
+        {
+            ClUsuarioDatos objDatos = new ClUsuarioDatos();
+            return objDatos.MtObtenerUsuarioPorId(idUsuario);
+        }
+
+        public string MtActualizarUsuario(Usuario oUsuario)
+        {
+            ClUsuarioDatos objDatos = new ClUsuarioDatos();
+            return objDatos.MtActualizarUsuario(oUsuario);
+        }
     }
 }

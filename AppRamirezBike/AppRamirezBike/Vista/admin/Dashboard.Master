@@ -25,7 +25,7 @@
                 <hr>
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active" href="Productos.aspx">
+                        <a class="nav-link active" href="administracion.aspx">
                             <i class="bi bi-box-seam me-2"></i> Productos
                         </a>
                     </li>

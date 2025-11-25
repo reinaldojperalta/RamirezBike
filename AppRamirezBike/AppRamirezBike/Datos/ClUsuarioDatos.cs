@@ -88,7 +88,97 @@ namespace AppRamirezBike.Datos
             return HasheoClave.MtVerificarClave(claveIngresada, usuario.clave);
         }
 
-       
+        public string MtInhabilitarUsuario(int idUsuario)
+        {
+            // Por ahora, usamos DELETE. Cuando añadas el campo 'estado', cámbialo a UPDATE.
+            string consulta = "DELETE FROM usuario WHERE idUsuario = @idUsuario";
+
+            SqlConnection conex = objConexion.MtAbrirConexion();
+            SqlCommand cmd = new SqlCommand(consulta, conex);
+            cmd.Parameters.AddWithValue("@idUsuario", idUsuario);
+
+            int filasAfectadas = cmd.ExecuteNonQuery();
+
+            objConexion.MtCerrarConexion();
+
+            if (filasAfectadas > 0)
+            {
+                return "Usuario eliminado correctamente.";
+            }
+            else
+            {
+                return "No se encontró el usuario para eliminar.";
+            }
+        }
+
+        // --- MÉTODO PARA OBTENER UN USUARIO POR ID (PARA EDITAR) ---
+        public Usuario MtObtenerUsuarioPorId(int idUsuario)
+        {
+            Usuario usuario = null;
+            string consulta = "SELECT idUsuario, nombre, apellido, telefono, email, idRol FROM usuario WHERE idUsuario = @idUsuario";
+
+            SqlConnection conex = objConexion.MtAbrirConexion();
+            SqlCommand cmd = new SqlCommand(consulta, conex);
+            cmd.Parameters.AddWithValue("@idUsuario", idUsuario);
+
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            if (reader.Read())
+            {
+                usuario = new Usuario
+                {
+                    idUsuario = Convert.ToInt32(reader["idUsuario"]),
+                    nombre = reader["nombre"].ToString(),
+                    apellido = reader["apellido"].ToString(),
+                    telefono = reader["telefono"].ToString(),
+                    email = reader["email"].ToString(),
+                    idRol = Convert.ToInt32(reader["idRol"])
+                };
+            }
+
+            reader.Close();
+            objConexion.MtCerrarConexion();
+
+            return usuario;
+        }
+
+        // --- MÉTODO PARA ACTUALIZAR UN USUARIO ---
+        public string MtActualizarUsuario(Usuario oUsuario)
+        {
+            string consulta = @"
+            UPDATE usuario 
+            SET nombre = @nombre, 
+                apellido = @apellido, 
+                telefono = @telefono, 
+                email = @email, 
+                idRol = @idRol 
+            WHERE idUsuario = @idUsuario";
+
+            SqlConnection conex = objConexion.MtAbrirConexion();
+            SqlCommand cmd = new SqlCommand(consulta, conex);
+
+            cmd.Parameters.AddWithValue("@nombre", oUsuario.nombre);
+            cmd.Parameters.AddWithValue("@apellido", oUsuario.apellido);
+            cmd.Parameters.AddWithValue("@telefono", oUsuario.telefono);
+            cmd.Parameters.AddWithValue("@email", oUsuario.email);
+            cmd.Parameters.AddWithValue("@idRol", oUsuario.idRol);
+            cmd.Parameters.AddWithValue("@idUsuario", oUsuario.idUsuario);
+
+            int filasAfectadas = cmd.ExecuteNonQuery();
+
+            objConexion.MtCerrarConexion();
+
+            if (filasAfectadas > 0)
+            {
+                return "Usuario actualizado correctamente.";
+            }
+            else
+            {
+                return "No se pudo actualizar el usuario.";
+            }
+        }
+
+
 
     }
 }
