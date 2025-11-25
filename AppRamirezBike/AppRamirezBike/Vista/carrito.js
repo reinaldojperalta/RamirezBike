@@ -20,6 +20,7 @@ function añadirAlCarrito(id) {
             carrito[i].cantidad++;
             guardarCarrito();
             actualizarNumero();
+            animarCarrito();
             alert("¡Añadido otra vez!");
             return;
         }
@@ -27,6 +28,7 @@ function añadirAlCarrito(id) {
     carrito.push({ idProducto: id, cantidad: 1 });
     guardarCarrito();
     actualizarNumero();
+    animarCarrito();
     alert("¡Producto añadido al carrito!");
 }
 
@@ -127,3 +129,23 @@ setInterval(function () {
     actualizarNumero();
     revisarCarrito();
 }, 1000);
+
+function animarCarrito() {
+    let cartIcon = document.querySelector(".bi-cart-plus");
+    let cartCount = document.querySelector(".contador-carrito-fijo");
+
+    if (cartIcon && cartCount) {
+        cartIcon.classList.remove("animate-icon");
+        void cartIcon.offsetWidth;
+        cartIcon.classList.add("animate-icon");
+
+        cartCount.classList.remove("animate-badge");
+        void cartCount.offsetWidth;
+        cartCount.classList.add("animate-badge");
+
+        setTimeout(() => {
+            cartIcon.classList.remove("animate-icon");
+            cartCount.classList.remove("animate-badge");
+        }, 4000);
+    }
+}
