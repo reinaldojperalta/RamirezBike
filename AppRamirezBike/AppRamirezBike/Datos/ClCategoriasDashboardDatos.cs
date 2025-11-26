@@ -16,8 +16,7 @@ namespace AppRamirezBike.Datos
             ClConexion objConexion = new ClConexion();
             SqlConnection conex = null;
 
-            // Consulta SQL para obtener la lista de categorías
-            // Nota: Asumo que las categorías también tienen estado = true
+            
             string consulta = "SELECT idCategoria, nombre FROM dbo.Categoria";
 
             conex = objConexion.MtAbrirConexion();
@@ -27,7 +26,7 @@ namespace AppRamirezBike.Datos
 
             while (reader.Read())
             {
-                // Mapeo del registro a la clase Categoria (con camelCase)
+                // Mapeo del registro a la clase Categoria 
                 Categoria objCategoria = new Categoria
                 {
                     // Usando GetInt32 o GetOrdinal para mejor rendimiento y seguridad de tipo

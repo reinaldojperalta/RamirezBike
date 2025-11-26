@@ -95,7 +95,7 @@
         const pageUrl = "Productos.aspx";
         let tabla;
 
-        // 💡 RUTA ABSOLUTA CORREGIDA: Apunta a ~/Vista/img/
+        //  RUTA ABSOLUTA: Apunta a ~/Vista/img/
         const imgBasePath = '<%= ResolveUrl("~/Vista/img/") %>';
 
         $(document).ready(function () {
