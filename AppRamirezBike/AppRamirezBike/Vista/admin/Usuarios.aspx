@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Gestión de Usuarios" Language="C#" MasterPageFile="~/Vista/admin/dashboard.master" AutoEventWireup="true" CodeBehind="Usuarios.aspx.cs" Inherits="AppRamirezBike.Vista.admin.Usuarios" %>
+﻿<%@ Page Title="Gestión de Usuarios" Language="C#" MasterPageFile="~/Vista/admin/dashboard.master" AutoEventWireup="true" CodeBehind="Usuarios.aspx.cs" Inherits="AppRamirezBike.Vista.Admin.Usuarios" %>
 
 <%-- 
     CORRECCIÓN 1: Solo hay UN bloque <asp:Content>.

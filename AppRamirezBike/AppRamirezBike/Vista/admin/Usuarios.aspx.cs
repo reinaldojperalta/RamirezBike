@@ -7,7 +7,7 @@ using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace AppRamirezBike.Vista.admin
+namespace AppRamirezBike.Vista.Admin
 {
     public partial class Usuarios : System.Web.UI.Page
     {

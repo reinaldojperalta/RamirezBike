@@ -117,6 +117,7 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
+    <Content Include="Vista\admin\SubirImagen.aspx" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />
     <Content Include="Scripts\jquery-3.7.1.slim.js" />
@@ -127,6 +128,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Vista\admin\administracion.aspx" />
+    <Content Include="Vista\admin\Productos.aspx" />
     <Content Include="Vista\admin\Usuarios.aspx" />
     <Content Include="Vista\carrito.js" />
     <Content Include="Vista\Catalogo.aspx" />
@@ -143,17 +145,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Datos\ClCategoriaDatos.cs" />
+    <Compile Include="Datos\ClCategoriasDashboardDatos.cs" />
     <Compile Include="Datos\ClConexion.cs" />
     <Compile Include="Datos\ClProductoDatos.cs" />
     <Compile Include="Datos\ClRolDatos.cs" />
     <Compile Include="Datos\ClUsuarioDashBoardDatos.cs" />
     <Compile Include="Datos\ClUsuarioDatos.cs" />
+    <Compile Include="Datos\ClProductosDashboardDatos.cs" />
+    <Compile Include="Vista\admin\SubirImagen.aspx.cs">
+      <DependentUpon>SubirImagen.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vista\admin\SubirImagen.aspx.designer.cs">
+      <DependentUpon>SubirImagen.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Logica\ClCategoriaLogica.cs" />
     <Compile Include="Datos\HasheoClave.cs" />
+    <Compile Include="Logica\ClCategoriasDashboardLogica.cs" />
     <Compile Include="Logica\ClProductoLogica.cs" />
     <Compile Include="Logica\ClRolLogica.cs" />
     <Compile Include="Logica\ClUsuarioDashBoardLogica.cs" />
     <Compile Include="Logica\ClUsuarioLogica.cs" />
+    <Compile Include="Logica\ClProductosDashboardLogica.cs" />
     <Compile Include="Modelo\Categoria.cs" />
     <Compile Include="Modelo\Rol.cs" />
     <Compile Include="Modelo\Usuario.cs" />
@@ -174,6 +187,13 @@
     </Compile>
     <Compile Include="Vista\admin\dashboard.master.designer.cs">
       <DependentUpon>dashboard.master</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\admin\Productos.aspx.cs">
+      <DependentUpon>Productos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vista\admin\Productos.aspx.designer.cs">
+      <DependentUpon>Productos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vista\admin\Usuarios.aspx.cs">
       <DependentUpon>Usuarios.aspx</DependentUpon>

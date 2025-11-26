@@ -7,16 +7,15 @@ using MySql.Data.MySqlClient;
 
 namespace AppRamirezBike.Datos
 {
-	public class ClConexion
-	{
+    public class ClConexion
+    {
         SqlConnection objConexion;
 
         public ClConexion()
         {
 
 
-            objConexion = new SqlConnection("Data Source=LAPTOP-6LQPP2A5\\SQLEXPRESS;Initial Catalog=dbRamirezBike;Integrated Security=True;Encrypt=True;TrustServerCertificate=True");
-
+            objConexion = new SqlConnection("Data Source=DESKTOP-AJM9FE4;Initial Catalog=dbRamirezBike;Integrated Security=True;Encrypt=True;TrustServerCertificate=True");
         }
         public SqlConnection MtAbrirConexion()
         {
@@ -28,5 +27,5 @@ namespace AppRamirezBike.Datos
         {
             objConexion.Close();
         }
-	}
+    }
 }
