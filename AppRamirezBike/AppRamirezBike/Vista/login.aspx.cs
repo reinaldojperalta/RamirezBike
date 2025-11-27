@@ -15,7 +15,7 @@ namespace AppRamirezBike.Vista
         {
             if (User.Identity.IsAuthenticated)
             {
-                Response.Redirect("Vista/Catalogo.aspx");
+                Response.Redirect("Catalogo.aspx");
             }
         }
         protected void BtnLogin_Click(object sender, EventArgs e)
@@ -25,12 +25,21 @@ namespace AppRamirezBike.Vista
 
             ClUsuarioLogica objLogica = new ClUsuarioLogica();
 
-            if (objLogica.MtVerificarLogin(usuario, password))
-            {
-                FormsAuthentication.SetAuthCookie(usuario, false);
+            // Llama al método correcto
+            var usuarioObj = objLogica.MtLogin(usuario, password);
 
+            if (usuarioObj != null)
+            {
+                // Mantiene autenticación por cookie
+                FormsAuthentication.SetAuthCookie(usuarioObj.email, false);
+
+                // Guardar datos clave en sesión
+                Session["idUsuario"] = usuarioObj.idUsuario;
+                Session["emailUsuario"] = usuarioObj.email;
+
+                // Redirección igual que antes
                 string returnUrl = Request.QueryString["ReturnUrl"];
-                if (returnUrl != null)
+                if (!string.IsNullOrEmpty(returnUrl))
                 {
                     Response.Redirect(returnUrl);
                 }

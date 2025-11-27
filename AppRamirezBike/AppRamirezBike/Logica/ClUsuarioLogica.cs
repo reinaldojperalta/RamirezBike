@@ -22,11 +22,30 @@ namespace AppRamirezBike.Logica
             return oUsuarioD.MtVerificarDocumentoExistente(documento);
         }
 
-        public bool MtVerificarLogin(string correo, string claveIngresada)
+        public Usuario MtLogin(string correo, string clave)
         {
             ClUsuarioDatos oUsuarioD = new ClUsuarioDatos();
-            bool confirmacion = oUsuarioD.MtVerificarLogin(correo,claveIngresada);
-            return confirmacion;
+            Usuario usuario = oUsuarioD.MtBuscarCorreo(correo);
+
+            if (usuario == null)
+            {
+                return null;
+            }
+
+            bool claveCorrecta = HasheoClave.MtVerificarClave(clave, usuario.clave);
+
+            if (!claveCorrecta)
+            {
+                return null;
+            }
+
+            // Aquí SI trae idUsuario, nombre, email, etc.
+            return usuario;
+        }
+        public int ObtenerIdPorEmail(string correo)
+        {
+            ClUsuarioDatos datos = new ClUsuarioDatos();
+            return datos.ObtenerIdPorEmail(correo);
         }
     }
 }

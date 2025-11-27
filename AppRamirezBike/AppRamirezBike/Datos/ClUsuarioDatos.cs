@@ -88,7 +88,17 @@ namespace AppRamirezBike.Datos
             return HasheoClave.MtVerificarClave(claveIngresada, usuario.clave);
         }
 
-       
+        public int ObtenerIdPorEmail(string correo)
+        {
+            Usuario usuario = MtBuscarCorreo(correo);
+
+            if (usuario != null)
+            {
+                return usuario.idUsuario;
+            }
+
+            return 0; // Si no existe
+        }
 
     }
 }

@@ -11,35 +11,17 @@ namespace AppRamirezBike.Vista
 {
 
 
-    public partial class Carrito
+    public partial class Checkout
     {
 
         /// <summary>
-        /// Control pnlVacio.
+        /// Control form1.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlVacio;
-
-        /// <summary>
-        /// Control pnlCarrito.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlCarrito;
-
-        /// <summary>
-        /// Control rptCarrito.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptCarrito;
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
         /// Control lblTotal.
@@ -51,13 +33,13 @@ namespace AppRamirezBike.Vista
         protected global::System.Web.UI.WebControls.Label lblTotal;
 
         /// <summary>
-        /// Control lblMensaje.
+        /// Control hdnIdOrden.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMensaje;
+        protected global::System.Web.UI.WebControls.HiddenField hdnIdOrden;
 
         /// <summary>
         /// Control hdnCarrito.
@@ -69,12 +51,12 @@ namespace AppRamirezBike.Vista
         protected global::System.Web.UI.WebControls.HiddenField hdnCarrito;
 
         /// <summary>
-        /// Control btnPagar.
+        /// Control lblMensaje.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnPagar;
+        protected global::System.Web.UI.WebControls.Label lblMensaje;
     }
 }
