@@ -17,6 +17,8 @@ namespace AppRamirezBike.Datos
 
 
             objConexion = new SqlConnection(ConfigurationManager.ConnectionStrings["dbRamirezBikeConnection"].ConnectionString);
+            //objConexion = new SqlConnection("Data Source=DESKTOP-8842IPF;Initial Catalog=dbRamirezBike;Integrated Security=True;Encrypt=True;TrustServerCertificate=True");
+        
         }
         public SqlConnection MtAbrirConexion()
         {
