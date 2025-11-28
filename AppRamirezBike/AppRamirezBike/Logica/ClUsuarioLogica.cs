@@ -40,7 +40,6 @@ namespace AppRamirezBike.Logica
                 return null;
             }
 
-            // Aquí SI trae idUsuario, nombre, email, etc.
             return usuario;
         }
         public int ObtenerIdPorEmail(string correo)
@@ -61,11 +60,13 @@ namespace AppRamirezBike.Logica
 
             // 2. Obtener Datos del Usuario
             Usuario objUsuario = objDatos.MtBuscarCorreo(correo);
+            int idUsuario = objUsuario.idUsuario;
             int idRol = objUsuario.idRol;
 
             // 3. Crear el Ticket de Autenticación Personalizado (¡La única cookie!)
             if (idRol > 0)
-            {
+            { 
+                string userData = idUsuario.ToString() + "," + idRol.ToString();
                 // 🔒 Cifrar el Rol y guardarlo como datos de usuario del Ticket
                 FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(
                     1, // Versión del ticket
@@ -73,7 +74,8 @@ namespace AppRamirezBike.Logica
                     DateTime.Now, // Fecha de emisión
                     DateTime.Now.AddDays(1), // Fecha de expiración (igual que tu cookie anterior)
                     false, // No persistente (false), aunque la expiración de arriba manda
-                    idRol.ToString() // ⬅️ ¡Aquí guardamos el idRol en la sección de datos!
+                    userData,
+                    FormsAuthentication.FormsCookiePath
                 );
 
                 // 4. Cifrar el Ticket y crear la Cookie
@@ -84,8 +86,13 @@ namespace AppRamirezBike.Logica
                 HttpContext.Current.Response.Cookies.Add(cookie);
             }
 
+            
+            
+                // Guardar el idUsuario en sesión si es necesario
+                return idRol;
+
             // 6. Devolver el ID del Rol para la redirección
-            return idRol;
+
         }
 
         public string MtInhabilitarUsuario(int idUsuario)

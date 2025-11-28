@@ -57,12 +57,10 @@
 
             <asp:Label ID="lblMensaje" runat="server" CssClass="text-danger"></asp:Label>
 
-            <!-- Botón server-side que inyectará script para abrir ePayco -->
             <asp:Button ID="btnIniciarPago" runat="server" CssClass="btn btn-success mt-3" Text="Pagar con ePayco" OnClick="btnIniciarPago_Click" />
         </div>
     </form>
 
-    <!-- Bootstrap JS y dependencias (opcional si necesitas funcionalidad JS) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

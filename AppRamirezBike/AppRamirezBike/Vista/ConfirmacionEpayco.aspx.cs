@@ -51,7 +51,6 @@ namespace AppRamirezBike.Vista
                     DateTime fechaPago = DateTime.Now;
                     DateTime.TryParse(Convert.ToString(fechaStr), out fechaPago);
 
-                    // Determinar estado para mostrar y actualizar
                     string estadoFinal = "Desconocido";
                     if (estadoAPI == "Aceptada") estadoFinal = "Pagada";
                     else if (estadoAPI == "Rechazada") estadoFinal = "Rechazada";
@@ -59,11 +58,11 @@ namespace AppRamirezBike.Vista
                     else if (estadoAPI == "Fallida") estadoFinal = "Fallida";
 
                     lblEstado.Text = estadoFinal;
-                    lblEstado.CssClass = estadoFinal; // para color
-                    lblValor.Text = amount.ToString("C0"); // formato moneda
+                    lblEstado.CssClass = estadoFinal; 
+                    lblValor.Text = amount.ToString("C0"); 
                     lblFecha.Text = fechaPago.ToString("dd/MM/yyyy HH:mm:ss");
 
-                    // Actualizar base de datos
+  
                     logicaOrden.ActualizarEstadoPorReferencia(refPayco, estadoFinal);
                     if (estadoFinal == "Pagada")
                         logicaOrden.ActualizarFechaPagoPorReferencia(refPayco, fechaPago);
@@ -74,7 +73,6 @@ namespace AppRamirezBike.Vista
                 lblEstado.Text = "Error al verificar el pago";
                 lblValor.Text = "-";
                 lblFecha.Text = "-";
-                // Opcional: loguear ex.Message
             }
         }
         protected void btnVolver_Click(object sender, EventArgs e)

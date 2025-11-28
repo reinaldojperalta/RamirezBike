@@ -21,38 +21,32 @@ namespace AppRamirezBike.Vista
         }
 
 
-         protected void BtnLogin_Click(object sender, EventArgs e)
+        protected void BtnLogin_Click(object sender, EventArgs e)
         {
-            string usuario = txtEmail.Text.Trim();
+            string email = txtEmail.Text.Trim();
             string password = txtClave.Text;
 
             ClUsuarioLogica objLogica = new ClUsuarioLogica();
 
-            // Llama al método correcto
-            var usuarioObj = objLogica.MtLogin(usuario, password);
+            // Llamamos al nuevo método que hace el login y cifra el rol
+            int idRol = objLogica.MtIniciarSesionYCifrarRol(email, password);
 
-            if (usuarioObj != null)
+            // 1. Verificar si el login fue exitoso (idRol > 0)
+            if (idRol > 0)
             {
-                // Mantiene autenticación por cookie
-                FormsAuthentication.SetAuthCookie(usuarioObj.email, false);
-
-                // Guardar datos clave en sesión
-                Session["idUsuario"] = usuarioObj.idUsuario;
-                Session["emailUsuario"] = usuarioObj.email;
-
-                // Redirección igual que antes
-                string returnUrl = Request.QueryString["ReturnUrl"];
-                if (!string.IsNullOrEmpty(returnUrl))
+                // 2. Lógica de Redirección 
+                if (idRol == 1 || idRol == 2) // Admin o Empleado
                 {
-                    Response.Redirect(returnUrl);
+                    Response.Redirect("~/Vista/admin/administracion.aspx");
                 }
-                else
+                else // Cliente (cualquier otro)
                 {
-                    Response.Redirect("Catalogo.aspx");
+                    Response.Redirect("~/Vista/Catalogo.aspx");
                 }
             }
             else
             {
+                // Si la lógica devuelve 0 (fallo de credenciales)
                 lblMensaje.Text = "Usuario o contraseña incorrectos.";
             }
         }
