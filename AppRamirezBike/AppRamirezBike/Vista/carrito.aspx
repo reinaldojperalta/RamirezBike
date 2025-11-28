@@ -54,15 +54,24 @@
 
             <div class="text-end mt-4">
                 <h3>Total: $<asp:Label ID="lblTotal" runat="server" CssClass="text-success fw-bold" /></h3>
-                <button type="button" class="btn btn-danger btn-lg me-3"
-                    onclick="vaciarCarrito()">
+                <asp:Label ID="lblMensaje" runat="server" CssClass="text-danger fw-bold" />
+                <button type="button" class="btn btn-danger btn-lg me-3" onclick="vaciarCarrito()">
                     Vaciar Carrito
                 </button>
-                <button class="btn btn-success btn-lg">Proceder al Pago</button>
+                <asp:HiddenField ID="hdnCarrito" runat="server" />
+                <asp:Button ID="btnPagar" runat="server" CssClass="btn btn-success btn-lg"
+                    Text="Proceder al Pago" OnClick="btnPagar_Click" />
             </div>
         </asp:Panel>
     </div>
+    <script>
+        function enviarCarritoAlServidor() {
+            let carrito = localStorage.getItem("carrito_ramirez");
+            document.getElementById("<%= hdnCarrito.ClientID %>").value = carrito;
+        }
 
-   
+        document.addEventListener("DOMContentLoaded", enviarCarritoAlServidor);
+    </script>
+
 </asp:Content>
 

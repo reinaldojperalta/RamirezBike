@@ -134,6 +134,8 @@
     <Content Include="Vista\admin\Usuarios.aspx" />
     <Content Include="Vista\carrito.js" />
     <Content Include="Vista\Catalogo.aspx" />
+    <Content Include="Vista\Checkout.aspx" />
+    <Content Include="Vista\ConfirmacionEpayco.aspx" />
     <Content Include="Vista\Detalle.aspx" />
     <Content Include="Vista\Global.asax" />
     <Content Include="Vista\img\bici1.jpeg" />
@@ -150,6 +152,8 @@
     <Compile Include="Datos\ClCategoriaDatos.cs" />
     <Compile Include="Datos\ClCategoriasDashboardDatos.cs" />
     <Compile Include="Datos\ClConexion.cs" />
+    <Compile Include="Datos\ClOrdenDatos.cs" />
+    <Compile Include="Datos\ClOrdenDetalleDatos.cs" />
     <Compile Include="Datos\ClProductoDatos.cs" />
     <Compile Include="Datos\ClRolDatos.cs" />
     <Compile Include="Datos\ClUsuarioDashBoardDatos.cs" />
@@ -172,12 +176,17 @@
     <Compile Include="Logica\ClCategoriaLogica.cs" />
     <Compile Include="Datos\HasheoClave.cs" />
     <Compile Include="Logica\ClCategoriasDashboardLogica.cs" />
+    <Compile Include="Logica\ClOrdenDetalleLogica.cs" />
+    <Compile Include="Logica\ClOrdenLogica.cs" />
     <Compile Include="Logica\ClProductoLogica.cs" />
     <Compile Include="Logica\ClRolLogica.cs" />
     <Compile Include="Logica\ClUsuarioDashBoardLogica.cs" />
     <Compile Include="Logica\ClUsuarioLogica.cs" />
     <Compile Include="Logica\ClProductosDashboardLogica.cs" />
+    <Compile Include="Modelo\CarritoItem.cs" />
     <Compile Include="Modelo\Categoria.cs" />
+    <Compile Include="Modelo\Orden.cs" />
+    <Compile Include="Modelo\OrdenDetalle.cs" />
     <Compile Include="Modelo\Rol.cs" />
     <Compile Include="Modelo\Usuario.cs" />
     <Compile Include="Modelo\Producto.cs" />
@@ -217,6 +226,20 @@
     </Compile>
     <Compile Include="Vista\Catalogo.aspx.designer.cs">
       <DependentUpon>Catalogo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\Checkout.aspx.cs">
+      <DependentUpon>Checkout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vista\Checkout.aspx.designer.cs">
+      <DependentUpon>Checkout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\ConfirmacionEpayco.aspx.cs">
+      <DependentUpon>ConfirmacionEpayco.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vista\ConfirmacionEpayco.aspx.designer.cs">
+      <DependentUpon>ConfirmacionEpayco.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vista\Detalle.aspx.cs">
       <DependentUpon>Detalle.aspx</DependentUpon>

@@ -4,6 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentBody1" runat="server">
 
+<<<<<<< HEAD
     <!-- ===================================================== -->
     <!-- JUMBOTRON DE BIENVENIDA -->
     <!-- ===================================================== -->
@@ -19,6 +20,28 @@
         <p>Envíos a todo el país · Financiación sin intereses · Servicio técnico propio</p>
       </div>
     </div>
+=======
+    <!-- Jumbotron RamirezBike -->
+<div class="container mt-3">
+  <div class="mt-4 p-5 bg-dark text-white rounded shadow">
+    <h1 class="display-4">Bienvenido a RamirezBike</h1>
+    <p class="lead">
+      Tu tienda de confianza en bicicletas, refacciones y accesorios.
+      Calidad, precio justo y atención personalizada para cada pedal.
+    </p>
+    <hr class="my-4">
+    <p>Envíos a todo el país · Financiación sin intereses · Servicio técnico propio</p>
+    <!--<a class="btn btn-outline-light btn-lg" href="Catalogo.aspx" role="button">
+      Ver catálogo
+    </a>-->
+  </div>
+    <br />
+      <div class ="filtro-categoria">
+      <asp:Label ID="lblFiltro" runat="server" Text="Filtra Aqui Por Categoria"  />
+      <asp:DropDownList ID="ddlCategorias" runat="server" AutoPostBack ="true" OnSelectedIndexChanged="ddlCategorias_SelectedIndexChanged"></asp:DropDownList>
+  </div>
+</div>
+>>>>>>> 3b039c98cb0b4fb1a228317d1785a4116ff5234d
 
     <!-- ===================================================== -->
     <!-- CONTENEDOR PRINCIPAL CON SIDEBAR Y GRID DE PRODUCTOS -->
@@ -51,6 +74,7 @@
                 </div>
             </aside>
 
+<<<<<<< HEAD
             <!-- ===================================================== -->
             <!-- GRID DE PRODUCTOS -->
             <!-- ===================================================== -->
@@ -74,6 +98,26 @@
                                             <a href="Detalle.aspx?id=<%# Eval("idProducto") %>" class="btn btn-outline-primary w-100">Ver Detalles</a>
                                         </div>
                                     </div>
+=======
+            <asp:Repeater ID="rptProducto" runat="server">
+
+                <ItemTemplate>
+                    <div class="col-sm-6 col-md-4 mb-4">
+                        <div class="card shadow-sm h-100">
+
+                            <img src='img/<%# Eval("imgUrl") %>' class="card-img-top" alt='<%# Eval("nombre") %>'>
+
+                            <div class="card-body d-flex flex-column">
+
+                                <h4 class="card-title"><%# Eval("nombre") %></h4>
+
+                                <p class="card-text"><%# Eval("descripcion") %></p>
+
+                                <h5 class="card-text"><%# Eval("precio") %></h5>
+
+                                <div class="mt-auto">
+                                    <a href="Detalle.aspx?id=<%# Eval("idProducto") %>" class="btn btn-primary w-100">Comprar</a>
+>>>>>>> 3b039c98cb0b4fb1a228317d1785a4116ff5234d
                                 </div>
                             </div>
                         </ItemTemplate>

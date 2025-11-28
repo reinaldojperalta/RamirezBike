@@ -88,6 +88,7 @@ namespace AppRamirezBike.Datos
             return HasheoClave.MtVerificarClave(claveIngresada, usuario.clave);
         }
 
+<<<<<<< HEAD
         public string MtInhabilitarUsuario(int idUsuario)
         {
             // Por ahora, usamos DELETE. Cuando añadas el campo 'estado', cámbialo a UPDATE.
@@ -179,6 +180,19 @@ namespace AppRamirezBike.Datos
         }
 
 
+=======
+        public int ObtenerIdPorEmail(string correo)
+        {
+            Usuario usuario = MtBuscarCorreo(correo);
+
+            if (usuario != null)
+            {
+                return usuario.idUsuario;
+            }
+
+            return 0; // Si no existe
+        }
+>>>>>>> 3b039c98cb0b4fb1a228317d1785a4116ff5234d
 
     }
 }

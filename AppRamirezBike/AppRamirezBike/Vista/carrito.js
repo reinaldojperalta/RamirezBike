@@ -49,7 +49,12 @@ function añadirAlCarrito(id, cantidadNueva) {
 
             guardarCarrito();
             actualizarNumero();
+<<<<<<< HEAD
             alert(`¡Añadido! Ahora tienes ${carrito[i].cantidad} unidades.`);
+=======
+            animarCarrito();
+            alert("¡Añadido otra vez!");
+>>>>>>> 3b039c98cb0b4fb1a228317d1785a4116ff5234d
             return;
         }
     }
@@ -60,6 +65,7 @@ function añadirAlCarrito(id, cantidadNueva) {
 
     guardarCarrito();
     actualizarNumero();
+    animarCarrito();
     alert("¡Producto añadido al carrito!");
 }
 
@@ -160,3 +166,57 @@ setInterval(function () {
     actualizarNumero();
     revisarCarrito();
 }, 1000);
+
+function animarCarrito() {
+    let cartIcon = document.querySelector(".bi-cart-plus");
+    let cartCount = document.querySelector(".contador-carrito-fijo");
+
+    if (cartIcon && cartCount) {
+        cartIcon.classList.remove("animate-icon");
+        void cartIcon.offsetWidth;
+        cartIcon.classList.add("animate-icon");
+
+        cartCount.classList.remove("animate-badge");
+        void cartCount.offsetWidth;
+        cartCount.classList.add("animate-badge");
+
+        setTimeout(() => {
+            cartIcon.classList.remove("animate-icon");
+            cartCount.classList.remove("animate-badge");
+        }, 4000);
+    }
+}
+
+function getCookie(nombre) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${nombre}=`);
+    if (parts.length === 2) return parts.pop().split(';')[0];
+    return null;
+}
+
+function procesarPago() {
+
+    let email = getCookie("email");  // << Ajustamos cuando me digas el nombre real
+
+    if (!email) {
+        alert("Debes iniciar sesión antes de pagar.");
+        window.location.href = "Login.aspx?ReturnUrl=Carrito.aspx";
+        return;
+    }
+
+    if (!carrito || carrito.length === 0) {
+        alert("Tu carrito está vacío");
+        return;
+    }
+
+    let total = carrito.reduce((sum, item) => sum + (item.cantidad * getPrecio(item.idProducto)), 0);
+
+    sessionStorage.setItem("totalCompra", total);
+
+    window.location.href = "Checkout.aspx?total=" + total;
+}
+function getPrecio(id) {
+    let fila = document.querySelector(`tr[data-id='${id}']`);
+    if (!fila) return 0;
+    return parseInt(fila.getAttribute("data-precio"));
+}

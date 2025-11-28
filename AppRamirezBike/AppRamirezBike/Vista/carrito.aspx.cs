@@ -72,9 +72,29 @@ namespace AppRamirezBike.Vista
                 rptCarrito.DataSource = listaCarrito;
                 rptCarrito.DataBind();
                 lblTotal.Text = totalGeneral.ToString("N0");
+
+                hdnCarrito.Value = Newtonsoft.Json.JsonConvert.SerializeObject(listaCarrito);
             }
         }
+        protected void btnPagar_Click(object sender, EventArgs e)
+        {
+            string carritoJson = hdnCarrito.Value;
+
+            if (string.IsNullOrEmpty(carritoJson))
+            {
+                // Opcional: mostrar mensaje al usuario
+                lblMensaje.Text = "El carrito está vacío";
+                return;
+            }
+
+            // Guardar en sesión (opcional) o pasar como QueryString
+            Session["carrito"] = carritoJson;
+
+            // Redirigir al Checkout
+            Response.Redirect("Checkout.aspx");
+        }
     }
+
 
     // Clase auxiliar para el Repeater
     public class ItemCarrito

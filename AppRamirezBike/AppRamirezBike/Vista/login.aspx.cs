@@ -16,7 +16,7 @@ namespace AppRamirezBike.Vista
         {
             if (User.Identity.IsAuthenticated)
             {
-                Response.Redirect("Vista/Catalogo.aspx");
+                Response.Redirect("Catalogo.aspx");
             }
         }
 
@@ -28,6 +28,7 @@ namespace AppRamirezBike.Vista
 
             ClUsuarioLogica objLogica = new ClUsuarioLogica();
 
+
             // Llamamos al nuevo método que hace el login y cifra el rol
             int idRol = objLogica.MtIniciarSesionYCifrarRol(email, password);
 
@@ -36,6 +37,23 @@ namespace AppRamirezBike.Vista
             {
                 // 2. Lógica de Redirección 
                 if (idRol == 1 || idRol == 2) // Admin o Empleado
+
+            // Llama al método correcto
+            var usuarioObj = objLogica.MtLogin(usuario, password);
+
+            if (usuarioObj != null)
+            {
+                // Mantiene autenticación por cookie
+                FormsAuthentication.SetAuthCookie(usuarioObj.email, false);
+
+                // Guardar datos clave en sesión
+                Session["idUsuario"] = usuarioObj.idUsuario;
+                Session["emailUsuario"] = usuarioObj.email;
+
+                // Redirección igual que antes
+                string returnUrl = Request.QueryString["ReturnUrl"];
+                if (!string.IsNullOrEmpty(returnUrl))
+>>>>>>> 3b039c98cb0b4fb1a228317d1785a4116ff5234d
                 {
                     Response.Redirect("~/Vista/admin/Administracion.aspx");
                 }
