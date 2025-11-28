@@ -49,12 +49,8 @@ function añadirAlCarrito(id, cantidadNueva) {
 
             guardarCarrito();
             actualizarNumero();
-<<<<<<< HEAD
-            alert(`¡Añadido! Ahora tienes ${carrito[i].cantidad} unidades.`);
-=======
             animarCarrito();
             alert("¡Añadido otra vez!");
->>>>>>> 3b039c98cb0b4fb1a228317d1785a4116ff5234d
             return;
         }
     }
