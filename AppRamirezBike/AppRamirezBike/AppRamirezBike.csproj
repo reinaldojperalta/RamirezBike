@@ -132,11 +132,11 @@
     <Content Include="Vista\ConfirmacionEpayco.aspx" />
     <Content Include="Vista\Detalle.aspx" />
     <Content Include="Vista\Global.asax" />
-    <Content Include="Vista\Imagenes\bici1.jpeg" />
-    <Content Include="Vista\Imagenes\carrito.png" />
-    <Content Include="Vista\Imagenes\mtb_beast.jpg" />
-    <Content Include="Vista\Imagenes\mtb_explorer.jpg" />
-    <Content Include="Vista\Imagenes\mtb_raptor.jpg" />
+    <Content Include="Vista\img\bici1.jpeg" />
+    <Content Include="Vista\img\carrito.png" />
+    <Content Include="Vista\img\mtb_beast.jpg" />
+    <Content Include="Vista\img\mtb_explorer.jpg" />
+    <Content Include="Vista\img\mtb_raptor.jpg" />
     <Content Include="Vista\login.aspx" />
     <Content Include="Vista\RegistroUsuario.aspx" />
     <Content Include="Vista\Carrito.aspx" />
