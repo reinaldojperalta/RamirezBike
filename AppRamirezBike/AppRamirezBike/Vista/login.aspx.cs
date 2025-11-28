@@ -1,4 +1,5 @@
 ﻿using AppRamirezBike.Logica;
+using AppRamirezBike.Modelo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,9 @@ namespace AppRamirezBike.Vista
                 Response.Redirect("Catalogo.aspx");
             }
         }
-        protected void BtnLogin_Click(object sender, EventArgs e)
+
+
+         protected void BtnLogin_Click(object sender, EventArgs e)
         {
             string usuario = txtEmail.Text.Trim();
             string password = txtClave.Text;

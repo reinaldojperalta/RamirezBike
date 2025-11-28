@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -7,15 +8,15 @@ using MySql.Data.MySqlClient;
 
 namespace AppRamirezBike.Datos
 {
-	public class ClConexion
-	{
+    public class ClConexion
+    {
         SqlConnection objConexion;
 
         public ClConexion()
         {
 
-            objConexion = new SqlConnection("Data Source=DESKTOP-8842IPF;Initial Catalog=dbRamirezBike;Integrated Security=True;Encrypt=True;TrustServerCertificate=True");
 
+            objConexion = new SqlConnection(ConfigurationManager.ConnectionStrings["dbRamirezBikeConnection"].ConnectionString);
         }
         public SqlConnection MtAbrirConexion()
         {
@@ -27,5 +28,5 @@ namespace AppRamirezBike.Datos
         {
             objConexion.Close();
         }
-	}
+    }
 }

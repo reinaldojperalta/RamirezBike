@@ -13,11 +13,40 @@ cargarCarrito();
 function guardarCarrito() {
     localStorage.setItem("carrito_ramirez", JSON.stringify(carrito));
 }
+function capturarDatosYAnadir(idProducto) {
+    // AHORA ES FÁCIL: Usamos el ID directo porque es STATIC
+    let txtCantidad = document.getElementById('txtCantidad');
 
-function añadirAlCarrito(id) {
+    // Validación por seguridad (por si acaso cambias el nombre en el futuro)
+    if (!txtCantidad) {
+        console.error("No se encontró el input 'txtCantidad'");
+        return;
+    }
+
+    let cantidad = parseInt(txtCantidad.value);
+
+    //Si NO es mayor o igual a 1 (o si es inválido), entra al error.
+    if (!(cantidad >= 1)) {
+        alert("Por favor, ingresa una cantidad válida (mínimo 1).");
+        return;
+    }
+
+    // Llamar a la función principal
+    añadirAlCarrito(idProducto, cantidad);
+}
+
+
+
+function añadirAlCarrito(id, cantidadNueva) {
+
+    // Buscar si el producto ya existe en el carrito
     for (let i = 0; i < carrito.length; i++) {
         if (carrito[i].idProducto == id) {
-            carrito[i].cantidad++;
+
+            // 🐛 CORRECCIÓN CLAVE: Si ya existe, NO solo sumamos 1.
+            // Sumamos la cantidad que el usuario eligió.
+            carrito[i].cantidad += cantidadNueva;
+
             guardarCarrito();
             actualizarNumero();
             animarCarrito();
@@ -25,7 +54,11 @@ function añadirAlCarrito(id) {
             return;
         }
     }
-    carrito.push({ idProducto: id, cantidad: 1 });
+
+    // Si no existe, lo añade con la cantidad seleccionada.
+    // 🐛 CORRECCIÓN CLAVE: Usamos 'cantidadNueva' en lugar de 1.
+    carrito.push({ idProducto: id, cantidad: cantidadNueva });
+
     guardarCarrito();
     actualizarNumero();
     animarCarrito();

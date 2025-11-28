@@ -1,0 +1,61 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/Vista/MasterPag1.Master" AutoEventWireup="true" CodeBehind="dashboard.master.cs" Inherits="AppRamirezBike.Vista.admin.dashboard" %>
+
+
+<asp:Content ID="Content1" ContentPlaceHolderID="ContentBody1" runat="server">
+
+    <!-- ===================================================== -->
+    <!-- FILA PRINCIPAL CON EL SISTEMA DE GRID DE BOOTSTRAP -->
+    <!-- ===================================================== -->
+    <!-- 
+    Idea de diseño:
+    - Usamos el sistema de grid de Bootstrap (<div class="row">) para crear un layout de dos columnas.
+    - El menú lateral será una columna (<div class="col-lg-3">).
+    - El contenido principal será la otra columna (<div class="col-lg-9">).
+    - 'g-0' elimina el espacio entre las columnas para un look unificado.
+    - 'd-none d-lg-block' en el menú lo oculta en móviles para que no ocupe espacio.
+    -->
+    <div class="row g-0">
+
+        <!-- ===================================================== -->
+        <!-- COLUMNA IZQUIERDA: MENÚ LATERAL -->
+        <!-- ===================================================== -->
+        <aside class="col-lg-3 d-none d-lg-block bg-light border-end">
+            <div class="p-3">
+                <h4 class="h5">Panel de Control</h4>
+                <hr>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="Productos.aspx">
+                            <i class="bi bi-box-seam me-2"></i>Productos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Usuarios.aspx">
+                            <i class="bi bi-people me-2"></i>Usuarios
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="Ventas.aspx">
+                            <i class="bi bi-cart-check me-2"></i>Ventas
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- ===================================================== -->
+        <!-- COLUMNA DERECHA: CONTENIDO PRINCIPAL -->
+        <!-- ===================================================== -->
+        <main class="col-lg-9">
+            <div class="p-4">
+                <!-- Aquí es donde tus páginas hijas (Productos.aspx, etc.) inyectarán su contenido -->
+                <asp:ContentPlaceHolder ID="ContentSubPage" runat="server">
+                </asp:ContentPlaceHolder>
+            </div>
+        </main>
+
+    </div>
+    <!-- Cierre de la fila principal -->
+
+</asp:Content>

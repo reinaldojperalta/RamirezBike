@@ -2,115 +2,145 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="es"> <!-- Añadido el idioma para accesibilidad y SEO -->
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Meta etiqueta esencial para el responsive design -->
     <title></title>
+
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
+    
+    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-
- <style>
-        @keyframes cart-bounce {
-            0%, 100% {
-                transform: scale(1);
-                fill: currentColor;
-            }
-            50% {
-                transform: scale(1.2);
-                fill: red;
-            }
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Estilos personalizados para detalles adicionales -->
+    <style>
+        /* Estilo para el badge del carrito */
+        .cart-icon-wrapper {
+            position: relative;
+            cursor: pointer;
         }
-
-        @keyframes badge-flash {
-            0%, 100% {
-                background-color: #DC3545; 
-                box-shadow: none;
-            }
-            50% {
-                background-color: #28A745; 
-                transform: scale(1.2);
-                box-shadow: 0 0 10px rgba(40, 167, 69, 0.8);
-            }
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            font-size: 0.7rem;
+            padding: 2px 5px;
+            border-radius: 50%;
         }
-        .bi-cart-plus.animate-icon {
-            animation: cart-bounce 4s ease-in-out;
-        }
-        .contador-carrito-fijo.animate-badge {
-            animation: badge-flash 4s ease-in-out;
-        }
-        
-        .contador-carrito-fijo {
-            display: none; 
+        /* Estilo para el footer */
+        footer {
+            margin-top: 50px; /* Espacio superior para separarlo del contenido */
         }
     </style>
-
-
 </head>
 <body>
     <form id="form1" runat="server">
-
-
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="javascript:void(0)">Logo</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="mynavbar">
-            
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="Catalogo.aspx">Catalogo</a>
-                </li>
-            </ul>
-            
-            <div class="d-flex mx-auto align-items-center" style="width: 400px;">
-                <asp:TextBox ID="txtBusqueda" 
-                    runat="server" 
-                    CssClass="form-control me-3" 
-                    placeholder="Buscar..."
-                    Width="200px" />
-    
-                <asp:Button ID="btnBuscar" 
-                    runat="server" 
-                    CssClass="btn btn-primary" 
-                    Text="Search" 
-                    OnClick="btnBuscar_Click" />
-            </div>
-
-            <div class="d-flex align-items-center ms-auto">
-                
-                <asp:Button ID="btnLogout" 
-                    runat="server" 
-                    Text="Cerrar sesión" 
-                    CssClass="btn btn-outline-light btn-sm me-3" 
-                    OnClick="btnLogout_Click" />
-
-                <a href="javascript:irAlCarrito()" class="text-white position-relative">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
-                        <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9z"/>
-                        <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
-                    </svg>
-                 <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger contador-carrito-fijo">1</span>
+        <!-- ===================================================== -->
+        <!-- BARRA DE NAVEGACIÓN MEJORADA -->
+        <!-- ===================================================== -->
+        <!-- Se mantiene la estructura y los controles de servidor, pero se mejora el diseño y la UX. -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+            <div class="container">
+                <!-- Logo: Reemplazar "Logo" con una imagen real -->
+                <a class="navbar-brand d-flex align-items-center" href="/Vista/Catalogo.aspx">
+                    <img src="/Vista/img/logo.png" alt="RamirezBike Logo" width="40" height="40" class="me-2">
+                    RamirezBike
                 </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mynavbar">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="javascript:void(0)">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Vista/Catalogo.aspx">Catálogo</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Vista/admin/administracion.aspx">DashBoard</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Vista/RegistroUsuario.aspx">registro</a>
+                        </li>
+
+                    </ul>
+                    
+                    <!-- Sección de búsqueda y acciones del usuario -->
+                    <div class="d-flex align-items-center">
+                        <!-- Barra de búsqueda mejorada con input-group -->
+                        <div class="input-group me-3">
+                            <asp:TextBox ID="txtBusqueda" runat="server" CssClass="form-control" placeholder="Buscar productos..." aria-label="Buscar" />
+                            <asp:Button ID="btnBuscar" runat="server" CssClass="btn btn-outline-light" Text="Buscar" OnClick="btnBuscar_Click" />
+                        </div>
+
+                        <!-- Carrito de compras con icono y badge -->
+                        <div class="cart-icon-wrapper text-white me-3" onclick="irAlCarrito()">
+                            <i class="bi bi-cart3 fs-4"></i>
+                            <span id="cart-count" class="badge bg-danger cart-badge">1</span>
+                        </div>
+
+                        <!-- Botón de logout con estilo de enlace para menos prominencia -->
+                        <asp:Button ID="btnLogout" runat="server" Text="Cerrar Sesión" CssClass="btn btn-link text-decoration-none text-white" OnClick="btnLogout_Click" />
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-</nav>
+        </nav>
 
-
+        <!-- Contenedor principal donde las páginas inyectarán su contenido -->
         <div>
             <asp:ContentPlaceHolder ID="ContentBody1" runat="server">
             </asp:ContentPlaceHolder>
         </div>
 
-
-
+        <!-- ===================================================== -->
+        <!-- PIE DE PÁGINA (FOOTER) -->
+        <!-- ===================================================== -->
+        <!-- Un footer profesional que aporta información y cierre visual al sitio. -->
+        <footer class="bg-dark text-white text-center py-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <h5>Contacto</h5>
+                        <p><i class="bi bi-geo-alt"></i> Calle Ficticia #123, Ciudad</p>
+                        <p><i class="bi bi-telephone"></i> +123 456 7890</p>
+                        <p><i class="bi bi-envelope"></i> info@ramirezbike.com</p>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <h5>Enlaces Rápidos</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="javascript:void(0)" class="text-white-50">Política de Privacidad</a></li>
+                            <li><a href="javascript:void(0)" class="text-white-50">Términos y Condiciones</a></li>
+                            <li><a href="javascript:void(0)" class="text-white-50">Preguntas Frecuentes</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <h5>Síguenos</h5>
+                        <a href="#" class="text-white me-2"><i class="bi bi-facebook fs-4"></i></a>
+                        <a href="#" class="text-white me-2"><i class="bi bi-instagram fs-4"></i></a>
+                        <a href="#" class="text-white"><i class="bi bi-twitter-x fs-4"></i></a>
+                    </div>
+                </div>
+                <hr class="bg-white-50">
+                <p>&copy; <%= DateTime.Now.Year %> RamirezBike. Todos los derechos reservados.</p>
+            </div>
+        </footer>
 
     </form>
+
+    <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+      <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-2.3.4/b-3.2.5/b-colvis-3.2.5/b-html5-3.2.5/b-print-3.2.5/r-3.0.7/datatables.min.js"></script>
+    <!-- Tu script personalizado del carrito -->
     <script src="carrito.js"></script>
+
 
 </body>
 </html>
