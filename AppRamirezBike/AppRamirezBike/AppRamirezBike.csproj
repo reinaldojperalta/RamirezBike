@@ -13,6 +13,7 @@
     <RootNamespace>AppRamirezBike</RootNamespace>
     <AssemblyName>AppRamirezBike</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort />
@@ -117,6 +118,7 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
+    <Content Include="Default.aspx" />
     <Content Include="Vista\admin\SubirImagen.aspx" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />
@@ -135,6 +137,7 @@
     <Content Include="Vista\Detalle.aspx" />
     <Content Include="Vista\Global.asax" />
     <Content Include="Vista\img\bici1.jpeg" />
+    <Content Include="Vista\img\logo.png" />
     <Content Include="Vista\img\mtb_beast.jpg" />
     <Content Include="Vista\img\mtb_explorer.jpg" />
     <Content Include="Vista\img\mtb_raptor.jpg" />
@@ -152,6 +155,13 @@
     <Compile Include="Datos\ClUsuarioDashBoardDatos.cs" />
     <Compile Include="Datos\ClUsuarioDatos.cs" />
     <Compile Include="Datos\ClProductosDashboardDatos.cs" />
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Vista\admin\SubirImagen.aspx.cs">
       <DependentUpon>SubirImagen.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -172,7 +182,6 @@
     <Compile Include="Modelo\Usuario.cs" />
     <Compile Include="Modelo\Producto.cs" />
     <Compile Include="Modelo\UsuarioDashBoard.cs" />
-    <Compile Include="obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Vista\admin\administracion.aspx.cs">
       <DependentUpon>administracion.aspx</DependentUpon>

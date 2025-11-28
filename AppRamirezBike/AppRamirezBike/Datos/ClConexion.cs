@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace AppRamirezBike.Datos
         {
 
 
-            objConexion = new SqlConnection("Data Source=DESKTOP-AJM9FE4;Initial Catalog=dbRamirezBike;Integrated Security=True;Encrypt=True;TrustServerCertificate=True");
+            objConexion = new SqlConnection(ConfigurationManager.ConnectionStrings["dbRamirezBikeConnection"].ConnectionString);
         }
         public SqlConnection MtAbrirConexion()
         {
