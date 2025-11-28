@@ -11,41 +11,47 @@ namespace AppRamirezBike.Datos
     {
         ClConexion conexion = new ClConexion();
 
+        // Registrar orden (antes del pago)
         public int RegistrarOrden(Orden orden)
         {
-            string query = "INSERT INTO Orden(idUsuario,fecha,total,estado,referenciaPago) OUTPUT INSERTED.idOrden " +
-                           "VALUES(@idUsuario,@fecha,@total,@estado,@referenciaPago)";
+            string query = @"INSERT INTO Orden (idUsuario, Referencia, Total, Estado, MetodoPago, FechaCreacion, FechaPago)
+                         OUTPUT INSERTED.idOrden
+                         VALUES (@idUsuario, @Referencia, @Total, @Estado, @MetodoPago, @FechaCreacion, @FechaPago)";
 
             SqlCommand cmd = new SqlCommand(query, conexion.MtAbrirConexion());
+
             cmd.Parameters.AddWithValue("@idUsuario", orden.IdUsuario);
-            cmd.Parameters.AddWithValue("@fecha", orden.Fecha);
-            cmd.Parameters.AddWithValue("@total", orden.Total);
-            cmd.Parameters.AddWithValue("@estado", orden.Estado);
-            cmd.Parameters.AddWithValue("@referenciaPago", orden.RefPago ?? (object)DBNull.Value);
+            cmd.Parameters.AddWithValue("@Referencia", orden.Referencia ?? (object)DBNull.Value);
+            cmd.Parameters.AddWithValue("@Total", orden.Total);
+            cmd.Parameters.AddWithValue("@Estado", orden.Estado);
+            cmd.Parameters.AddWithValue("@MetodoPago", orden.MetodoPago ?? (object)DBNull.Value);
+            cmd.Parameters.AddWithValue("@FechaCreacion", orden.FechaCreacion);
+            cmd.Parameters.AddWithValue("@FechaPago", orden.FechaPago ?? (object)DBNull.Value);
 
             int idOrden = (int)cmd.ExecuteScalar();
             conexion.MtCerrarConexion();
             return idOrden;
         }
 
+        // Actualizar estado (respuesta de ePayco)
         public int ActualizarEstado(int idOrden, string estado)
         {
-            string query = "UPDATE Orden SET estado=@estado WHERE idOrden=@idOrden";
+            string query = "UPDATE Orden SET Estado=@Estado WHERE idOrden=@idOrden";
 
             SqlCommand cmd = new SqlCommand(query, conexion.MtAbrirConexion());
-            cmd.Parameters.AddWithValue("@estado", estado);
+            cmd.Parameters.AddWithValue("@Estado", estado);
             cmd.Parameters.AddWithValue("@idOrden", idOrden);
 
             int filas = cmd.ExecuteNonQuery();
             conexion.MtCerrarConexion();
             return filas;
         }
+
+        // Registrar detalle
         public int RegistrarDetalle(OrdenDetalle detalle)
         {
-            ClConexion oConexion = new ClConexion();
-
             string consulta = @"INSERT INTO OrdenDetalle (idOrden, idProducto, cantidad, precioUnitario)
-                        VALUES (@idOrden, @idProducto, @cantidad, @precioUnitario)";
+                            VALUES (@idOrden, @idProducto, @cantidad, @precioUnitario)";
 
             SqlCommand cmd = new SqlCommand(consulta, conexion.MtAbrirConexion());
 
@@ -55,17 +61,17 @@ namespace AppRamirezBike.Datos
             cmd.Parameters.AddWithValue("@precioUnitario", detalle.PrecioUnitario);
 
             int result = cmd.ExecuteNonQuery();
-
-            oConexion.MtCerrarConexion();
-
+            conexion.MtCerrarConexion();
             return result;
         }
-        public int ActualizarTotal(int idOrden, double total)
+
+        // Actualizar total (si cambian productos)
+        public int ActualizarTotal(int idOrden, decimal total)
         {
-            string consulta = "UPDATE Orden SET total=@total WHERE idOrden=@idOrden";
+            string consulta = "UPDATE Orden SET Total=@Total WHERE idOrden=@idOrden";
 
             SqlCommand cmd = new SqlCommand(consulta, conexion.MtAbrirConexion());
-            cmd.Parameters.AddWithValue("@total", total);
+            cmd.Parameters.AddWithValue("@Total", total);
             cmd.Parameters.AddWithValue("@idOrden", idOrden);
 
             int filas = cmd.ExecuteNonQuery();
@@ -73,5 +79,44 @@ namespace AppRamirezBike.Datos
             return filas;
         }
 
+        // Guardar referencia generada por ePayco
+        public int ActualizarReferencia(int idOrden, string referencia)
+        {
+            string query = "UPDATE Orden SET Referencia=@Referencia WHERE idOrden=@idOrden";
+
+            SqlCommand cmd = new SqlCommand(query, conexion.MtAbrirConexion());
+            cmd.Parameters.AddWithValue("@Referencia", referencia);
+            cmd.Parameters.AddWithValue("@idOrden", idOrden);
+
+            int filas = cmd.ExecuteNonQuery();
+            conexion.MtCerrarConexion();
+            return filas;
+        }
+
+       
+        public int ActualizarEstadoPorReferencia(string referencia, string nuevoEstado)
+        {
+            string query = @"UPDATE Orden 
+                     SET Estado = @Estado, FechaPago = GETDATE()
+                     WHERE Referencia = @Referencia";
+
+            SqlCommand cmd = new SqlCommand(query, conexion.MtAbrirConexion());
+            cmd.Parameters.AddWithValue("@Estado", nuevoEstado);
+            cmd.Parameters.AddWithValue("@Referencia", referencia);
+
+            int filas = cmd.ExecuteNonQuery();
+            conexion.MtCerrarConexion();
+            return filas;
+        }
+        public int ActualizarFechaPagoPorReferencia(string referencia, DateTime fechaPago)
+        {
+            string query = "UPDATE Orden SET FechaPago=@FechaPago WHERE Referencia=@Referencia";
+            SqlCommand cmd = new SqlCommand(query, conexion.MtAbrirConexion());
+            cmd.Parameters.AddWithValue("@FechaPago", fechaPago);
+            cmd.Parameters.AddWithValue("@Referencia", referencia);
+            int filas = cmd.ExecuteNonQuery();
+            conexion.MtCerrarConexion();
+            return filas;
+        }
     }
 }

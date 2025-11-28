@@ -9,10 +9,11 @@ namespace AppRamirezBike.Modelo
     {
         public int IdOrden { get; set; }
         public int IdUsuario { get; set; }
+        public string Referencia { get; set; }
         public decimal Total { get; set; }
-        public string Estado { get; set; }  // Pendiente, Pagado, Fallido
-        public DateTime Fecha { get; set; }
-        public string RefPago { get; set; } // Código o referencia de ePayco
-
+        public string Estado { get; set; }
+        public string MetodoPago { get; set; }
+        public DateTime FechaCreacion { get; set; }
+        public DateTime? FechaPago { get; set; }
     }
 }

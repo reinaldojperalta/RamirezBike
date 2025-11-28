@@ -6,53 +6,63 @@
     <meta charset="utf-8" />
     <title>Confirmar Pedido</title>
 
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <!-- Script oficial de ePayco -->
     <script src="https://checkout.epayco.co/checkout.js"></script>
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #343a40;
+            margin-bottom: 20px;
+        }
+        .total-label {
+            font-size: 1.2rem;
+        }
+        .btn-success {
+            width: 100%;
+            padding: 10px;
+            font-size: 1.1rem;
+        }
+        #lblMensaje {
+            margin-top: 15px;
+        }
+    </style>
 </head>
 <body>
+    <form id="form1" runat="server">
+        <div class="container">
+            <h2>Resumen del Pedido</h2>
 
-<form id="form1" runat="server">
+            <p class="total-label">
+                <strong>Total a pagar:</strong> <asp:Label ID="lblTotal" runat="server" CssClass="fw-bold"></asp:Label>
+            </p>
 
-    <h2>Resumen del Pedido</h2>
+            <!-- Valores que llenará el servidor -->
+            <asp:HiddenField ID="hdnIdOrden" runat="server" />
+            <asp:HiddenField ID="hdnTotal" runat="server" />
+            <asp:HiddenField ID="hdnReferencia" runat="server" />
 
-    <p><strong>Total a pagar:</strong> <asp:Label ID="lblTotal" runat="server" CssClass="fw-bold"></asp:Label></p>
+            <asp:Label ID="lblMensaje" runat="server" CssClass="text-danger"></asp:Label>
 
-    <!-- Se usa en ePayco como referencia -->
-    <asp:HiddenField ID="hdnIdOrden" runat="server" />
-    <asp:HiddenField ID="hdnCarrito" runat="server" />
-    <asp:Label ID="lblMensaje" runat="server" CssClass="text-danger"></asp:Label>
+            <!-- Botón server-side que inyectará script para abrir ePayco -->
+            <asp:Button ID="btnIniciarPago" runat="server" CssClass="btn btn-success mt-3" Text="Pagar con ePayco" OnClick="btnIniciarPago_Click" />
+        </div>
+    </form>
 
-
-    <button type="button" class="btn btn-success" onclick="procesarPago()">Pagar con ePayco</button>
-
-</form>
-
-<script>
-
-    function procesarPago() {
-
-        var handler = ePayco.checkout.configure({
-            key: "YOUR_PUBLIC_KEY_SANDBOX",
-            test: true
-        });
-
-        handler.open({
-            name: "Ramirez Bike Store",
-            description: "Compra Online",
-            invoice: document.getElementById("<%= hdnIdOrden.ClientID %>").value,
-        currency: "cop",
-        amount: document.getElementById("<%= lblTotal.ClientID %>").innerText,
-        tax_base: "0",
-        tax: "0",
-        country: "CO",
-        external: "false",
-        test: "true",
-        response: "https://localhost:44342/Vista/RespuestaEpayco.aspx",
-        confirmation: "https://localhost:44342/Vista/ConfirmacionEpayco.aspx"
-    });
-
-    }
-</script>
-
+    <!-- Bootstrap JS y dependencias (opcional si necesitas funcionalidad JS) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

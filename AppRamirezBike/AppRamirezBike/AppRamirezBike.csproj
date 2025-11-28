@@ -129,6 +129,7 @@
     <Content Include="Vista\carrito.js" />
     <Content Include="Vista\Catalogo.aspx" />
     <Content Include="Vista\Checkout.aspx" />
+    <Content Include="Vista\ConfirmacionEpayco.aspx" />
     <Content Include="Vista\Detalle.aspx" />
     <Content Include="Vista\Global.asax" />
     <Content Include="Vista\Imagenes\bici1.jpeg" />
@@ -178,6 +179,13 @@
     </Compile>
     <Compile Include="Vista\Checkout.aspx.designer.cs">
       <DependentUpon>Checkout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\ConfirmacionEpayco.aspx.cs">
+      <DependentUpon>ConfirmacionEpayco.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vista\ConfirmacionEpayco.aspx.designer.cs">
+      <DependentUpon>ConfirmacionEpayco.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vista\Detalle.aspx.cs">
       <DependentUpon>Detalle.aspx</DependentUpon>
