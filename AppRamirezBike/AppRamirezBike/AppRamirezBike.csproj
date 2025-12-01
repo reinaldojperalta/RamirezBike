@@ -132,6 +132,7 @@
     <Content Include="Vista\admin\administracion.aspx" />
     <Content Include="Vista\admin\Productos.aspx" />
     <Content Include="Vista\admin\Usuarios.aspx" />
+    <Content Include="Vista\admin\Venta.aspx" />
     <Content Include="Vista\carrito.js" />
     <Content Include="Vista\Catalogo.aspx" />
     <Content Include="Vista\Checkout.aspx" />
@@ -159,6 +160,7 @@
     <Compile Include="Datos\ClUsuarioDashBoardDatos.cs" />
     <Compile Include="Datos\ClUsuarioDatos.cs" />
     <Compile Include="Datos\ClProductosDashboardDatos.cs" />
+    <Compile Include="Datos\ClVentaDatos.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -166,6 +168,7 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Logica\ClVentaLogica.cs" />
     <Compile Include="Vista\admin\SubirImagen.aspx.cs">
       <DependentUpon>SubirImagen.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -219,6 +222,13 @@
     </Compile>
     <Compile Include="Vista\admin\Usuarios.aspx.designer.cs">
       <DependentUpon>Usuarios.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\admin\Venta.aspx.cs">
+      <DependentUpon>Venta.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vista\admin\Venta.aspx.designer.cs">
+      <DependentUpon>Venta.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vista\Catalogo.aspx.cs">
       <DependentUpon>Catalogo.aspx</DependentUpon>
