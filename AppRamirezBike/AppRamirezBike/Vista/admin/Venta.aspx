@@ -1,178 +1,101 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Vista/admin/dashboard.master" AutoEventWireup="true" CodeBehind="Venta.aspx.cs" Inherits="AppRamirezBike.Vista.admin.Venta" %>
-
+﻿<%@ Page Title="Historial de Ventas" Language="C#" MasterPageFile="~/Vista/admin/dashboard.master" AutoEventWireup="true" CodeBehind="Venta.aspx.cs" Inherits="AppRamirezBike.Vista.admin.Venta" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentSubPage" runat="server">
+
+    <!-- Título + Total + Select elegante para ordenar -->
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3>Gestión de Ventas</h3>
+        <h3>Historial de Ventas</h3>
+        <div class="d-flex align-items-center gap-3">
+
+            <span class="badge bg-success fs-5 px-4 py-2">
+                Total Vendido: $<span id="totalVentas">0</span>
+            </span>
+
+            <div>
+                <label class="form-label mb-1 text-muted small">Ordenar por fecha:</label>
+                <select id="ordenarFecha" class="form-select form-select-sm" style="width: 220px;">
+                    <option value="desc">Más recientes </option>
+                    <option value="asc">Más antiguas </option>
+                </select>
+            </div>
+        </div>
     </div>
 
-    <div class="card">
-        <div class="card-body">
-            <table id="tablaVentas" class="table table-striped table-hover" style="width: 100%">
-                <thead>
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <table id="tablaVentas" class="table table-striped table-hover table-sm mb-0" style="width:100%">
+                <thead class="table-dark text-white">
                     <tr>
-                        <th></th>
-                        <th>ID Orden</th>
-                        <th>Referencia</th>
-                        <th>ID Usuario</th>
-                        <th>Total</th>
-                        <th>Estado</th>
-                        <th>Fecha Creación</th>
+                        <th class="text-center">Pedido</th>
+                        <th class="text-center">Fecha</th>
+                        <th>Cliente</th>
+                        <th>Producto</th>
+                        <th class="text-center">Cant.</th>
+                        <th class="text-end">Precio</th>
+                        <th class="text-end">Subtotal</th>
+                        <th class="text-end">Total</th>
+                        <th class="text-center">Estado</th>
                     </tr>
                 </thead>
-                <tbody>
-                </tbody>
+                <tbody></tbody>
             </table>
         </div>
     </div>
 
     <script type="text/javascript">
-
-        // FIX 1: Corregida la URL al nombre de archivo correcto (Venta.aspx)
-        const pageUrl = "Venta.aspx";
-        let tablaVentas;
-
-        // ----------------------------------------------------
-        // FUNCIÓN DE FORMATO PARA EL DETALLE (FILA EXPANDIBLE)
-        // ----------------------------------------------------
-        function format(idOrden) {
-            // Retorna un HTML temporal mientras se carga el detalle
-            return `<div class="p-3">
-                <h5>Detalle de Orden #${idOrden}</h5>
-                <table id="detalle-${idOrden}" class="table table-bordered table-sm">
-                    <thead>
-                        <tr>
-                            <th>ID Producto</th>
-                            <th>Cantidad</th>
-                            <th>Precio Unitario</th>
-                            <th>Subtotal</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td colspan="4">Cargando detalle...</td></tr>
-                    </tbody>
-                </table>
-            </div>`;
-        }
-
         $(document).ready(function () {
-
-            // 1. INICIALIZAR DATATABLE
-            function inicializarDataTableVentas() {
-                tablaVentas = $('#tablaVentas').DataTable({
-                    processing: true,
-                    serverSide: false,
-                    ajax: {
-                        url: pageUrl + '/ListarVentas', // WebMethod 1
-                        method: 'POST',
-                        dataType: 'json',
-                        contentType: 'application/json; charset=utf-8',
-                        // FIX 2: Se agrega el payload vacío para asegurar la comunicación con el WebMethod
-                        data: function () {
-                            return JSON.stringify({});
-                        },
-                        dataSrc: function (json) { return json.d; },
-                        error: function (xhr, error, thrown) {
-                            // Intenta mostrar más detalles del error de red
-                            const errorDetail = xhr.status === 404 ? " (Error 404: WebMethod no encontrado. ¿URL/Nombre correcto?)" : "";
-                            console.error("Error AJAX de DataTables:", thrown, xhr);
-                            alert("Error al cargar la tabla de Ventas." + errorDetail);
+            var tabla = $('#tablaVentas').DataTable({
+                responsive: true,
+                ajax: {
+                    url: 'Venta.aspx/ListarTodasLasVentas',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: function () { return JSON.stringify({}); },
+                    dataSrc: 'd'
+                },
+                columns: [
+                    { data: 'IdOrden', className: 'text-center fw-bold' },
+                    {
+                        data: 'FechaCreacion',
+                        className: 'text-center text-nowrap',
+                        render: function (data) {
+                            var fecha = new Date(data);
+                            if (isNaN(fecha)) {
+                                var num = data.replace(/\/Date\((\d+).*\)\//, '$1');
+                                fecha = new Date(parseInt(num));
+                            }
+                            return fecha.toLocaleString('es-CO');
                         }
                     },
-                    columns: [
-                        {
-                            // Columna de control
-                            className: 'dt-control',
-                            orderable: false,
-                            data: null,
-                            defaultContent: '<i class="bi bi-plus-circle"></i>' // Ícono para expandir
-                        },
-                        { data: 'IdOrden' },
-                        { data: 'Referencia' },
-                        { data: 'IdUsuario' },
-                        {
-                            data: 'Total',
-                            render: $.fn.dataTable.render.number('.', ',', 2, '$') // Formato de moneda
-                        },
-                        { data: 'Estado' },
-                        {
-                            data: 'FechaCreacion',
-                            render: function (data) {
-                                // Se mantiene la lógica de DataTables/JSON para fechas .NET
-                                return data ? new Date(parseInt(data.substr(6))).toLocaleDateString() : 'N/A';
-                            }
-                        }
-                    ],
-                    order: [[1, 'desc']], // Ordenar por ID Orden descendente
-                    language: { url: 'https://cdn.datatables.net/plug-ins/2.0.0/i18n/es-ES.json' },
-                    dom: 'Bfrtip',
-                    buttons: ['copy', 'excel', 'pdf']
-                });
-            }
-
-            // Inicialización al cargar el DOM
-            inicializarDataTableVentas();
-
-            // ----------------------------------------------------
-            // 2. MANEJO DEL EVENTO CLIC PARA EXPANDIR LA FILA
-            // ----------------------------------------------------
-            $('#tablaVentas tbody').on('click', 'td.dt-control', function () {
-                const tr = $(this).closest('tr');
-                const row = tablaVentas.row(tr);
-                const icon = $(this).find('i');
-
-                if (row.child.isShown()) {
-                    // Esta fila ya está abierta, la cerramos
-                    row.child.hide();
-                    tr.removeClass('shown');
-                    icon.removeClass('bi-dash-circle').addClass('bi-plus-circle');
-                } else {
-                    // Abrimos la fila (muestra la estructura HTML inicial)
-                    const idOrden = row.data().IdOrden;
-                    row.child(format(idOrden)).show();
-                    tr.addClass('shown');
-                    icon.removeClass('bi-plus-circle').addClass('bi-dash-circle');
-
-                    // Llamada AJAX para obtener el detalle real
-                    cargarDetalleVenta(idOrden, $(`#detalle-${idOrden} tbody`));
+                    { data: 'Cliente', render: d => '<strong>' + d + '</strong>' },
+                    { data: 'Producto' },
+                    { data: 'Cantidad', className: 'text-center' },
+                    { data: 'PrecioUnitario', className: 'text-end', render: d => '$' + Number(d).toLocaleString('es-CO') },
+                    { data: 'Subtotal', className: 'text-end', render: d => '$' + Number(d).toLocaleString('es-CO') },
+                    { data: 'Total', className: 'text-end fw-bold', render: d => '<strong class="text-success">$' + Number(d).toLocaleString('es-CO') + '</strong>' },
+                    {
+                        data: 'Estado',
+                        className: 'text-center',
+                        render: d => d === 'Pagada'
+                            ? '<span class="badge bg-success fs-6 px-3 py-2">PAGADA</span>'
+                            : '<span class="badge bg-warning text-dark fs-6 px-3 py-2">PENDIENTE</span>'
+                    }
+                ],
+                order: [[1, 'desc']],  
+                pageLength: 25,
+                language: { url: 'https://cdn.datatables.net/plug-ins/2.0.0/i18n/es-ES.json' },
+                dom: 'Bfrtip',
+                buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+                initComplete: function () {
+                    var total = 0;
+                    tabla.column(7).data().each(v => total += Number(v));
+                    $('#totalVentas').text(total.toLocaleString('es-CO'));
                 }
             });
 
-            // ----------------------------------------------------
-            // 3. FUNCIÓN PARA CARGAR EL DETALLE DE LA ORDEN
-            // ----------------------------------------------------
-            function cargarDetalleVenta(idOrden, detalleBody) {
-                $.ajax({
-                    url: pageUrl + '/ObtenerDetalleVenta', // WebMethod 2
-                    method: 'POST',
-                    contentType: 'application/json; charset=utf-8',
-                    data: JSON.stringify({ idOrden: idOrden }),
-                    success: function (response) {
-                        detalleBody.empty(); // Limpiar el "Cargando..."
-
-                        if (!response.d || response.d.length === 0) {
-                            detalleBody.append('<tr><td colspan="4">No se encontraron detalles para esta orden.</td></tr>');
-                            return;
-                        }
-
-                        // Llenar la tabla de detalle con los datos
-                        $.each(response.d, function (i, detalle) {
-                            detalleBody.append(`
-                                <tr>
-                                    <td>${detalle.IdProducto}</td>
-                                    <td>${detalle.Cantidad}</td>
-                                    <td>$${detalle.PrecioUnitario.toFixed(2)}</td>
-                                    <td>$${detalle.Subtotal.toFixed(2)}</td>
-                                </tr>
-                            `);
-                        });
-                    },
-                    error: function (err) {
-                        detalleBody.empty().append(`<tr><td colspan="4" class="text-danger">Error al cargar el detalle: ${err.statusText}</td></tr>`);
-                        console.error("Error al cargar detalle de venta:", err.responseText);
-                    }
-                });
-            }
-
+            $('#ordenarFecha').on('change', function () {
+                var valor = $(this).val(); // 'desc' o 'asc'
+                tabla.order([1, valor]).draw();
+            });
         });
     </script>
 </asp:Content>

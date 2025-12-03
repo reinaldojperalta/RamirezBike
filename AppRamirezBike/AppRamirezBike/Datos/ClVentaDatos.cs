@@ -9,95 +9,57 @@ namespace AppRamirezBike.Datos
 {
     public class ClVentaDatos
     {
-        public List<Orden> MtListarTodasLasVentas()
+        public List<VentaListado> MtListarTodasLasVentas()
         {
             ClConexion objConexion = new ClConexion();
-            List<Orden> listaOrdenes = new List<Orden>();
-            SqlConnection conex = null;
+            List<VentaListado> lista = new List<VentaListado>();
+            SqlConnection conex = objConexion.MtAbrirConexion();
 
-            conex = objConexion.MtAbrirConexion();
-
-            string consulta = @"
-        SELECT IdOrden, IdUsuario, Referencia, Total, Estado, MetodoPago, FechaCreacion, FechaPago
-        FROM Orden 
-        ORDER BY FechaCreacion DESC";
-
-            SqlCommand cmd = new SqlCommand(consulta, conex);
-            SqlDataReader reader = cmd.ExecuteReader();
-
-            while (reader.Read())
-            {
-                Nullable<DateTime> fechaPago;
-
-                if (reader["FechaPago"] != DBNull.Value)
-                {
-                    // Usamos Convert.ToDateTime() para asegurar que la conversión sea correcta
-                    fechaPago = Convert.ToDateTime(reader["FechaPago"]);
-                }
-                else
-                {
-                    fechaPago = null; // Simplificamos (Nullable<DateTime>)null a null
-                }
-
-                listaOrdenes.Add(new Orden()
-                {
-                    IdOrden = Convert.ToInt32(reader["IdOrden"]),
-                    IdUsuario = Convert.ToInt32(reader["IdUsuario"]),
-                    Referencia = reader["Referencia"].ToString(),
-                    Total = Convert.ToDecimal(reader["Total"]),
-                    Estado = reader["Estado"].ToString(),
-                    MetodoPago = reader["MetodoPago"].ToString(),
-                    FechaCreacion = Convert.ToDateTime(reader["FechaCreacion"]),
-                    FechaPago = fechaPago
-                });
-            }
-            reader.Close();
-            objConexion.MtCerrarConexion();
-
-            return listaOrdenes;
-        }
-
-
-        public List<OrdenDetalle> MtObtenerDetallePorId(int idOrden)
-        {
-            ClConexion objConexion = new ClConexion();
-            List<OrdenDetalle> listaDetalles = new List<OrdenDetalle>();
-            SqlConnection conex = null;
-
-            conex = objConexion.MtAbrirConexion();
-
-            // Consulta que TRAE SOLO LAS COLUMNAS DEFINIDAS EN TU MODELO OrdenDetalle
             string consulta = @"
                 SELECT 
-                    IdDetalle, 
-                    IdOrden, 
-                    IdProducto, 
-                    Cantidad, 
-                    PrecioUnitario, 
-                    Subtotal
-                FROM OrdenDetalle 
-                WHERE IdOrden = @idOrden";
+                    o.IdOrden,
+                    o.Referencia,
+                    CONCAT(u.nombre, ' ', u.apellido) AS Cliente,
+                    u.email AS Email,
+                    o.FechaCreacion,
+                    o.Total,
+                    o.Estado,
+                    o.MetodoPago,
+                    p.nombre AS Producto,
+                    od.Cantidad,
+                    od.PrecioUnitario,
+                    (od.Cantidad * od.PrecioUnitario) AS Subtotal
+                FROM Orden o
+                INNER JOIN usuario u ON o.IdUsuario = u.idUsuario
+                INNER JOIN OrdenDetalle od ON o.IdOrden = od.IdOrden
+                INNER JOIN producto p ON od.IdProducto = p.idProducto
+                ORDER BY o.FechaCreacion DESC";
 
             SqlCommand cmd = new SqlCommand(consulta, conex);
-            cmd.Parameters.AddWithValue("@idOrden", idOrden);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
             {
-                listaDetalles.Add(new OrdenDetalle()
+                lista.Add(new VentaListado()
                 {
-                    IdOrdenDetalle = Convert.ToInt32(reader["IdDetalle"]),
                     IdOrden = Convert.ToInt32(reader["IdOrden"]),
-                    IdProducto = Convert.ToInt32(reader["IdProducto"]),
+                    Referencia = reader["Referencia"].ToString(),
+                    Cliente = reader["Cliente"].ToString(),
+                    Email = reader["Email"].ToString(),
+                    FechaCreacion = Convert.ToDateTime(reader["FechaCreacion"]),
+                    Total = Convert.ToDecimal(reader["Total"]),
+                    Estado = reader["Estado"].ToString(),
+                    MetodoPago = reader["MetodoPago"] == DBNull.Value ? "N/A" : reader["MetodoPago"].ToString(),
+                    Producto = reader["Producto"].ToString(),
                     Cantidad = Convert.ToInt32(reader["Cantidad"]),
                     PrecioUnitario = Convert.ToDecimal(reader["PrecioUnitario"]),
                     Subtotal = Convert.ToDecimal(reader["Subtotal"])
                 });
             }
+
             reader.Close();
             objConexion.MtCerrarConexion();
-
-            return listaDetalles;
+            return lista;
         }
     }
 }

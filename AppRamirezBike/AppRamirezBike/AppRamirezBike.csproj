@@ -169,6 +169,7 @@
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Logica\ClVentaLogica.cs" />
+    <Compile Include="Modelo\VentaListado.cs" />
     <Compile Include="Vista\admin\SubirImagen.aspx.cs">
       <DependentUpon>SubirImagen.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
