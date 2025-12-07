@@ -6,70 +6,44 @@ function cargarCarrito() {
         carrito = JSON.parse(guardado);
     }
 }
-
-// CARGAR AL INICIO (solo una vez)
 cargarCarrito();
 
 function guardarCarrito() {
     localStorage.setItem("carrito_ramirez", JSON.stringify(carrito));
 }
+
 function capturarDatosYAnadir(idProducto) {
-    // AHORA ES FÁCIL: Usamos el ID directo porque es STATIC
     let txtCantidad = document.getElementById('txtCantidad');
-
-    // Validación por seguridad (por si acaso cambias el nombre en el futuro)
-    if (!txtCantidad) {
-        console.error("No se encontró el input 'txtCantidad'");
-        return;
-    }
-
+    if (!txtCantidad) return;
     let cantidad = parseInt(txtCantidad.value);
-
-    //Si NO es mayor o igual a 1 (o si es inválido), entra al error.
     if (!(cantidad >= 1)) {
-        alert("Por favor, ingresa una cantidad válida (mínimo 1).");
+        Swal.fire({ icon: 'warning', title: 'Cantidad inválida', text: 'Ingresa mínimo 1', confirmButtonColor: '#198754' });
         return;
     }
-
-    // Llamar a la función principal
     añadirAlCarrito(idProducto, cantidad);
 }
 
-
-
 function añadirAlCarrito(id, cantidadNueva) {
-
-    // Buscar si el producto ya existe en el carrito
     for (let i = 0; i < carrito.length; i++) {
         if (carrito[i].idProducto == id) {
-
-            // 🐛 CORRECCIÓN CLAVE: Si ya existe, NO solo sumamos 1.
-            // Sumamos la cantidad que el usuario eligió.
             carrito[i].cantidad += cantidadNueva;
-
             guardarCarrito();
             actualizarNumero();
             animarCarrito();
-            alert("¡Añadido otra vez!");
+            Swal.fire({ icon: 'success', title: '¡Añadido otra vez!', toast: true, position: 'top-end', timer: 2000, showConfirmButton: false });
             return;
         }
     }
-
-    // Si no existe, lo añade con la cantidad seleccionada.
-    // 🐛 CORRECCIÓN CLAVE: Usamos 'cantidadNueva' en lugar de 1.
     carrito.push({ idProducto: id, cantidad: cantidadNueva });
-
     guardarCarrito();
     actualizarNumero();
     animarCarrito();
-    alert("¡Producto añadido al carrito!");
+    Swal.fire({ icon: 'success', title: '¡Añadido al carrito!', toast: true, position: 'top-end', timer: 2000, showConfirmButton: false });
 }
 
 function actualizarNumero() {
     let total = 0;
-    for (let i = 0; i < carrito.length; i++) {
-        total += carrito[i].cantidad;
-    }
+    for (let i = 0; i < carrito.length; i++) total += carrito[i].cantidad;
     let contador = document.getElementById("cart-count");
     if (contador) {
         contador.innerText = total;
@@ -80,8 +54,7 @@ function actualizarNumero() {
 function irAlCarrito() {
     let datos = localStorage.getItem("carrito_ramirez");
     if (!datos || datos === "[]" || datos === "null" || datos === "") {
-        alert("Tu carrito está vacío");
-        window.location.href = "Carrito.aspx";
+        Swal.fire({ icon: 'info', title: 'Carrito vacío', text: 'Agrega productos para comprar', confirmButtonColor: '#198754' });
         return;
     }
     let temp = JSON.parse(datos);
@@ -94,11 +67,9 @@ function irAlCarrito() {
 }
 
 function revisarCarrito() {
-    // Solo ejecutamos si estamos en Carrito.aspx
     let divVacio = document.getElementById("divVacio");
     let divConProductos = document.getElementById("divConProductos");
-    if (!divVacio && !divConProductos) return; // Salimos si no existen
-
+    if (!divVacio && !divConProductos) return;
     let guardado = localStorage.getItem("carrito_ramirez");
     if (!guardado || guardado === "[]" || guardado === "null" || guardado === "") {
         divVacio.style.display = "block";
@@ -110,32 +81,52 @@ function revisarCarrito() {
 }
 
 function vaciarCarrito() {
-    if (confirm("¿Estás seguro de que quieres vaciar todo el carrito?")) {
-        localStorage.removeItem("carrito_ramirez");
-        window.location.href = "Carrito.aspx";
-    }
+    Swal.fire({
+        title: '¿Vaciar carrito?',
+        text: 'Se eliminarán todos los productos',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Sí, vaciar',
+        cancelButtonText: 'Cancelar'
+    }).then((r) => { if (r.isConfirmed) { localStorage.removeItem("carrito_ramirez"); window.location.href = "Carrito.aspx"; } });
 }
 
 function modificarCantidad(idProducto, cambio) {
     let datos = localStorage.getItem("carrito_ramirez");
     if (!datos || datos === "[]" || datos === "null") return;
-
     let temp = JSON.parse(datos);
     for (let i = 0; i < temp.length; i++) {
         if (temp[i].idProducto == idProducto) {
             temp[i].cantidad += cambio;
             if (temp[i].cantidad < 1) {
-                if (confirm("¿Quieres eliminar este producto del carrito?")) {
-                    temp.splice(i, 1);
-                } else {
-                    temp[i].cantidad = 1;
-                }
+                Swal.fire({
+                    title: '¿Eliminar producto?',
+                    text: 'La cantidad llegó a 0',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#dc3545',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Mantener (1)'
+                }).then((r) => {
+                    if (r.isConfirmed) temp.splice(i, 1);
+                    else temp[i].cantidad = 1;
+                    localStorage.setItem("carrito_ramirez", JSON.stringify(temp));
+                    let nuevaCadena = "";
+                    for (let j = 0; j < temp.length; j++) {
+                        if (j > 0) nuevaCadena += ",";
+                        nuevaCadena += temp[j].idProducto + "-" + temp[j].cantidad;
+                    }
+                    window.location.href = nuevaCadena === "" ? "Carrito.aspx" : "Carrito.aspx?datos=" + nuevaCadena;
+                });
+                return;
             }
             break;
         }
     }
     localStorage.setItem("carrito_ramirez", JSON.stringify(temp));
-
     let nuevaCadena = "";
     for (let i = 0; i < temp.length; i++) {
         if (i > 0) nuevaCadena += ",";
@@ -144,20 +135,15 @@ function modificarCantidad(idProducto, cambio) {
     window.location.href = nuevaCadena === "" ? "Carrito.aspx" : "Carrito.aspx?datos=" + nuevaCadena;
 }
 
-// === ESTO ES LO QUE FALTABA: EJECUTAR AL CARGAR LA PÁGINA ===
 document.addEventListener("DOMContentLoaded", function () {
     actualizarNumero();
     revisarCarrito();
 });
-
-// Actualiza si cambian desde otra pestaña
 window.addEventListener("storage", function () {
     cargarCarrito();
     actualizarNumero();
     revisarCarrito();
 });
-
-// Por si acaso (infalible)
 setInterval(function () {
     actualizarNumero();
     revisarCarrito();
@@ -166,53 +152,12 @@ setInterval(function () {
 function animarCarrito() {
     let cartIcon = document.querySelector(".bi-cart-plus");
     let cartCount = document.querySelector(".contador-carrito-fijo");
-
     if (cartIcon && cartCount) {
-        cartIcon.classList.remove("animate-icon");
-        void cartIcon.offsetWidth;
         cartIcon.classList.add("animate-icon");
-
-        cartCount.classList.remove("animate-badge");
-        void cartCount.offsetWidth;
         cartCount.classList.add("animate-badge");
-
         setTimeout(() => {
             cartIcon.classList.remove("animate-icon");
             cartCount.classList.remove("animate-badge");
         }, 4000);
     }
-}
-
-function getCookie(nombre) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${nombre}=`);
-    if (parts.length === 2) return parts.pop().split(';')[0];
-    return null;
-}
-
-function procesarPago() {
-
-    let email = getCookie("email");  // << Ajustamos cuando me digas el nombre real
-
-    if (!email) {
-        alert("Debes iniciar sesión antes de pagar.");
-        window.location.href = "Login.aspx?ReturnUrl=Carrito.aspx";
-        return;
-    }
-
-    if (!carrito || carrito.length === 0) {
-        alert("Tu carrito está vacío");
-        return;
-    }
-
-    let total = carrito.reduce((sum, item) => sum + (item.cantidad * getPrecio(item.idProducto)), 0);
-
-    sessionStorage.setItem("totalCompra", total);
-
-    window.location.href = "Checkout.aspx?total=" + total;
-}
-function getPrecio(id) {
-    let fila = document.querySelector(`tr[data-id='${id}']`);
-    if (!fila) return 0;
-    return parseInt(fila.getAttribute("data-precio"));
 }
