@@ -139,6 +139,7 @@
     <Content Include="Vista\Detalle.aspx" />
     <Content Include="Vista\Global.asax" />
     <Content Include="Vista\img\bici1.jpeg" />
+    <Content Include="Vista\img\FondoLogin.png" />
     <Content Include="Vista\img\logo.png" />
     <Content Include="Vista\img\mtb_beast.jpg" />
     <Content Include="Vista\img\mtb_explorer.jpg" />

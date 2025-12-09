@@ -70,7 +70,7 @@ namespace AppRamirezBike.Vista
                         return;
                     }
 
-                    List<ItemCarrito> carrito = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ItemCarrito>>(carritoJson);
+                    List<ItemCarrito> carrito = JsonConvert.DeserializeObject<List<ItemCarrito>>(carritoJson);
 
                     // 3) Calcular total leyendo precios desde BD (evitar manipulación cliente)
                     decimal total = 0M;

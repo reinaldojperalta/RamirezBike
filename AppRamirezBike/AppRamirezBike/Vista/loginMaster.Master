@@ -1,11 +1,10 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="loginMaster.master.cs" Inherits="AppRamirezBike.Vista.loginMaster" %>
 
 <!DOCTYPE html>
-
 <html>
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title></title>
+    <title>Ramirez Bike - Ingreso</title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -13,60 +12,53 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
+        @keyframes background-zoom {
+            0% {
+                background-size: 110%;
+            }
+            100% {
+                background-size: 100%;
+            }
+        }
+        
         body {
-            background: white;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('<%= ResolveUrl("img/FondoLogin.png") %>');
+            
+            background-color: #333333; 
+            animation: background-zoom 30s infinite alternate; 
+            
+            background-attachment: fixed;
+            background-position: center center;
+            
             min-height: 100vh;
-            align-items: center;
-            justify-content: center;
         }
 
-        .card {
-            border-radius: 50px;
-            box-shadow: 0 1px 40px rgb(0, 0, 0);
+        @keyframes fadeInBounce {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            70% {
+                opacity: 1;
+                transform: translateY(-5px) scale(1.01);
+            }
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
         }
 
-        .form-label {
-            font-weight: 500;
-        }
-
-        .btnRegistrarse {
-            background-color: white;
-            box-shadow: 0 1px 10px rgb(0, 255, 33);
-            border-radius: 10px;
+        .animate-login {
+            animation: fadeInBounce 0.8s ease-out forwards;
         }
     </style>
-
 </head>
 <body>
     <form id="form1" runat="server">
-        <div>
-
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-md-6 col-lg-5">
-                        <div class="card p-4">
-                            <h3 class="text-center mb-4">ingreso</h3>
-
-                            <asp:ValidationSummary ID="ValidationSummary1" runat="server"
-                                CssClass="alert alert-warning"
-                                HeaderText="<i class='bi bi-exclamation-circle me-2'></i>PLACEHOLDER" />
-
-                            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-
-
-                            </asp:ContentPlaceHolder>
-
-
-
-                            <div class="d-grid">
-                                
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+        <div class="container-fluid">
+            
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
 
         </div>
     </form>
