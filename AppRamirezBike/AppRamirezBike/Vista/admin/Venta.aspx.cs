@@ -15,10 +15,10 @@ namespace AppRamirezBike.Vista.admin
         protected void Page_Load(object sender, EventArgs e) { }
 
         [WebMethod]
-        public static List<VentaListado> ListarTodasLasVentas()
+        public static List<VentaCabecera> ListarTodasLasVentas()
         {
             ClVentaLogica logica = new ClVentaLogica();
-            return logica.ListarTodasLasVentas();
+            return logica.ListarVentasConDetalle();
         }
 
     }

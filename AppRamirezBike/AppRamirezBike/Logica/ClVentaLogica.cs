@@ -9,11 +9,10 @@ namespace AppRamirezBike.Logica
 {
     public class ClVentaLogica
     {
-        ClVentaDatos datos = new ClVentaDatos();
-
-        public List<VentaListado> ListarTodasLasVentas()
+        public List<VentaCabecera> ListarVentasConDetalle()
         {
-            return datos.MtListarTodasLasVentas();
+            ClVentaDatos datos = new ClVentaDatos();
+            return datos.MtListarVentasConDetalle();
         }
     }
 }
