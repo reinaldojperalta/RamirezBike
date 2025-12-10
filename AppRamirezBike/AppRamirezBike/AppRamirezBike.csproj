@@ -118,6 +118,7 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
+    <Content Include="Assets\css\effects.css" />
     <Content Include="Default.aspx" />
     <Content Include="Vista\admin\SubirImagen.aspx" />
     <Content Include="Scripts\jquery-3.7.1.js" />
@@ -140,6 +141,7 @@
     <Content Include="Vista\Detalle.aspx" />
     <Content Include="Vista\Global.asax" />
     <Content Include="Vista\img\bici1.jpeg" />
+    <Content Include="Vista\img\fondoBici.png" />
     <Content Include="Vista\img\logo.png" />
     <Content Include="Vista\img\mtb_beast.jpg" />
     <Content Include="Vista\img\mtb_explorer.jpg" />

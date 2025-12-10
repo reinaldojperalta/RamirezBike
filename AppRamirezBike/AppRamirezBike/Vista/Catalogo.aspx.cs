@@ -160,5 +160,17 @@ namespace AppRamirezBike.Vista
                 return categoriaQuery + busquedaQuery;
             }
         }
+
+        public string TruncateDescription(string text, int maxLength)
+        {
+            if (string.IsNullOrEmpty(text)) return string.Empty;
+            int periodIndex = text.IndexOf('.');
+            if (periodIndex > -1 && periodIndex < maxLength) return text.Substring(0, periodIndex + 1);
+            else
+            {
+                if (text.Length > maxLength) return text.Substring(0, maxLength) + "...";
+                else return text;
+            }
+        }
     }
 }

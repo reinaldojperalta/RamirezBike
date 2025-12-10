@@ -1,0 +1,177 @@
+﻿/* Efecto Glassmorphism para las tarjetas */
+/* ===================================================== */
+/* EFECTO GLASSMORPHISM ACTUALIZADO Y CORREGIDO */
+/* ===================================================== */
+
+/* --- Tarjetas Principales (Productos, Sidebar) --- */
+/* Usamos .card.glass-card para ser más específicos que Bootstrap */
+.card.glass-card {
+    /* Usamos !important para forzar el estilo y sobreescribir Bootstrap */
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 0.75rem;
+    /* Sombra principal para dar profundidad */
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    /* El efecto de desenfoque del fondo */
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(8px);
+    /* Brillos interiores para simular el reflejo del cristal */
+    position: relative;
+    overflow: hidden;
+}
+
+    /* Ajustamos el texto para que sea legible sobre el fondo glassmórfico */
+    .card.glass-card .card-title,
+    .card.glass-card .card-text,
+    .card.glass-card .card-text h4 {
+        color: #ffffff; /* Texto blanco para máximo contraste */
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+/* --- Dropdown de Filtros --- */
+.glass-select {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    color: white !important;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+    /* Color de las opciones dentro del dropdown */
+    .glass-select option {
+        background-color: #470000; /* Color más oscuro para las opciones */
+        color: white;
+    }
+
+/* --- Paginación --- */
+.glass-page-link {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    color: white !important;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+}
+
+    .glass-page-link:hover {
+        background-color: rgba(255, 0, 0, 0.4) !important;
+        border-color: rgba(255, 0, 0, 0.6) !important;
+        color: white !important;
+    }
+
+/* Resaltar la página activa en la paginación */
+.page-item.active .glass-page-link {
+    background-color: rgba(255, 0, 0, 0.6) !important;
+    border-color: #FF0000 !important;
+    color: white !important;
+}
+
+/* --- Botones --- */
+.btn-red-glass {
+    background-color: rgba(255, 0, 0, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    color: white !important;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+}
+
+    .btn-red-glass:hover {
+        background-color: rgba(209, 0, 0, 0.5) !important;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
+        color: white !important;
+    }
+
+/* --- Mejora del Hover en las Tarjetas --- */
+.transition-hover {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+    .transition-hover:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 15px 30px rgba(255, 0, 0, 0.3) !important;
+    }
+
+/* Contenedor principal del fondo animado */
+.ethereal-background {
+    position: fixed; /* Fijo para que cubra toda la pantalla al hacer scroll */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1; /* Muy importante para que esté detrás de todo el contenido */
+    background-color: #1a1a1a; /* Color de fondo base */
+}
+
+    /* Contenedor interno que aplica el filtro SVG */
+    .ethereal-background .filter-container {
+        position: absolute;
+        inset: -20px; /* Un poco más grande que el contenedor para evitar bordes */
+        filter: url(#ethereal-filter);
+    }
+
+    /* La capa de color con la máscara de imagen */
+    .ethereal-background .masked-layer {
+        background-color: #D10000; /* Color del fondo animado */
+        mask-image: url('/vista/img/fondoBici.png');
+        mask-size: 100% 100%;
+        mask-repeat: no-repeat;
+        mask-position: center;
+        width: 100%;
+        height: 100%;
+        -webkit-mask-image: url('/vista/img/fondoBici.png'); /* Para Safari */
+        -webkit-mask-size: cover;
+        -webkit-mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+    }
+
+    /* Capa de ruido superpuesta */
+    .ethereal-background .noise-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("https://framerusercontent.com/images/g0QcWrxr87K0ufOxIUFBakwYA8.png");
+        background-size: 50px; /* Tamaño del ruido */
+        opacity:1 ; /* Opacidad del ruido */
+    }
+/* ===================================================== */
+/* ESTILOS ADICIONALES PARA LA PÁGINA DE DETALLES */
+/* ===================================================== */
+
+/* --- Contenedor con Brillo Neon para la Imagen --- */
+.neon-glow-container {
+    /* El color del brillo principal es el rojo más brillante de la paleta */
+    box-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #FF0000, 0 0 20px #FF0000, 0 0 35px #FF0000, 0 0 40px #D10000; /* El color se degrada sutilmente */
+    transition: all 0.3s ease-in-out;
+}
+
+    /* Hacemos que el brillo pulse sutilmente al pasar el ratón */
+    .neon-glow-container:hover {
+        transform: scale(1.02);
+        box-shadow: 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #FF0000, 0 0 25px #FF0000, 0 0 45px #FF0000, 0 0 55px #D10000;
+    }
+
+/* --- Estilo Glass para el Input de Cantidad --- */
+.glass-input {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    color: white !important;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+    /* Color del texto del placeholder */
+    .glass-input::placeholder {
+        color: rgba(255, 255, 255, 0.7) !important;
+    }
+
+/* --- Ajustes para la tarjeta de detalles principal --- */
+/* Aseguramos que el texto sea legible y los espaciados correctos */
+.glass-card .text-danger {
+    color: #FF0000 !important; /* Forzamos el rojo neón */
+    text-shadow: 0 0 5px #FF0000;
+}

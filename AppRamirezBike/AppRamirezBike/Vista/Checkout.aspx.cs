@@ -154,8 +154,8 @@ namespace AppRamirezBike.Vista
             tax_base: '0',
             tax: '0',
             country: 'CO',
-            response: 'https://lue-premoral-rosa.ngrok-free.dev/Vista/ConfirmacionEpayco.aspx',
-            confirmation: 'https://lue-premoral-rosa.ngrok-free.dev/Vista/ConfirmacionEpayco.aspx'
+            response: 'http://www.RamiresBike.somee.com',
+            confirmation: 'http://www.RamiresBike.somee.com'
         }});";
 
             ScriptManager.RegisterStartupScript(this, this.GetType(), "OpenEpayco", script, true);

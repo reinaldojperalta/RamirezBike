@@ -5,50 +5,53 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentBody1" runat="server">
 
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <asp:Image runat="server" ID="imgPrincipal" CssClass="img-fluid rounded" />
+    <!-- Contenedor principal con efecto glass -->
+    <div class="container mt-5 p-4">
+        <div class="row glass-card rounded p-4">
+
+            <!-- Columna de la imagen con efecto neon -->
+            <div class="col-md-6 mb-3 d-flex align-items-center justify-content-center">
+                <div class="neon-glow-container rounded p-2">
+                    <asp:Image runat="server" ID="imgPrincipal" CssClass="img-fluid rounded" />
+                </div>
             </div>
 
-            <div class="col-md-6">
-                <h2>
-                    <asp:Label runat="server" ID="lblNombre" /></h2>
+            <!-- Columna de detalles -->
+            <div class="col-md-6 d-flex flex-column justify-content-center">
+                <h2 class="text-white fw-bold">
+                    <asp:Label runat="server" ID="lblNombre" />
+                </h2>
 
-                <p class="text-muted">
+                <p class="text-white-50">
                     <asp:Label runat="server" ID="lblSKU" />
                 </p>
 
                 <div class="mb-3">
-                    <span class="h4 me-2">
-                        <asp:Label runat="server" ID="lblPrecio" />
+                    <span class="h3 me-2 text-danger fw-bold">
+                        $<asp:Label runat="server" ID="lblPrecio" />
                     </span>
-                    <asp:Label runat="server" ID="lblPrecioOriginal" />
+                    <asp:Label runat="server" ID="lblPrecioOriginal" CssClass="text-white-50 text-decoration-line-through" />
                 </div>
 
-                <p class="mb-4">
+                <p class="mb-4 text-white-50 flex-grow-1">
                     <asp:Label runat="server" ID="lblDescripcion" />
                 </p>
 
                 <div class="mb-3">
-                    <label class="form-label">Cantidad:</label>
-
+                    <label class="form-label text-white">Cantidad:</label>
                     <asp:TextBox runat="server" ID="txtCantidad"
                         ClientIDMode="Static"
-                        CssClass="form-control"
+                        CssClass="form-control glass-input"
                         TextMode="Number" Min="1"
-                        Style="width: 90px;" />
+                        Style="width: 120px;" />
                 </div>
 
                 <button type="button"
                     onclick="capturarDatosYAnadir(<%= producto.idProducto %>)"
-                    class="btn btn-primary btn-lg">
-                    AÑADIR AL CARRITO
+                    class="btn btn-red-glass btn-lg w-100">
+                    <i class="bi bi-cart-plus me-2"></i> AÑADIR AL CARRITO
                 </button>
             </div>
         </div>
     </div>
-
-   
-
 </asp:Content>

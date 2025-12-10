@@ -3,7 +3,6 @@
 <!DOCTYPE html>
 
 <html lang="es">
-<!-- Añadido el idioma para accesibilidad y SEO -->
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,8 +11,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
+    <link href="~/assets/css/effects.css" rel="stylesheet" type="text/css" />
     <asp:ContentPlaceHolder ID="head" runat="server">
+        
     </asp:ContentPlaceHolder>
 
     <!-- Bootstrap 5 CSS -->
@@ -21,35 +21,141 @@
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-    <!-- Estilos personalizados para detalles adicionales -->
+    <!-- ===================================================== -->
+    <!-- ESTILOS PERSONALIZADOS PARA LA NAVBAR Y EL FOOTER -->
+    <!-- ===================================================== -->
     <style>
-        /* Estilo para el badge del carrito */
-        .cart-icon-wrapper {
-            position: relative;
-            cursor: pointer;
+        /* --- ESTILOS GLASS PARA LA NAVBAR --- */
+        .glass-navbar {
+            background-color: rgba(0, 0, 0, 0.4) !important; /* Fondo negro semitransparente */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
         }
 
-        .cart-badge {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            font-size: 0.7rem;
-            padding: 2px 5px;
-            border-radius: 50%;
+        .glass-navbar .navbar-brand,
+        .glass-navbar .nav-link {
+            color: #ffffff !important;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
-        /* Estilo para el footer */
-        footer {
-            margin-top: 50px; /* Espacio superior para separarlo del contenido */
+
+        .glass-navbar .nav-link:hover {
+            color: #ff0000 !important; /* Cambia a rojo al hacer hover */
+        }
+
+        /* --- ESTILOS GLASS PARA EL COMPONENTE DE BÚSQUEDA --- */
+        .glass-search-input {
+            background-color: rgba(255, 255, 255, 0.1) !important;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .glass-search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .glass-search-button {
+            background-color: rgba(255, 0, 0, 0.3) !important; /* Botón rojo semitransparente */
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .glass-search-button:hover {
+            background-color: rgba(255, 0, 0, 0.5) !important;
+            border-color: #FF0000;
+            color: white;
+        }
+
+        /* --- ESTILOS GLASS PARA EL FOOTER --- */
+        .glass-footer {
+            background-color: rgba(0, 0, 0, 0.5) !important; /* Fondo un poco más oscuro que la navbar */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 50px;
+            padding: 3rem 0; /* Más espacio vertical */
+        }
+
+        .glass-footer h5 {
+            color: #ffffff;
+        }
+
+        .glass-footer a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .glass-footer a:hover {
+            color: #ff0000; /* Enlaces rojos al hacer hover */
+        }
+
+        /* --- ESTILOS CLAVE PARA QUE EL FONDO SEA VISIBLE --- */
+        body, form {
+            background-color: transparent !important;
+        }
+        .container, .container-fluid {
+            background-color: transparent !important;
         }
     </style>
 </head>
 <body>
+
+    <div class="ethereal-background">
+        <div class="filter-container">
+            <svg style="position: absolute;">
+                <defs>
+                    <filter id="ethereal-filter">
+                        <feTurbulence
+                            result="undulation"
+                            numOctaves="2"
+                            baseFrequency="0.0005, 0.002"
+                            seed="1"
+                            type="turbulence"
+                        />
+                        <feColorMatrix
+                            id="color-matrix"
+                            in="undulation"
+                            type="hueRotate"
+                            values="0"
+                        />
+                        <feColorMatrix
+                            in="dist"
+                            result="circulation"
+                            type="matrix"
+                            values="4 0 0 0 1  4 0 0 0 1  4 0 0 0 1  1 0 0 0 0"
+                        />
+                        <feDisplacementMap
+                            in="SourceGraphic"
+                            in2="circulation"
+                            scale="30"
+                            result="dist"
+                        />
+                        <feDisplacementMap
+                            in="dist"
+                            in2="undulation"
+                            scale="30"
+                            result="output"
+                        />
+                    </filter>
+                </defs>
+            </svg>
+            <div class="masked-layer"></div>
+        </div>
+        <div class="noise-overlay"></div>
+    </div>
+
     <form id="form1" runat="server">
         <!-- ===================================================== -->
-        <!-- BARRA DE NAVEGACIÓN MEJORADA -->
+        <!-- BARRA DE NAVEGACIÓN CON EFECTO GLASS -->
         <!-- ===================================================== -->
-        <!-- Se mantiene la estructura y los controles de servidor, pero se mejora el diseño y la UX. -->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+        <nav class="navbar navbar-expand-lg navbar-dark glass-navbar shadow-sm">
             <div class="container">
                 <!-- Logo: Reemplazar "Logo" con una imagen real -->
                 <a class="navbar-brand d-flex align-items-center" href="/Vista/Catalogo.aspx">
@@ -70,19 +176,17 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/Vista/admin/administracion.aspx">DashBoard</a>
                         </li>
-
                         <li class="nav-item">
                             <a class="nav-link" href="/Vista/RegistroUsuario.aspx">registro</a>
                         </li>
-
                     </ul>
 
                     <!-- Sección de búsqueda y acciones del usuario -->
                     <div class="d-flex align-items-center">
-                        <!-- Barra de búsqueda mejorada con input-group -->
+                        <!-- Barra de búsqueda con estilos glass -->
                         <div class="input-group me-3">
-                            <asp:TextBox ID="txtBusqueda" runat="server" CssClass="form-control" placeholder="Buscar productos..." aria-label="Buscar" />
-                            <asp:Button ID="btnBuscar" runat="server" CssClass="btn btn-outline-light" Text="Buscar" OnClick="btnBuscar_Click" />
+                            <asp:TextBox ID="txtBusqueda" runat="server" CssClass="form-control glass-search-input" placeholder="Buscar productos..." aria-label="Buscar" />
+                            <asp:Button ID="btnBuscar" runat="server" CssClass="btn glass-search-button" Text="Buscar" OnClick="btnBuscar_Click" />
                         </div>
 
                         <!-- Carrito de compras con icono y badge -->
@@ -105,10 +209,9 @@
         </div>
 
         <!-- ===================================================== -->
-        <!-- PIE DE PÁGINA (FOOTER) -->
+        <!-- PIE DE PÁGINA (FOOTER) CON EFECTO GLASS -->
         <!-- ===================================================== -->
-        <!-- Un footer profesional que aporta información y cierre visual al sitio. -->
-        <footer class="bg-dark text-white text-center py-4">
+        <footer class="glass-footer text-white text-center">
             <div class="container">
                 <div class="row">
                     <div class="col-md-4 mb-3">
@@ -120,9 +223,9 @@
                     <div class="col-md-4 mb-3">
                         <h5>Enlaces Rápidos</h5>
                         <ul class="list-unstyled">
-                            <li><a href="javascript:void(0)" class="text-white-50">Política de Privacidad</a></li>
-                            <li><a href="javascript:void(0)" class="text-white-50">Términos y Condiciones</a></li>
-                            <li><a href="javascript:void(0)" class="text-white-50">Preguntas Frecuentes</a></li>
+                            <li><a href="javascript:void(0)">Política de Privacidad</a></li>
+                            <li><a href="javascript:void(0)">Términos y Condiciones</a></li>
+                            <li><a href="javascript:void(0)">Preguntas Frecuentes</a></li>
                         </ul>
                     </div>
                     <div class="col-md-4 mb-3">
@@ -139,12 +242,25 @@
 
     </form>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const colorMatrix = document.getElementById('color-matrix');
+            if (colorMatrix) {
+                let hue = 0;
+                function animate() {
+                    hue = (hue + 1.6) % 360; // Velocidad de la animación. Aumenta para más rápido.
+                    colorMatrix.setAttribute('values', hue);
+                    requestAnimationFrame(animate);
+                }
+                animate();
+            }
+        });
+    </script>
+
     <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-2.3.4/b-3.2.5/b-colvis-3.2.5/b-html5-3.2.5/b-print-3.2.5/r-3.0.7/datatables.min.js"></script>
     <!-- Tu script personalizado del carrito -->
     <script src="carrito.js"></script>
-
-
 </body>
 </html>
