@@ -2,74 +2,158 @@
 
 <!DOCTYPE html>
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title></title>
-    <asp:ContentPlaceHolder ID="head" runat="server">
-    </asp:ContentPlaceHolder>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    
+    <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- Nuestro CSS con todos los efectos -->
+    <link href="~/assets/css/effects.css" rel="stylesheet" type="text/css" />
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <style>
-        body {
-            background: white;
-            min-height: 100vh;
-            align-items: center;
-            justify-content: center;
+        /* --- ESTILOS PARA EL CENTRADO Y FONDO --- */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
         }
 
-        .card {
-            border-radius: 50px;
-            box-shadow: 0 1px 40px rgb(0, 0, 0);
+        body {
+            background-color: transparent !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: auto;
+        }
+
+        /* Contenedor principal que centra el formulario */
+        .form-container {
+            width: 100%;
+            max-width: 450px;
+            padding: 20px;
+        }
+
+        /* --- ESTILOS ESPECÍFICOS DE ESTA PÁGINA --- */
+        .glass-card h3 {
+            color: #ffffff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
 
         .form-label {
+            color: #ffffff;
             font-weight: 500;
         }
 
-        .btnRegistrarse {
-            background-color: white;
-            box-shadow: 0 1px 10px rgb(0, 255, 33);
-            border-radius: 10px;
+        /* Aseguramos que los mensajes de error sean visibles */
+        .text-danger {
+            color: #ff6b6b !important;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+            font-size: 0.9em;
         }
     </style>
 
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
 </head>
 <body>
+
+    <!-- ===================================================== -->
+    <!-- FONDO ANIMADO (COPIADO DE LA MASTER PAGE) -->
+    <!-- ===================================================== -->
+    <div class="ethereal-background">
+        <div class="filter-container">
+            <svg style="position: absolute;">
+                <defs>
+                    <filter id="ethereal-filter">
+                        <feTurbulence
+                            result="undulation"
+                            numOctaves="2"
+                            baseFrequency="0.0005, 0.002"
+                            seed="1"
+                            type="turbulence"
+                        />
+                        <feColorMatrix
+                            id="color-matrix"
+                            in="undulation"
+                            type="hueRotate"
+                            values="0"
+                        />
+                        <feColorMatrix
+                            in="dist"
+                            result="circulation"
+                            type="matrix"
+                            values="4 0 0 0 1  4 0 0 0 1  4 0 0 0 1  1 0 0 0 0"
+                        />
+                        <feDisplacementMap
+                            in="SourceGraphic"
+                            in2="circulation"
+                            scale="30"
+                            result="dist"
+                        />
+                        <feDisplacementMap
+                            in="dist"
+                            in2="undulation"
+                            scale="30"
+                            result="output"
+                        />
+                    </filter>
+                </defs>
+            </svg>
+            <div class="masked-layer"></div>
+        </div>
+        <div class="noise-overlay"></div>
+    </div>
+
     <form id="form1" runat="server">
-        <div>
-
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-md-6 col-lg-5">
-                        <div class="card p-4">
-                            <h3 class="text-center mb-4">ingreso</h3>
-
-                            <asp:ValidationSummary ID="ValidationSummary1" runat="server"
-                                CssClass="alert alert-warning"
-                                HeaderText="<i class='bi bi-exclamation-circle me-2'></i>PLACEHOLDER" />
-
-                            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-
-
-                            </asp:ContentPlaceHolder>
-
-
-
-                            <div class="d-grid">
-                                
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
+        <div class="form-container">
+            <!-- Logo de la empresa -->
+            <div class="text-center mb-4">
+                
+                <img src="/Vista/img/logo.png" alt="RamirezBike Logo" width="80" height="80" class="rounded-circle">
             </div>
 
+            <!-- Tarjeta principal con efecto glass -->
+            <div class="card p-4 glass-card">
+                <h3 class="text-center mb-4">Ingreso</h3>
 
+                <asp:ValidationSummary ID="ValidationSummary1" runat="server"
+                    CssClass="alert alert-danger"
+                    HeaderText="<i class='bi bi-exclamation-triangle-fill me-2'></i> Por favor, corrija los siguientes errores:" />
+
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
+            </div>
         </div>
     </form>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Script para la animación del fondo (COPIADO DE LA MASTER PAGE) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const colorMatrix = document.getElementById('color-matrix');
+            if (colorMatrix) {
+                let hue = 0;
+                function animate() {
+                    hue = (hue + 1.6) % 360;
+                    colorMatrix.setAttribute('values', hue);
+                    requestAnimationFrame(animate);
+                }
+                animate();
+            }
+        });
+    </script>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
 </html>

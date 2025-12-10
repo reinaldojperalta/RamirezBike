@@ -16,21 +16,21 @@ namespace AppRamirezBike.Vista
         {
             if (!IsPostBack)
             {
-                MtCargarRoles();
+                //MtCargarRoles();
             }
         }
 
-        private void MtCargarRoles()
-        {
-            ClRolLogica objRolLogica = new ClRolLogica();
-            List<Rol> listaRoles = objRolLogica.MtObtenerRoles();
-            ddlRol.DataSource = listaRoles;
-            ddlRol.DataTextField = "nombre";
-            ddlRol.DataValueField = "idRol";
-            ddlRol.DataBind();
+        //private void MtCargarRoles()
+        //{
+        //    ClRolLogica objRolLogica = new ClRolLogica();
+        //    List<Rol> listaRoles = objRolLogica.MtObtenerRoles();
+        //    ddlRol.DataSource = listaRoles;
+        //    ddlRol.DataTextField = "nombre";
+        //    ddlRol.DataValueField = "idRol";
+        //    ddlRol.DataBind();
 
-            ddlRol.Items.Insert(0, new ListItem("Seleccione Un Rol", ""));
-        }
+        //    ddlRol.Items.Insert(0, new ListItem("Seleccione Un Rol", ""));
+        //}
         protected void BtnRegistrarse_Click(object sender, EventArgs e)
         {
             if (!Page.IsValid)
@@ -38,7 +38,7 @@ namespace AppRamirezBike.Vista
                 return;
             }
 
-            int idRol = int.Parse(ddlRol.SelectedValue);
+            int idRol = int.Parse("3"/*ddlRol.SelectedValue*/);
             ClUsuarioLogica objUsuario = new ClUsuarioLogica();
             string documentoIngresado = txtDocumento.Text.Trim();
 

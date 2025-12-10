@@ -175,3 +175,60 @@
     color: #FF0000 !important; /* Forzamos el rojo neón */
     text-shadow: 0 0 5px #FF0000;
 }
+
+/* ===================================================== */
+/* ESTILOS PARA LA TABLA DEL CARRITO (ACTUALIZADO)
+/* ===================================================== */
+
+/* --- Estilo Glass para la Tabla completa (opaco y con tinte rojo) --- */
+.glass-table {
+    background-color: rgba(255, 255, 255, 0.01) !important; /* Rojo oscuro opaco */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white; /* Asegura que todo el texto en la tabla sea blanco por defecto */
+}
+
+/* --- Estilo para la cabecera de la tabla --- */
+.glass-table-header {
+    background-color: rgba(255, 0, 0, 0.3) !important; /* Un rojo más brillante para el encabezado */
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+    .glass-table-header th {
+        color: #ffffff;
+        font-weight: bold;
+        border: none;
+    }
+
+/* --- ESTA ES LA PARTE CLAVE --- */
+/* Forzamos a las celdas del cuerpo y la cabecera a ser transparentes */
+.glass-table td,
+.glass-table th {
+    background-color: transparent !important; /* <-- ¡LA LÍNEA MÁGICA! */
+    border: none; /* Quita los bordes por defecto de las celdas */
+    vertical-align: middle;
+}
+
+/* --- Botones de cantidad (Glass opaco con efecto neon sutil) --- */
+.btn-quantity-glass {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    /* Efecto neon sutil */
+    box-shadow: 0 0 5px #fff, 0 0 10px #FF0000;
+    transition: all 0.2s ease;
+}
+
+    .btn-quantity-glass:hover {
+        background-color: rgba(255, 0, 0, 0.5) !important;
+        transform: scale(1.1);
+        box-shadow: 0 0 10px #fff, 0 0 20px #FF0000;
+    }
