@@ -12,29 +12,38 @@ namespace AppRamirezBike.Vista
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
-	          if(Context.User != null && Context.User.Identity.IsAuthenticated)
-			{
-				btnLogout.Visible = true;
+            if (!IsPostBack)
+            {
+                // Tu código existente
+                if (Context.User != null && Context.User.Identity.IsAuthenticated)
+                {
+                    btnLogout.Visible = true;
+                }
+                else
+                {
+                    btnLogout.Visible = false;
+                }
 
-			}
-			else
-			{
-				btnLogout.Visible = false;
-			}
+                // === CAMBIO MÍNIMO: ocultar "registro" si hay sesión ===
+                if (Context.User.Identity.IsAuthenticated)
+                {
+                    liRegistro.Visible = false;
+                }
+                else
+                {
+                    liRegistro.Visible = true;
+                }
+            }
 
-		}
+        }
 
         protected void btnLogout_Click(object sender, EventArgs e)
         {
-			FormsAuthentication.SignOut();
-
-			HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, "");
-			cookie.Expires = DateTime.Now.AddYears(-1);
-			Response.Cookies.Add(cookie);
-
-
-			Response.Redirect("/Vista/Login.aspx");
-
+            FormsAuthentication.SignOut();
+            HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, "");
+            cookie.Expires = DateTime.Now.AddYears(-1);
+            Response.Cookies.Add(cookie);
+            Response.Redirect("/Vista/Login.aspx");
         }
 
         protected void btnBuscar_Click(object sender, EventArgs e)

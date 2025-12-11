@@ -171,8 +171,8 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/Vista/admin/administracion.aspx">DashBoard</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Vista/RegistroUsuario.aspx">registro</a>
+                        <li class="nav-item" runat="server" id="liRegistro">
+                            <a class="nav-link" href="/Vista/RegistroUsuario.aspx">Registro</a>
                         </li>
                     </ul>
 
