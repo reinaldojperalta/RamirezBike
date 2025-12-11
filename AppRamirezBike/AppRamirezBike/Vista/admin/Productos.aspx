@@ -141,18 +141,37 @@
                         data: formData,
                         processData: false,
                         contentType: false,
-                        success: response => resolve(typeof response === "string" ? response : response.d),
-                        error: () => reject()
+                        cache: false,
+                        success: function (response) {
+                            try {
+                                // Intentamos parsear como JSON
+                                let json = typeof response === 'string' ? JSON.parse(response) : response;
+                                if (json.success) {
+                                    resolve(json.filename);
+                                } else {
+                                    reject(json.error || "Error desconocido");
+                                }
+                            } catch (e) {
+                                // Si no es JSON, es texto plano (tu SubirImagen.aspx devuelve solo el nombre)
+                                let nombre = response.trim().replace(/^"|"$/g, '');
+                                resolve(nombre);
+                            }
+                        },
+                        error: function (xhr) {
+                            reject("Error de conexión: " + xhr.statusText);
+                        }
                     });
                 });
             }
+            
 
             inicializarDataTable();
             cargarCategorias();
 
             // ==================== BOTÓN GUARDAR ====================
             $('#btnSubmit').on('click', function () {
-                if ($('#valNombre').val() === '' || $('#valPrecio').val() === '' || $('#valStock').val() === '' || $('#valCategoria').val() === null) {
+                // Validaciones
+                if (!$('#valNombre').val() || !$('#valPrecio').val() || !$('#valStock').val() || !$('#valCategoria').val()) {
                     Swal.fire({ icon: 'warning', title: '¡Faltan datos!', text: 'Completa todos los campos obligatorios', confirmButtonColor: '#198754' });
                     return;
                 }
@@ -163,38 +182,45 @@
                     return;
                 }
 
-                subirImagen(file).then(nombreImagen => {
-                    const nombreFinal = nombreImagen || $('#valImgUrl').val();
-
-                    const producto = {
-                        idProducto: parseInt($('#idProducto').val()),
-                        nombre: $('#valNombre').val(),
-                        descripcion: $('#valDescripcion').val(),
-                        precio: parseFloat($('#valPrecio').val()),
-                        stock: parseInt($('#valStock').val()),
-                        imgUrl: nombreFinal,
-                        idCategoria: parseInt($('#valCategoria').val())
-                    };
-
-                    $.ajax({
-                        url: pageUrl + '/GuardarProducto',
-                        method: 'POST',
-                        contentType: 'application/json; charset=utf-8',
-                        data: JSON.stringify({ objProducto: producto }),
-                        success: function (res) {
-                            Swal.fire({ icon: 'success', title: '¡Perfecto!', text: res.d, confirmButtonColor: '#198754' }).then(() => {
-                                $('#collapseFormulario').collapse('hide');
-                                tabla.ajax.reload();
-                                limpiarFormulario();
-                            });
-                        },
-                        error: function () {
-                            Swal.fire({ icon: 'error', title: 'Error', text: 'No se pudo guardar el producto', confirmButtonColor: '#dc3545' });
-                        }
-                    });
-                }).catch(() => {
-                    Swal.fire({ icon: 'error', title: 'Error', text: 'No se pudo subir la imagen', confirmButtonColor: '#dc3545' });
+                // Mostrar cargando
+                Swal.fire({
+                    title: 'Guardando producto...',
+                    allowOutsideClick: false,
+                    didOpen: () => { Swal.showLoading(); }
                 });
+
+                subirImagen(file)
+                    .then(nombreNuevo => {
+                        const nombreFinal = nombreNuevo || $('#valImgUrl').val() || '';
+
+                        const producto = {
+                            idProducto: parseInt($('#idProducto').val()),
+                            nombre: $('#valNombre').val(),
+                            descripcion: $('#valDescripcion').val() || '',
+                            precio: parseFloat($('#valPrecio').val()),
+                            stock: parseInt($('#valStock').val()),
+                            imgUrl: nombreFinal,
+                            idCategoria: parseInt($('#valCategoria').val())
+                        };
+
+                        return $.ajax({
+                            url: pageUrl + '/GuardarProducto',
+                            method: 'POST',
+                            contentType: 'application/json; charset=utf-8',
+                            data: JSON.stringify({ objProducto: producto })
+                        });
+                    })
+                    .then(res => {
+                        Swal.fire({ icon: 'success', title: '¡Perfecto!', text: res.d || 'Producto guardado correctamente', confirmButtonColor: '#198754' }).then(() => {
+                            $('#collapseFormulario').collapse('hide');
+                            tabla.ajax.reload();
+                            limpiarFormulario();
+                        });
+                    })
+                    .catch(err => {
+                        console.error("Error:", err);
+                        Swal.fire({ icon: 'error', title: 'Error', text: err || 'No se pudo completar la operación', confirmButtonColor: '#dc3545' });
+                    });
             });
 
             // ==================== BOTÓN EDITAR ====================

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace AppRamirezBike.Datos
                     string rutaCompleta = Path.Combine(rutaCarpeta, nombre);
                     file.SaveAs(rutaCompleta);
 
-                    Response.Write("{\"success\": true, \"filename\": \"" + nombre + "\"}");
+                    Response.Write(JsonConvert.SerializeObject(new { success = true, filename = nombre }));
                 }
                 else
                 {

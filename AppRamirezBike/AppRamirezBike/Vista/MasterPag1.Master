@@ -7,13 +7,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title></title>
-   
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link href="~/assets/css/effects.css" rel="stylesheet" type="text/css" />
     <asp:ContentPlaceHolder ID="head" runat="server">
-        
     </asp:ContentPlaceHolder>
 
     <!-- Bootstrap 5 CSS -->
@@ -34,15 +33,15 @@
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
         }
 
-        .glass-navbar .navbar-brand,
-        .glass-navbar .nav-link {
-            color: #ffffff !important;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-        }
+            .glass-navbar .navbar-brand,
+            .glass-navbar .nav-link {
+                color: #ffffff !important;
+                text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            }
 
-        .glass-navbar .nav-link:hover {
-            color: #ff0000 !important; /* Cambia a rojo al hacer hover */
-        }
+                .glass-navbar .nav-link:hover {
+                    color: #ff0000 !important; /* Cambia a rojo al hacer hover */
+                }
 
         /* --- ESTILOS GLASS PARA EL COMPONENTE DE BÚSQUEDA --- */
         .glass-search-input {
@@ -53,9 +52,9 @@
             -webkit-backdrop-filter: blur(5px);
         }
 
-        .glass-search-input::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
+            .glass-search-input::placeholder {
+                color: rgba(255, 255, 255, 0.7);
+            }
 
         .glass-search-button {
             background-color: rgba(255, 0, 0, 0.3) !important; /* Botón rojo semitransparente */
@@ -66,11 +65,11 @@
             transition: all 0.3s ease;
         }
 
-        .glass-search-button:hover {
-            background-color: rgba(255, 0, 0, 0.5) !important;
-            border-color: #FF0000;
-            color: white;
-        }
+            .glass-search-button:hover {
+                background-color: rgba(255, 0, 0, 0.5) !important;
+                border-color: #FF0000;
+                color: white;
+            }
 
         /* --- ESTILOS GLASS PARA EL FOOTER --- */
         .glass-footer {
@@ -82,24 +81,25 @@
             padding: 3rem 0; /* Más espacio vertical */
         }
 
-        .glass-footer h5 {
-            color: #ffffff;
-        }
+            .glass-footer h5 {
+                color: #ffffff;
+            }
 
-        .glass-footer a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
+            .glass-footer a {
+                color: rgba(255, 255, 255, 0.7);
+                text-decoration: none;
+                transition: color 0.3s ease;
+            }
 
-        .glass-footer a:hover {
-            color: #ff0000; /* Enlaces rojos al hacer hover */
-        }
+                .glass-footer a:hover {
+                    color: #ff0000; /* Enlaces rojos al hacer hover */
+                }
 
         /* --- ESTILOS CLAVE PARA QUE EL FONDO SEA VISIBLE --- */
         body, form {
             background-color: transparent !important;
         }
+
         .container, .container-fluid {
             background-color: transparent !important;
         }
@@ -117,32 +117,27 @@
                             numOctaves="2"
                             baseFrequency="0.0005, 0.002"
                             seed="1"
-                            type="turbulence"
-                        />
+                            type="turbulence" />
                         <feColorMatrix
                             id="color-matrix"
                             in="undulation"
                             type="hueRotate"
-                            values="0"
-                        />
+                            values="0" />
                         <feColorMatrix
                             in="dist"
                             result="circulation"
                             type="matrix"
-                            values="4 0 0 0 1  4 0 0 0 1  4 0 0 0 1  1 0 0 0 0"
-                        />
+                            values="4 0 0 0 1  4 0 0 0 1  4 0 0 0 1  1 0 0 0 0" />
                         <feDisplacementMap
                             in="SourceGraphic"
                             in2="circulation"
                             scale="30"
-                            result="dist"
-                        />
+                            result="dist" />
                         <feDisplacementMap
                             in="dist"
                             in2="undulation"
                             scale="30"
-                            result="output"
-                        />
+                            result="output" />
                     </filter>
                 </defs>
             </svg>
@@ -190,7 +185,7 @@
                         </div>
 
                         <!-- Carrito de compras con icono y badge -->
-                        <div class="cart-icon-wrapper text-white me-3" onclick="irAlCarrito()">
+                        <div class="cart-icon-wrapper text-white me-3" onclick="irAlCarrito()" style="cursor: pointer;">
                             <i class="bi bi-cart3 fs-4"></i>
                             <span id="cart-count" class="badge bg-danger cart-badge">1</span>
                         </div>
